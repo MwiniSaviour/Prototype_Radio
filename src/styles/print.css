@@ -1,0 +1,34 @@
+/*
+ * Print stylesheet — readers print articles; the chrome around them is noise.
+ * Imported by src/app/globals.css with the `print` media query.
+ */
+@media print {
+  body {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  header,
+  footer,
+  nav,
+  [data-no-print],
+  button {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    word-break: break-all;
+  }
+
+  article img {
+    max-width: 100% !important;
+    height: auto !important;
+    break-inside: avoid;
+  }
+}

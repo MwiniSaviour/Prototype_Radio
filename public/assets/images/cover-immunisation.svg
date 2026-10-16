@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Border Outreach cover art">
+  <rect width="800" height="800" fill="#191721"/>
+  <rect x="40" y="40" width="720" height="720" rx="48" fill="none" stroke="#f2b75c" stroke-width="4" opacity="0.6"/>
+  <g><rect x="300" y="180" width="200" height="240" rx="24" fill="#fbfaf7"/><path d="M370 260h60M400 230v60" stroke="#c01b2b" stroke-width="18" stroke-linecap="round"/><path d="M370 350h60M370 350v40h60v-40" stroke="#191721" stroke-width="10" fill="none"/></g><circle cx="530" cy="240" r="34" fill="#f2b75c"/>
+  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#fbfaf7">Border Outreach</text>
+  <text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="4" fill="#f2b75c">HEALTH DESK</text>
+</svg>

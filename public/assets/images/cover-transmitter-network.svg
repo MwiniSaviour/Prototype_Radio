@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="The Network That Keeps Wa On Air cover art">
+  <rect width="800" height="800" fill="#191721"/>
+  <rect x="40" y="40" width="720" height="720" rx="48" fill="none" stroke="#f2b75c" stroke-width="4" opacity="0.6"/>
+  <g fill="#f2b75c"><rect x="390" y="760" width="20" height="44" opacity="0.25"/><rect x="383" y="704" width="34" height="44" opacity="0.31"/><rect x="376" y="648" width="48" height="44" opacity="0.37"/><rect x="369" y="592" width="62" height="44" opacity="0.43"/><rect x="362" y="536" width="76" height="44" opacity="0.49"/><rect x="355" y="480" width="90" height="44" opacity="0.55"/><rect x="348" y="424" width="104" height="44" opacity="0.61"/><rect x="341" y="368" width="118" height="44" opacity="0.6699999999999999"/><rect x="334" y="312" width="132" height="44" opacity="0.73"/><rect x="327" y="256" width="146" height="44" opacity="0.79"/><rect x="320" y="200" width="160" height="44" opacity="0.85"/></g>
+  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#fbfaf7">The Network That Keeps Wa On Air</text>
+  <text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="4" fill="#f2b75c">TECHNOLOGY</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Agents Before ATMs cover art">
+  <rect width="800" height="800" fill="#191721"/>
+  <rect x="40" y="40" width="720" height="720" rx="48" fill="none" stroke="#f2b75c" stroke-width="4" opacity="0.6"/>
+  <rect x="280" y="200" width="240" height="180" rx="24" fill="#fbfaf7"/><rect x="320" y="240" width="160" height="70" rx="12" fill="#c01b2b"/><circle cx="400" cy="330" r="18" fill="#f2b75c"/><g stroke="#f2b75c" stroke-width="14" stroke-linecap="round"><path d="M220 460v-40M580 460v-40"/></g>
+  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#fbfaf7">Agents Before ATMs</text>
+  <text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="4" fill="#f2b75c">TECHNOLOGY</text>
+</svg>

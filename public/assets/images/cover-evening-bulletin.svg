@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Evening Bulletin cover art">
+  <rect width="800" height="800" fill="#191721"/>
+  <rect x="40" y="40" width="720" height="720" rx="48" fill="none" stroke="#f2b75c" stroke-width="4" opacity="0.6"/>
+  <g><rect x="300" y="200" width="200" height="140" rx="20" fill="#fbfaf7"/><path d="M340 270l60-40 60 40" fill="none" stroke="#c01b2b" stroke-width="16" stroke-linecap="round"/><path d="M250 420h300" stroke="#f2b75c" stroke-width="14" stroke-linecap="round"/><path d="M300 460h200" stroke="#f2b75c" stroke-width="14" stroke-linecap="round" opacity="0.6"/></g>
+  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#fbfaf7">Evening Bulletin</text>
+  <text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="4" fill="#f2b75c">WEEKDAYS 18:30</text>
+</svg>

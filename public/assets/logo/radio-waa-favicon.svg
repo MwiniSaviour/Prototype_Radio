@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Radio Waa">
+  <rect width="64" height="64" rx="14" fill="#c01b2b"/>
+  <path d="M20 46V20l24 13-24 13z" fill="#fbfaf7"/>
+  <circle cx="44" cy="20" r="5" fill="#f2b75c"/>
+</svg>

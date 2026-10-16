@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["esnext"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "resolveJsonModule": true,
+    "baseUrl": "../..",
+    "paths": { "@/*": ["./src/*"] },
+    "rootDir": "../..",
+    "outDir": "../../.validate-build"
+  },
+  "include": ["./articles.ts", "./categories.ts", "./authors.ts", "./shows.ts", "./podcasts.ts", "./nav.ts", "../lib/**/*.ts"]
+}
