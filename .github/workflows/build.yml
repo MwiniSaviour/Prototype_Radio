@@ -91,7 +91,7 @@ jobs:
             if curl -fsS -o /dev/null http://127.0.0.1:3100/; then break; fi
             sleep 2
           done
-          for path in / /shows /category/local-news /search?q=wa; do
+          for path in / /shows /category/local-news /robots.txt /sitemap.xml /search?q=wa; do
             echo "GET $path"
             curl -fsS -o /dev/null -w '  status=%{http_code}\n' "http://127.0.0.1:3100$path"
           done
