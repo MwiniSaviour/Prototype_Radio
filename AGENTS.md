@@ -64,7 +64,6 @@ just obey):
 cd /data/data/com.termux/files/home/radio-waa
 
 # after a fresh clone / npm install, fix shebangs (section 1.4) — then:
-npm run build        # next build --webpack — MUST pass (exit 0)
 npm run lint         # eslint . — 0 problems
 npm run typecheck    # tsc --noEmit via node_modules binary
 npm run dev          # next dev --webpack (port 3000)
@@ -72,25 +71,61 @@ npm start            # next start (serves the production build)
 
 # If npm scripts are ever unusable, the escape hatches:
 node node_modules/next/dist/bin/next dev --webpack -p 3000
-node node_modules/next/dist/bin/next build --webpack
 ```
 
-Current status (2026-10-15): `npm run build` exits 0 and emits the full route
-table below; lint and typecheck are clean.
+### Builds happen on GitHub Actions, not on this device
+
+`next build` reliably gets OOM-killed here (Android low-memory killer, exit 9).
+`.github/workflows/build.yml` builds on `ubuntu-latest` against a throwaway
+`postgres:18` service container, runs migrations + seed, smoke-tests the
+production server, and uploads the `.next` directory as a `next-build`
+artifact. ~2 minutes per run.
+
+```bash
+gh run list --workflow build.yml -L 5          # watch
+gh run view <id> --log | grep 'status='        # smoke-test codes
+gh run download <id> --name next-build --dir ci-artifacts
+
+# install the artifact over the local build, then serve it:
+rm -rf .next && tar -xzf ci-artifacts/next-build.tar.gz
+CONTENT_SOURCE=payload setsid nohup bash -c \
+  'echo $$ > start-3000.pid; exec node node_modules/next/dist/bin/next start -p 3000' \
+  > start-3000.log 2>&1 < /dev/null &
+```
+
+The phone only ever needs the extracted `.next` plus its own `node_modules`
+(the runner's native SWC build is linux-x64; the artifact's WASC bundle is
+portable). `.next/cache` is excluded from the tarball — it holds
+platform-specific compiler caches the server does not read.
+
+The preview server runs detached because Android reaps foreground processes
+between sessions. `cat start-3000.pid` gives the real Next PID (the inner
+`echo $$` is what makes that true); never `pgrep -f` or `pkill -f` — the
+pattern matches the invoking shell and kills the session that ran it.
+
+Current status (2026-10-16): CI run `38914817381` built and uploaded the
+artifact now serving on port 3000; all six smoke routes return 200
+(`/`, `/shows`, `/category/local-news`, `/robots.txt`, `/sitemap.xml`,
+`/search?q=wa`). The `.next/BUILD_ID` is `XV3yb4jlrkp7287gxeBG5`.
 
 ```
 ┌ ○ /                                   1h
 ├ ○ /_not-found                         1h
 ├ ○ /about                              1h
-├   /article/[slug]           (12 SSG pages)
+├   /article/[slug]           (23 SSG pages)
 ├ ○ /category                           1h
-├   /category/[slug]         (6 SSG pages)
+├   /category/[slug]         (10 SSG pages)
 ├ ○ /podcasts                           1h
 ├ ○ /robots.txt
 ├ ƒ /search           (dynamic, query-driven)
 ├ ○ /shows                              1h
 └ ○ /sitemap.xml                        1h
 ```
+
+> **Route-group caveat:** `robots.ts` must live at `src/app/robots.ts`, not
+> inside `src/app/(frontend)/`. Next 16.4 silently drops the metadata route
+> from a route group — `/robots.txt` 404s — while `sitemap.ts` in the same
+> directory resolves normally. The CI smoke test covers both.
 
 ## 3. Architecture
 
