@@ -29,6 +29,15 @@ const nextConfig = {
   // no longer accepts eslint config here.
   typescript: { ignoreBuildErrors: false },
 
+  // Android's low-memory killer killed the session during the first
+  // CONTENT_SOURCE=payload build. Next otherwise sizes its static-generation
+  // worker pool from os.cpus() (8 here); each worker carries a large heap, so
+  // cap the pool to keep peak RSS inside the ~2 GB budget on this device.
+  experimental: {
+    cpus: 2,
+    staticGenerationMaxConcurrency: 2,
+  },
+
   // Payload's TypeScript sources import sibling modules by their compiled
   // extension (".js" referring to a ".ts" file); extensionAlias teaches the
   // webpack resolver that mapping. Required by the official Payload/Next
