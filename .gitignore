@@ -13,6 +13,9 @@ next-env.d.ts
 
 # logs & os noise
 *.log
+# pidfiles from the detached dev/preview servers (no systemd here)
+*.pid
+*.pid.log
 .DS_Store
 
 # typescript
