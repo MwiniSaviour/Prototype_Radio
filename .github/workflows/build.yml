@@ -1,0 +1,112 @@
+name: Build
+
+# The Android/Termux dev host runs out of memory during `next build`
+# (Android's low-memory killer reaps the session, exit 9). This workflow
+# produces the production build on a GitHub-hosted runner instead and hands
+# the `.next` directory back as an artifact the phone can serve with a plain
+# `next start` — no on-device compilation, no OOM.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Next.js production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: radiowaa
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d radiowaa"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@127.0.0.1:5432/radiowaa
+      # Throwaway secret for the ephemeral CI database only. It authenticates
+      # nothing that leaves this job, and nothing encrypted by it is kept.
+      PAYLOAD_SECRET: 0000000000000000000000000000000000000000000000000000000000000000
+      CONTENT_SOURCE: payload
+      NEXT_PUBLIC_SITE_URL: https://radio-waa.example
+      NEXT_PUBLIC_SITE_NAME: Radio Waa
+      NEXT_PUBLIC_STREAM_URL: ""
+      NEXT_TELEMETRY_DISABLED: "1"
+      CI: "true"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      # Runs non-interactively on a fresh service database. `payload migrate`
+      # only prompts when a previous dev-mode `push` left a batch -1 row behind
+      # (see src/payload.config.ts, where push defaults on outside production);
+      # the CI database starts empty, so there is nothing to confirm.
+      - name: Apply database migrations
+        run: >-
+          node --no-warnings --import ./scripts/ts-ext-resolve.mjs
+          node_modules/payload/bin.js --disable-transpile migrate
+
+      - name: Seed content
+        run: npm run seed
+
+      - name: Build
+        run: npm run build
+
+      - name: Smoke test the production server
+        run: |
+          node node_modules/next/dist/bin/next start -p 3100 &
+          server_pid=$!
+          trap 'kill $server_pid 2>/dev/null || true' EXIT
+          for _ in $(seq 1 30); do
+            if curl -fsS -o /dev/null http://127.0.0.1:3100/; then break; fi
+            sleep 2
+          done
+          for path in / /shows /category/local-news /search?q=wa; do
+            echo "GET $path"
+            curl -fsS -o /dev/null -w '  status=%{http_code}\n' "http://127.0.0.1:3100$path"
+          done
+
+      - name: Package the build output
+        run: |
+          # .next/cache holds compiler caches that are platform-specific; the
+          # server does not need them and they would only bloat the artifact.
+          tar --exclude=.next/cache -czf next-build.tar.gz .next
+          sha256sum next-build.tar.gz
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-build
+          path: next-build.tar.gz
+          retention-days: 14
+          if-no-files-found: error
