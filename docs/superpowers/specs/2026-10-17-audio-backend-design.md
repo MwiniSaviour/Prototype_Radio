@@ -51,7 +51,7 @@ Radio Waa (https://myradiowaa.com/, Wa, Upper West Region, Ghana) already broadc
 ### Live stream
 
 - `NEXT_PUBLIC_STREAM_URL` = Zeno CDN URL. `src/components/radio/LivePlayerHero.tsx` unchanged in behavior; add §8.6 diagnostics:
-  - Boot-time `fetch(url, { method: 'HEAD', mode: 'cors' })` preflight → human sentence in the UI (aria-live), full detail to console/telemetry; COR failures never surface as bare `MEDIA_ERR_NETWORK`.
+  - Boot-time `fetch(url, { method: 'HEAD', mode: 'cors' })` preflight → human sentence in the UI (aria-live), full detail to console/telemetry; CORS failures never surface as bare `MEDIA_ERR_NETWORK`.
   - Time-to-first-audio measurement recorded (§4.7 gap).
 - Optional abstraction point only: keep the stream URL in one env var so a future Zeno API metadata source (if the station obtains access) can swap in without touching components.
 
@@ -76,7 +76,7 @@ Radio Waa (https://myradiowaa.com/, Wa, Upper West Region, Ghana) already broadc
 ## Security & privacy
 
 - Stream URL and episode audio URLs are public literary hyperlinks only; no authenticated playback, no signed URLs needed.
-- No new PII collection; telemetry limited to anonymous poly活动现场 stream diagnostics (error class, time-to-first-audio).
+- No new PII collection; telemetry limited to anonymous playback stream diagnostics (error class, time-to-first-audio).
 - No secrets in feed, sitemap, or client bundles; `PAYLOAD_SECRET` never committed (existing policy).
 
 ## Verification plan
