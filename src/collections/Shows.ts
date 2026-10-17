@@ -1,6 +1,11 @@
 import type { CollectionConfig, Option } from "payload";
 
+import { createRevalidateHooks } from "./hooks/revalidate";
+import { createSlugHook } from "./hooks/slug";
 import { isAdmin, isAdminOrEditor } from "./Users";
+
+// No per-show URL yet: /shows lists every show on one page.
+const revalidateShows = createRevalidateHooks(() => ["/", "/shows"]);
 
 const WEEKDAYS: Option[] = [
   { label: "Monday", value: "monday" },
@@ -37,8 +42,19 @@ export const Shows: CollectionConfig = {
     read: () => true,
     update: isAdminOrEditor,
   },
+  hooks: {
+    afterChange: revalidateShows.afterChange,
+    afterDelete: revalidateShows.afterDelete,
+  },
   fields: [
-    { name: "slug", type: "text", required: true, unique: true, index: true },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      hooks: { beforeValidate: [createSlugHook("name")] },
+    },
     { name: "name", type: "text", required: true },
     { name: "tagline", type: "text", required: true },
     { name: "description", type: "textarea", required: true },

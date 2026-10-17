@@ -249,6 +249,9 @@ export interface Author {
   avatarUrl?: string | null;
   bio: string;
   location: string;
+  /**
+   * Type a specialism and press Enter to add it.
+   */
   specialisms: string[];
   social: {
     label: string;
@@ -274,12 +277,18 @@ export interface Article {
   category: number | Category;
   author: number | Author;
   publishedAt: string;
+  /**
+   * Derived automatically from the body on save.
+   */
   readingMinutes: number;
   image: {
     src: string;
     alt: string;
     credit?: string | null;
   };
+  /**
+   * Type a tag and press Enter to add it.
+   */
   tags: string[];
   featured?: boolean | null;
   breaking?: boolean | null;
@@ -312,12 +321,23 @@ export interface Article {
         blockType: 'list';
       }
   )[];
+  meta?: {
+    /**
+     * Overrides the browser-tab and share title. Defaults to the article title.
+     */
+    title?: string | null;
+    /**
+     * Overrides the share-card description. Defaults to the excerpt.
+     */
+    description?: string | null;
+  };
   /**
    * Stable pre-CMS fixture id (e.g. art-water-emergency), set by the seed; never edited by hand.
    */
   legacyId?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -368,6 +388,9 @@ export interface PodcastEpisode {
     alt: string;
     credit?: string | null;
   };
+  /**
+   * Type a tag and press Enter to add it.
+   */
   tags: string[];
   /**
    * Stable pre-CMS fixture id (e.g. ep-wa-files-12), set by the seed; never edited by hand.
@@ -644,9 +667,16 @@ export interface ArticlesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   legacyId?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

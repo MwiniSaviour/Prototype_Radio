@@ -54,6 +54,8 @@ export interface Article {
   featured?: boolean;
   breaking?: boolean;
   body: ArticleBlock[];
+  /** Optional SEO overrides for <head>; falls back to title/excerpt. */
+  meta?: { title?: string; description?: string };
 }
 
 export interface ShowSlot {

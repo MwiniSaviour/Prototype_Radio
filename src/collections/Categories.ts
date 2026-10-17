@@ -1,6 +1,16 @@
 import type { CollectionConfig } from "payload";
 
+import { createRevalidateHooks } from "./hooks/revalidate";
+import { createSlugHook } from "./hooks/slug";
 import { isAdmin, isAdminOrEditor } from "./Users";
+
+const revalidateCategories = createRevalidateHooks((doc) => {
+  // Deleting or renaming a category can touch every article page it was on,
+  // so "/" is purged in addition to the category's own page.
+  const paths = ["/"];
+  if (typeof doc.slug === "string" && doc.slug) paths.push(`/category/${doc.slug}`);
+  return paths;
+});
 
 export const Categories: CollectionConfig = {
   slug: "categories",
@@ -13,8 +23,19 @@ export const Categories: CollectionConfig = {
     read: () => true,
     update: isAdminOrEditor,
   },
+  hooks: {
+    afterChange: revalidateCategories.afterChange,
+    afterDelete: revalidateCategories.afterDelete,
+  },
   fields: [
-    { name: "slug", type: "text", required: true, unique: true, index: true },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      hooks: { beforeValidate: [createSlugHook("name")] },
+    },
     { name: "name", type: "text", required: true },
     { name: "description", type: "textarea", required: true },
     {

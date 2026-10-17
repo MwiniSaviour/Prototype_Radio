@@ -1,6 +1,11 @@
 import type { CollectionConfig } from "payload";
 
+import { createRevalidateHooks } from "./hooks/revalidate";
+import { createSlugHook } from "./hooks/slug";
 import { isAdmin, isAdminOrEditor } from "./Users";
+
+// Episodes live under /podcasts; there is no per-episode URL yet.
+const revalidateEpisodes = createRevalidateHooks(() => ["/", "/podcasts"]);
 
 export const PodcastEpisodes: CollectionConfig = {
   slug: "podcast-episodes",
@@ -14,8 +19,19 @@ export const PodcastEpisodes: CollectionConfig = {
     read: () => true,
     update: isAdminOrEditor,
   },
+  hooks: {
+    afterChange: revalidateEpisodes.afterChange,
+    afterDelete: revalidateEpisodes.afterDelete,
+  },
   fields: [
-    { name: "slug", type: "text", required: true, unique: true, index: true },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      hooks: { beforeValidate: [createSlugHook("title")] },
+    },
     { name: "title", type: "text", required: true },
     { name: "description", type: "textarea", required: true },
     // PodcastEpisode.showId is a relation, not a string: the seed resolves the
@@ -35,7 +51,16 @@ export const PodcastEpisodes: CollectionConfig = {
         { name: "credit", type: "text" },
       ],
     },
-    { name: "tags", type: "text", hasMany: true, required: true },
+    {
+      name: "tags",
+      type: "text",
+      hasMany: true,
+      required: true,
+      // Same Enter-to-commit behavior as article tags — see Articles.ts.
+      admin: {
+        description: "Type a tag and press Enter to add it.",
+      },
+    },
     {
       name: "legacyId",
       type: "text",

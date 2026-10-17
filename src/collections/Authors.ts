@@ -1,6 +1,11 @@
 import type { CollectionConfig } from "payload";
 
+import { createRevalidateHooks } from "./hooks/revalidate";
+import { createSlugHook } from "./hooks/slug";
 import { isAdmin, isAdminOrEditor } from "./Users";
+
+// There is no author-facing route; author data renders inside article pages.
+const revalidateAuthors = createRevalidateHooks(() => ["/"]);
 
 export const Authors: CollectionConfig = {
   slug: "authors",
@@ -13,8 +18,19 @@ export const Authors: CollectionConfig = {
     read: () => true,
     update: isAdminOrEditor,
   },
+  hooks: {
+    afterChange: revalidateAuthors.afterChange,
+    afterDelete: revalidateAuthors.afterDelete,
+  },
   fields: [
-    { name: "slug", type: "text", required: true, unique: true, index: true },
+    {
+      name: "slug",
+      type: "text",
+      required: true,
+      unique: true,
+      index: true,
+      hooks: { beforeValidate: [createSlugHook("name")] },
+    },
     { name: "name", type: "text", required: true },
     { name: "role", type: "text", required: true },
     {
@@ -26,7 +42,16 @@ export const Authors: CollectionConfig = {
     },
     { name: "bio", type: "textarea", required: true },
     { name: "location", type: "text", required: true },
-    { name: "specialisms", type: "text", hasMany: true, required: true },
+    {
+      name: "specialisms",
+      type: "text",
+      hasMany: true,
+      required: true,
+      // Same Enter-to-commit behavior as article tags — see Articles.ts.
+      admin: {
+        description: "Type a specialism and press Enter to add it.",
+      },
+    },
     {
       name: "social",
       type: "array",

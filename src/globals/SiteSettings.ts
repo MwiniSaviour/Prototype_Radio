@@ -1,6 +1,20 @@
-import type { GlobalConfig } from "payload";
+import { revalidatePath } from "next/cache";
+import type { GlobalAfterChangeHook, GlobalConfig } from "payload";
 
 import { isAdmin } from "../collections/Users";
+
+// SiteSettings feeds nav, footer, socials and the breaking ticker, which render
+// in the ROOT layout — so changes must drop the layout cache for every route
+// ("layout"), not just the homepage path. revalidatePath throws outside a Next
+// request context (e.g. `payload run scripts/seed.ts`); the hourly ISR window
+// (revalidate = 3600) covers the missed purge.
+const revalidateSite: GlobalAfterChangeHook = () => {
+  try {
+    revalidatePath("/", "layout");
+  } catch {
+    // Best effort only — see the note above.
+  }
+};
 
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
@@ -13,6 +27,10 @@ export const SiteSettings: GlobalConfig = {
     // The public site renders nav, footer, socials and the ticker from here.
     read: () => true,
     update: isAdmin,
+  },
+  hooks: {
+    // Payload 3 global hooks are arrays.
+    afterChange: [revalidateSite],
   },
   fields: [
     { name: "siteName", type: "text", required: true },

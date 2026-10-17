@@ -16,10 +16,18 @@ const payload = await getPayload({ config })
 type SeedCollection = 'categories' | 'authors' | 'shows' | 'podcast-episodes' | 'articles'
 type Status = 'created' | 'updated' | 'unchanged'
 
-type SeedData<C extends SeedCollection> = Omit<
-  GeneratedConfig['collections'][C],
-  'id' | 'createdAt' | 'updatedAt'
->
+// readingMinutes is derived into articles by a collection-level beforeValidate
+// hook, so callers must not (and do not need to) supply it.
+// Written as an explicit branch rather than a conditional key inside a single
+// Omit: a generic conditional inside Omit's key union makes TS lose the
+// concrete keys needed for property access on `SeedData<C>` below.
+type SeedData<C extends SeedCollection> =
+  C extends 'articles'
+    ? Omit<
+        GeneratedConfig['collections'][C],
+        'id' | 'createdAt' | 'updatedAt' | 'readingMinutes'
+      >
+    : Omit<GeneratedConfig['collections'][C], 'id' | 'createdAt' | 'updatedAt'>
 
 /**
  * The Local API is generic over the concrete collection slug; this seed drives it
@@ -235,10 +243,10 @@ for (const article of articles) {
     slug: article.slug,
     title: article.title,
     excerpt: article.excerpt,
+    // readingMinutes is derived from body by a collection-level beforeValidate hook (required + min 1 validation passes via the hook); seeding it manually would churn every reseed.
     category: requireId(categoryIds, article.category.id, 'category', article.id),
     author: requireId(authorIds, article.author.id, 'author', article.id),
     publishedAt: article.publishedAt,
-    readingMinutes: article.readingMinutes,
     image: {
       src: article.image.src,
       alt: article.image.alt,
@@ -248,6 +256,8 @@ for (const article of articles) {
     featured: article.featured ?? false,
     breaking: article.breaking ?? false,
     body: article.body.map(toBodyBlock),
+    // The collection is concurrently getting versions.drafts enabled; explicit beats default-behavior dependence.
+    _status: 'published',
     legacyId: article.id,
   })
 }

@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   }
 
   return buildMetadata({
-    title: article.title,
-    description: article.excerpt,
+    title: article.meta?.title ?? article.title,
+    description: article.meta?.description ?? article.excerpt,
     path: `/article/${article.slug}`,
     image: article.image.src,
     type: "article",

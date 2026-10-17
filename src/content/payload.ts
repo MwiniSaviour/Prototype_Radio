@@ -191,6 +191,10 @@ function toArticle(doc: ArticleDoc): Article {
       `content: article "${doc.slug}" is missing its ${category ? "author" : "category"} relation`,
     );
   }
+  const publishedAt = doc.publishedAt ?? doc.updatedAt;
+  if (!publishedAt) {
+    throw new Error(`content: article "${doc.slug}" has neither publishedAt nor updatedAt`);
+  }
   return {
     id: domainId(doc),
     slug: doc.slug,
@@ -198,7 +202,7 @@ function toArticle(doc: ArticleDoc): Article {
     excerpt: doc.excerpt,
     category: toCategory(category, 0),
     author: toAuthor(author),
-    publishedAt: doc.publishedAt,
+    publishedAt,
     updatedAt: doc.updatedAt,
     readingMinutes: doc.readingMinutes,
     image: toImage(doc.image),
@@ -206,6 +210,9 @@ function toArticle(doc: ArticleDoc): Article {
     featured: doc.featured ?? undefined,
     breaking: doc.breaking ?? undefined,
     body: toBody(doc),
+    meta: doc.meta
+      ? { title: doc.meta.title ?? undefined, description: doc.meta.description ?? undefined }
+      : undefined,
   };
 }
 
@@ -216,9 +223,14 @@ const FIXTURE_ORDER = "id" as const;
 
 async function findArticles(where?: Where, limit?: number): Promise<Article[]> {
   const payload = await client();
+  // overrideAccess bypasses draft filtering; published-only must be explicit.
+  const publishedOnly: Where = {
+    _status: { equals: "published" },
+    publishedAt: { less_than_equal: new Date().toISOString() },
+  };
   const result = await payload.find({
     collection: "articles",
-    where,
+    where: where ? { and: [where, publishedOnly] } : publishedOnly,
     limit: limit ?? 0,
     pagination: limit === undefined,
     sort: RECENCY,
@@ -232,6 +244,11 @@ export async function getArticles(): Promise<Article[]> {
   const payload = await client();
   const result = await payload.find({
     collection: "articles",
+    // overrideAccess bypasses draft filtering; published-only must be explicit.
+    where: {
+      _status: { equals: "published" },
+      publishedAt: { less_than_equal: new Date().toISOString() },
+    },
     sort: FIXTURE_ORDER,
     pagination: false,
     depth: ARTICLE_DEPTH,
@@ -325,10 +342,13 @@ export async function searchArticles(query: string, limit = 20): Promise<Article
   const needle = query.trim();
   if (!needle) return [];
 
+  // `%` and `_` are SQL LIKE wildcards; escape them so the needle matches literally.
+  const safe = needle.replace(/[%_\\]/g, "\\$&");
+
   const payload = await client();
   const matchingCategories = await payload.find({
     collection: "categories",
-    where: { name: { contains: needle } },
+    where: { name: { contains: safe } },
     limit: 0,
     pagination: false,
     depth: 0,
@@ -336,9 +356,9 @@ export async function searchArticles(query: string, limit = 20): Promise<Article
   });
 
   const or: Where[] = [
-    { title: { contains: needle } },
-    { excerpt: { contains: needle } },
-    { tags: { contains: needle } },
+    { title: { contains: safe } },
+    { excerpt: { contains: safe } },
+    { tags: { contains: safe } },
   ];
   if (matchingCategories.docs.length) {
     or.push({ category: { in: matchingCategories.docs.map((doc) => doc.id) } });
