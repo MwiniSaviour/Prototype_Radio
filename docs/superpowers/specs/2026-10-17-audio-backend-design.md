@@ -1,7 +1,7 @@
 # Audio Backend Design — Radio Waa live stream + podcast
 
 - **Date:** 2026-10-17
-- **Status:** Draft for review
+- **Status:** Approved (user review 2026-10-17)
 - **Inputs:** [Brainstorm session decisions](#decisions), [docs/live-audio-backend-research.md](../../live-audio-backend-research.md) (§8.6 diagnostics, §8.7 licensing)
 
 ## Context
