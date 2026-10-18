@@ -56,7 +56,11 @@ export function LivePlayerHero({ show, slot, isLive, className }: LivePlayerHero
   }, [volume]);
 
   useEffect(() => {
-    setNow(new Date());
+    // setState must be triggered from a callback, not synchronously in the
+    // effect body (react-hooks/set-state-in-effect); the clock snapshot just
+    // lands one frame later — same single-read-per-mount behavior.
+    const frame = requestAnimationFrame(() => setNow(new Date()));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const scheduleByDay = useMemo<Record<Weekday, ShowSlot[]>>(() => {
