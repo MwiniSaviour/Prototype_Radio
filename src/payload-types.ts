@@ -383,6 +383,9 @@ export interface PodcastEpisode {
   episodeNumber: number;
   publishedAt: string;
   durationSeconds: number;
+  audioUrl?: string | null;
+  audioMimeType?: string | null;
+  audioByteLength?: number | null;
   image: {
     src: string;
     alt: string;
@@ -721,6 +724,9 @@ export interface PodcastEpisodesSelect<T extends boolean = true> {
   episodeNumber?: T;
   publishedAt?: T;
   durationSeconds?: T;
+  audioUrl?: T;
+  audioMimeType?: T;
+  audioByteLength?: T;
   image?:
     | T
     | {

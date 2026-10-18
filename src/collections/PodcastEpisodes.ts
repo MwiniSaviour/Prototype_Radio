@@ -5,7 +5,7 @@ import { createSlugHook } from "./hooks/slug";
 import { isAdmin, isAdminOrEditor } from "./Users";
 
 // Episodes live under /podcasts; there is no per-episode URL yet.
-const revalidateEpisodes = createRevalidateHooks(() => ["/", "/podcasts"]);
+const revalidateEpisodes = createRevalidateHooks(() => ["/", "/podcasts", "/feeds/radio-waa.xml"]);
 
 export const PodcastEpisodes: CollectionConfig = {
   slug: "podcast-episodes",
@@ -41,6 +41,38 @@ export const PodcastEpisodes: CollectionConfig = {
     { name: "episodeNumber", type: "number", required: true, min: 1 },
     { name: "publishedAt", type: "date", required: true, index: true },
     { name: "durationSeconds", type: "number", required: true, min: 1 },
+    // Optional hosted-audio metadata for the RSS feed; values stay null until
+    // a real audio host is configured (AUDIO_SAMPLE_BASE_URL) — plan §3.
+    {
+      name: "audioUrl",
+      type: "text",
+      validate: (value: string | null | undefined) => {
+        if (value == null || value === "") return true;
+        try {
+          const url = new URL(value);
+          if (url.protocol === "http:" || url.protocol === "https:") return true;
+          return "audioUrl must be an http:// or https:// URL";
+        } catch {
+          return "audioUrl must be a valid absolute URL";
+        }
+      },
+    },
+    {
+      name: "audioMimeType",
+      type: "text",
+      validate: (value: string | null | undefined) =>
+        value == null || value === "" || /^audio\/(mpeg|mp4|aac|ogg|opus|wav)$/.test(value)
+          ? true
+          : "audioMimeType must be audio/(mpeg, mp4, aac, ogg, opus or wav)",
+    },
+    {
+      name: "audioByteLength",
+      type: "number",
+      validate: (value: number | null | undefined) =>
+        value == null || (Number.isInteger(value) && value > 0)
+          ? true
+          : "audioByteLength must be a positive whole number of bytes",
+    },
     {
       name: "image",
       type: "group",

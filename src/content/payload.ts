@@ -133,6 +133,9 @@ function toEpisode(doc: EpisodeDoc): PodcastEpisode {
     episodeNumber: doc.episodeNumber,
     publishedAt: doc.publishedAt,
     durationSeconds: doc.durationSeconds,
+    audioUrl: doc.audioUrl ?? null,
+    audioMimeType: doc.audioMimeType ?? null,
+    audioByteLength: doc.audioByteLength ?? null,
     image: toImage(doc.image),
     tags: texts(doc.tags),
   };

@@ -87,6 +87,9 @@ export interface PodcastEpisode {
   episodeNumber: number;
   publishedAt: IsoDate;
   durationSeconds: number;
+  audioUrl?: string | null;
+  audioMimeType?: string | null;
+  audioByteLength?: number | null;
   image: ImageAsset;
   tags: string[];
 }
