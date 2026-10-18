@@ -50,6 +50,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "monthly" as const,
       priority: 0.4,
     })),
+    {
+      url: absoluteUrl("/feeds/radio-waa.xml"),
+      lastModified: now,
+      changeFrequency: "daily" as const,
+      priority: 0.6,
+    },
   ];
 }
 

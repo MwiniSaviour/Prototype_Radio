@@ -44,6 +44,6 @@ export const siteConfig = {
     { label: "Facebook", href: "https://facebook.com/" },
     { label: "Instagram", href: "https://instagram.com/" },
     { label: "YouTube", href: "https://youtube.com/" },
-    { label: "RSS", href: "/podcasts" },
+    { label: "RSS", href: "/feeds/radio-waa.xml" },
   ] satisfies SocialLink[],
 } as const;

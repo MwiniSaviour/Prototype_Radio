@@ -50,7 +50,10 @@ export function buildMetadata({
     description: composedDescription,
     applicationName: siteConfig.name,
     keywords,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      types: { "application/rss+xml": "/feeds/radio-waa.xml" },
+    },
     robots: noindex ? { index: false, follow: false } : undefined,
     openGraph: {
       title: composedTitle,
