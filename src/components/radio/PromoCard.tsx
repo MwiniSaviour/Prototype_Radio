@@ -25,7 +25,7 @@ export function PromoCard({ className }: PromoCardProps) {
     >
       <Image
         src="/assets/images/cover-hottest-mic.svg"
-        alt="Studio microphone artwork from the Hottest Mic show cover, drawn in the Radio Waa palette"
+        alt="Studio microphone artwork from the Hottest Mic show cover, drawn in the W93.5 FM palette"
         fill
         sizes="(max-width: 1279px) 100vw, 21rem"
         className="object-cover object-center opacity-60"
@@ -39,7 +39,7 @@ export function PromoCard({ className }: PromoCardProps) {
         <p className="flex items-center gap-2.5">
           <IconWaveform className="h-7 w-7 text-brand" aria-hidden="true" />
           <span className="font-display text-2xl leading-none font-extrabold tracking-tight text-white">
-            Radio Waa
+            W93.5 FM
           </span>
         </p>
 

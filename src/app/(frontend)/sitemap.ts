@@ -51,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.4,
     })),
     {
-      url: absoluteUrl("/feeds/radio-waa.xml"),
+      url: absoluteUrl("/feeds/w93-5.xml"),
       lastModified: now,
       changeFrequency: "daily" as const,
       priority: 0.6,

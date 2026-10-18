@@ -11,7 +11,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Shows & programmes",
   description:
-    "The Radio Waa weekly schedule: breakfast reporting, drive-time culture, Friday-night music, Saturday sport and the Sunday documentary.",
+    "The W93.5 FM weekly schedule: breakfast reporting, drive-time culture, Friday-night music, Saturday sport and the Sunday documentary.",
   path: "/shows",
 });
 

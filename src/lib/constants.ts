@@ -1,13 +1,13 @@
 import type { NavItem, SocialLink } from "./types";
 
 export const siteConfig = {
-  name: process.env.NEXT_PUBLIC_SITE_NAME ?? "Radio Waa",
-  shortName: "WAA",
-  legalName: "Radio Waa Broadcasting",
+  name: process.env.NEXT_PUBLIC_SITE_NAME ?? "W93.5 FM",
+  shortName: "93.5",
+  legalName: "W93.5 FM Broadcasting",
   tagline: "Live radio. Real stories. Every hour.",
   description:
-    "Radio Waa is an independent broadcaster and newsroom: live shows around the clock, in-depth reporting from the communities we serve, and podcasts you can take with you.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://radio-waa.example",
+    "W93.5 FM is an independent broadcaster and newsroom: live shows around the clock, in-depth reporting from the communities we serve, and podcasts you can take with you.",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://w93-5fm.example",
   locale: "en_US",
   /** localStorage key for the persisted theme choice (see ThemeToggle + layout script). */
   themeStorageKey: "radio-waa-theme",
@@ -44,6 +44,6 @@ export const siteConfig = {
     { label: "Facebook", href: "https://facebook.com/" },
     { label: "Instagram", href: "https://instagram.com/" },
     { label: "YouTube", href: "https://youtube.com/" },
-    { label: "RSS", href: "/feeds/radio-waa.xml" },
+    { label: "RSS", href: "/feeds/w93-5.xml" },
   ] satisfies SocialLink[],
 } as const;

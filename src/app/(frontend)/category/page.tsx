@@ -7,7 +7,7 @@ import { getArticles, getCategories } from "@/content";
 
 export const metadata = buildMetadata({
   title: "Categories",
-  description: "Every desk at Radio Waa: news, music, culture, sport, tech and community.",
+  description: "Every desk at W93.5 FM: news, music, culture, sport, tech and community.",
   path: "/category",
 });
 

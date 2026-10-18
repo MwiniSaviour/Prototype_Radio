@@ -21,7 +21,7 @@ export interface NewsletterSignupProps {
  */
 export function NewsletterSignup({
   className,
-  heading = "The Waa briefing",
+  heading = "The 93.5 briefing",
   description = "One email each weekday morning: what we reported overnight and what is on air today.",
 }: NewsletterSignupProps) {
   const [email, setEmail] = useState("");

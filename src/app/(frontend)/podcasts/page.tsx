@@ -18,7 +18,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "Podcasts",
   description:
-    "Listen back to every Radio Waa series: documentaries, extended interviews and the full Signal & Noise archive.",
+    "Listen back to every W93.5 FM series: documentaries, extended interviews and the full Signal & Noise archive.",
   path: "/podcasts",
 });
 

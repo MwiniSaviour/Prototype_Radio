@@ -134,7 +134,7 @@ export default async function HomePage() {
             <SectionHeading
               as="h2"
               id="top-stories-heading"
-              eyebrow="Radio Waa newsroom"
+              eyebrow="W93.5 FM newsroom"
               title="Top stories"
               className="mb-6"
             />

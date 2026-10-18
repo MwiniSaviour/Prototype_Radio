@@ -5,7 +5,7 @@ import { createSlugHook } from "./hooks/slug";
 import { isAdmin, isAdminOrEditor } from "./Users";
 
 // Episodes live under /podcasts; there is no per-episode URL yet.
-const revalidateEpisodes = createRevalidateHooks(() => ["/", "/podcasts", "/feeds/radio-waa.xml"]);
+const revalidateEpisodes = createRevalidateHooks(() => ["/", "/podcasts", "/feeds/w93-5.xml"]);
 
 export const PodcastEpisodes: CollectionConfig = {
   slug: "podcast-episodes",

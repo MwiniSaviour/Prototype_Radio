@@ -83,7 +83,7 @@ export function NewsletterRail({
           />
           <button
             type="submit"
-            aria-label="Subscribe to the Radio Waa newsletter"
+            aria-label="Subscribe to the W93.5 FM newsletter"
             className="absolute top-1 right-1 inline-flex h-10 w-10 items-center justify-center rounded-full bg-brand text-brand-fg shadow-card transition-[background-color,transform] duration-150 hover:scale-105 hover:bg-brand-hover focus-visible:focus-ring active:scale-95 motion-reduce:transform-none motion-reduce:hover:scale-100"
           >
             <IconArrowRight className="h-[1.125rem] w-[1.125rem]" aria-hidden="true" />

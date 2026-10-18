@@ -1,5 +1,5 @@
 /**
- * Radio Waa — Next.js configuration.
+ * W93.5 FM — Next.js configuration.
  *
  * Platform note (Termux / Android / bionic libc): see AGENTS.md. The native SWC
  * binding cannot dlopen glibc's libdl.so.2, so builds run on the WASM SWC binding

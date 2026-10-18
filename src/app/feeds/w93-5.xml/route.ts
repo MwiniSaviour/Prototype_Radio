@@ -39,7 +39,7 @@ export async function GET(): Promise<Response> {
     title: `${siteConfig.name} — All Episodes`,
     description: siteConfig.tagline,
     author: siteConfig.legalName,
-    selfUrl: absoluteUrl("/feeds/radio-waa.xml"),
+    selfUrl: absoluteUrl("/feeds/w93-5.xml"),
     siteUrl: absoluteUrl("/"),
     guid: CHANNEL_GUID,
     episodeItems: items,

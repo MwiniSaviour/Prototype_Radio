@@ -2,7 +2,7 @@
   "name": "radio-waa",
   "version": "0.1.0",
   "private": true,
-  "description": "Radio Waa — live radio, shows, podcasts and news platform (UI/UX foundation).",
+  "description": "W93.5 FM — live radio, shows, podcasts and news platform.",
   "engines": {
     "node": ">=20.9.0"
   },

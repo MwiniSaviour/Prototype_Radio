@@ -42,8 +42,8 @@ jobs:
       # nothing that leaves this job, and nothing encrypted by it is kept.
       PAYLOAD_SECRET: 0000000000000000000000000000000000000000000000000000000000000000
       CONTENT_SOURCE: payload
-      NEXT_PUBLIC_SITE_URL: https://radio-waa.example
-      NEXT_PUBLIC_SITE_NAME: Radio Waa
+      NEXT_PUBLIC_SITE_URL: https://w93-5fm.example
+      NEXT_PUBLIC_SITE_NAME: W93.5 FM
       NEXT_PUBLIC_STREAM_URL: ""
       NEXT_TELEMETRY_DISABLED: "1"
       CI: "true"

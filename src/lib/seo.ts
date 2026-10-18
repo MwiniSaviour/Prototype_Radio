@@ -52,7 +52,7 @@ export function buildMetadata({
     keywords,
     alternates: {
       canonical: url,
-      types: { "application/rss+xml": "/feeds/radio-waa.xml" },
+      types: { "application/rss+xml": "/feeds/w93-5.xml" },
     },
     robots: noindex ? { index: false, follow: false } : undefined,
     openGraph: {

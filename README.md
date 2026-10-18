@@ -1,4 +1,4 @@
-# Radio Waa
+# W93.5 FM
 
 Live radio, real stories, every hour. A production-grade **Next.js 16 + Tailwind v4**
 UI/UX foundation for a broadcast/news platform — App Router, TypeScript, strict

@@ -33,7 +33,7 @@ export function Wordmark({ className }: { className?: string }) {
         />
       </svg>
       <span className="font-display text-xl leading-none font-extrabold tracking-tight text-ink">
-        Radio<span className="text-brand">Waa</span>
+        W93<span className="text-brand">.5</span> FM
       </span>
     </span>
   );

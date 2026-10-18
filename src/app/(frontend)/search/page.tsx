@@ -10,7 +10,7 @@ import { pluralize } from "@/lib/format";
 
 export const metadata = buildMetadata({
   title: "Search",
-  description: "Search every Radio Waa story by keyword, topic or tag.",
+  description: "Search every W93.5 FM story by keyword, topic or tag.",
   path: "/search",
   noindex: true,
 });

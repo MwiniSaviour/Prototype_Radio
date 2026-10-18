@@ -11,7 +11,7 @@ import { buildMetadata } from "@/lib/seo";
 export const metadata = buildMetadata({
   title: "About",
   description:
-    "Who Radio Waa is, how the newsroom works, and how to reach us. Our editorial standards are published in full.",
+    "Who W93.5 FM is, how the newsroom works, and how to reach us. Our editorial standards are published in full.",
   path: "/about",
 });
 
@@ -48,7 +48,7 @@ export default async function AboutPage() {
             Est. 2016 · Independent
           </p>
           <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
-            Radio Waa is a station built out of its own call-in.
+            W93.5 FM is a station built out of its own call-in.
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-muted">
             We started with one transmitter, a borrowed studio and a phone line that
@@ -131,19 +131,19 @@ export default async function AboutPage() {
               <p>
                 <span className="font-semibold text-ink">Email:</span>{" "}
                 <a
-                  href="mailto:newsroom@radio-waa.example"
+                  href="mailto:newsroom@w93-5fm.example"
                   className="rounded-sm text-brand underline-offset-4 hover:underline focus-visible:focus-ring"
                 >
-                  newsroom@radio-waa.example
+                  newsroom@w93-5fm.example
                 </a>
               </p>
               <p>
                 <span className="font-semibold text-ink">Corrections:</span>{" "}
                 <a
-                  href="mailto:corrections@radio-waa.example"
+                  href="mailto:corrections@w93-5fm.example"
                   className="rounded-sm text-brand underline-offset-4 hover:underline focus-visible:focus-ring"
                 >
-                  corrections@radio-waa.example
+                  corrections@w93-5fm.example
                 </a>
               </p>
             </address>

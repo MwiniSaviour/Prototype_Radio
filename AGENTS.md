@@ -1,4 +1,4 @@
-# AGENTS.md — Radio Waa (Next.js 16 + Tailwind v4)
+# AGENTS.md — W93.5 FM (Next.js 16 + Tailwind v4)
 
 Read this before running anything. It exists because several days of rediscovering
 platform constraints can be avoided by reading one page.
