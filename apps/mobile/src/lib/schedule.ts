@@ -60,3 +60,103 @@ export function airingDay(startsAt: Date, now = new Date()): string {
   if (days === 1) return "Tomorrow";
   return startsAt.toLocaleDateString("en-GB", { weekday: "long" });
 }
+
+const DAYS: ShowSlot["day"][] = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
+];
+
+const todayName = (now: Date) => DAYS[(now.getDay() + 6) % 7];
+
+/** Minutes since midnight, for ordering a day's slots. */
+const minutesOf = (hhmm: string) => {
+  const [hours, minutes] = hhmm.split(":").map(Number);
+  return (hours % 24) * 60 + (minutes || 0);
+};
+
+export interface ScheduledProgramme extends UpcomingProgramme {
+  /** True when this slot is on air at `now`. */
+  live: boolean;
+}
+
+/** Everything scheduled today, in time order — the "Today's schedule" list. */
+export function todaySchedule(shows: Show[], now = new Date()): ScheduledProgramme[] {
+  const day = todayName(now);
+  const minute = now.getHours() * 60 + now.getMinutes();
+
+  return shows
+    .flatMap((show) =>
+      show.schedule
+        .filter((slot) => slot.day === day)
+        .map((slot) => {
+          const startsAt = new Date(now);
+          const [hours, minutes] = slot.start.split(":").map(Number);
+          startsAt.setHours(hours % 24, minutes || 0, 0, 0);
+          return {
+            show,
+            slot,
+            startsAt,
+            live: minute >= minutesOf(slot.start) && minute < minutesOf(slot.end),
+          };
+        }),
+    )
+    .sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime());
+}
+
+/**
+ * The broadcast on air right now. When the station is between programmes it
+ * returns the next one instead of inventing a live state, flagged `live: false`.
+ */
+export function currentBroadcast(shows: Show[], now = new Date()): ScheduledProgramme | null {
+  const today = todaySchedule(shows, now);
+  const onAir = today.find((programme) => programme.live);
+  if (onAir) return onAir;
+
+  const later = today.find((programme) => programme.startsAt.getTime() > now.getTime());
+  if (later) return later;
+
+  const next = upcomingProgrammes(shows, now, 1)[0];
+  return next ? { ...next, live: false } : null;
+}
+
+/** The whole week's grid, grouped by day — "View all schedule". */
+export function weekSchedule(shows: Show[], now = new Date()): {
+  day: ShowSlot["day"];
+  label: string;
+  today: boolean;
+  programmes: ScheduledProgramme[];
+}[] {
+  const todayIdx = (now.getDay() + 6) % 7;
+  // Which programme is on air today, so the week grid can mark it too.
+  const liveNow = todaySchedule(shows, now).filter((programme) => programme.live);
+
+  return DAYS.map((day, index) => {
+    const programmes = shows
+      .flatMap((show) =>
+        show.schedule
+          .filter((slot) => slot.day === day)
+          .map((slot) => {
+            const startsAt = new Date(now);
+            const [hours, minutes] = slot.start.split(":").map(Number);
+            startsAt.setHours(hours % 24, minutes || 0, 0, 0);
+            const live =
+              index === todayIdx &&
+              liveNow.some((item) => item.show.id === show.id && item.slot.start === slot.start);
+            return { show, slot, startsAt, live };
+          }),
+      )
+      .sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime());
+
+    return {
+      day,
+      label: day.charAt(0).toUpperCase() + day.slice(1),
+      today: index === todayIdx,
+      programmes,
+    };
+  });
+}

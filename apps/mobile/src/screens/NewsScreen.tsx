@@ -75,7 +75,7 @@ function BreakingStrip({ onOpen }: { onOpen: (slug: string) => void }) {
 
   return (
     <div className="flex items-stretch gap-3 border-y border-line bg-surface-2/60 px-5 py-2.5">
-      <span className="flex shrink-0 items-center rounded-[3px] bg-news px-2 py-[3px] text-[9.5px] font-bold uppercase tracking-[0.14em] text-white">
+      <span className="flex shrink-0 items-center rounded-[3px] bg-brand px-2 py-[3px] text-[9.5px] font-bold uppercase tracking-[0.14em] text-white">
         Breaking
       </span>
       <button
@@ -156,7 +156,7 @@ function LeadCarousel({ onOpen }: { onOpen: (slug: string) => void }) {
                 />
               </div>
 
-              <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.16em] text-news">
+              <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.16em] text-brand">
                 The big story
               </p>
               <h2 className="mt-1.5 font-display text-[27px] font-bold leading-[1.1] tracking-[-0.01em] text-ink">
@@ -187,7 +187,7 @@ function LeadCarousel({ onOpen }: { onOpen: (slug: string) => void }) {
             }}
             className={cn(
               "h-[5px] rounded-full transition-all",
-              position === index ? "w-[18px] bg-news" : "w-[5px] bg-ink/18",
+              position === index ? "w-[18px] bg-brand" : "w-[5px] bg-ink/18",
             )}
           />
         ))}
@@ -209,7 +209,7 @@ function LatestStory({ article, onOpen }: { article: Article; onOpen: () => void
           draggable={false}
         />
       </div>
-      <p className="mt-3 text-[9.5px] font-bold uppercase tracking-[0.16em] text-news">
+      <p className="mt-3 text-[9.5px] font-bold uppercase tracking-[0.16em] text-brand">
         {article.category.name}
       </p>
       <h3 className="mt-1 font-display text-[19px] font-bold leading-[1.18] tracking-[-0.01em] text-ink">

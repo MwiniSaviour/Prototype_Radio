@@ -10,6 +10,7 @@ import { EventDetailScreen } from "~/screens/EventDetailScreen";
 import { HomeScreen } from "~/screens/HomeScreen";
 import { ArticleScreen } from "~/screens/ArticleScreen";
 import { LiveScreen } from "~/screens/LiveScreen";
+import { ScheduleScreen } from "~/screens/ScheduleScreen";
 import { NewsScreen } from "~/screens/NewsScreen";
 import { OnboardingScreen } from "~/screens/OnboardingScreen";
 import { ProfileScreen } from "~/screens/ProfileScreen";
@@ -76,6 +77,7 @@ function Shell() {
               <Route path="/news" element={<NewsScreen />} />
               <Route path="/news/:slug" element={<ArticleScreen />} />
               <Route path="/live" element={<LiveScreen />} />
+              <Route path="/live/schedule" element={<ScheduleScreen />} />
               <Route path="/explore" element={<ExploreScreen />} />
               <Route path="/tickets" element={<TicketsScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />

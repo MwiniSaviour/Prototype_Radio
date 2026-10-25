@@ -34,7 +34,7 @@ export function ArticleScreen() {
       </div>
 
       <header className="mt-3 px-5">
-        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-news">
+        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand">
           {article.category.name}
         </p>
         <h1 className="mt-1.5 font-display text-[28px] font-bold leading-[1.1] tracking-[-0.01em] text-ink">
@@ -79,7 +79,7 @@ function Block({ block }: { block: ArticleBlock }) {
       );
     case "quote":
       return (
-        <blockquote className="my-5 border-l-2 border-news pl-3.5">
+        <blockquote className="my-5 border-l-2 border-brand pl-3.5">
           <p className="font-display text-[18px] leading-[1.35] text-ink">{block.text}</p>
           {block.attribution ? (
             <footer className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-muted">

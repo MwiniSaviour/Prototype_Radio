@@ -11,16 +11,31 @@ The tab bar is **Home · News · Events · Tickets · Profile**.
 | Home | `/` | `src/screens/HomeScreen.tsx` |
 | News | `/news` | `src/screens/NewsScreen.tsx` |
 | Story reader | `/news/:slug` | `src/screens/ArticleScreen.tsx` |
+| Live Radio (broadcast schedule) | `/live` | `src/screens/LiveScreen.tsx` |
+| Full week schedule | `/live/schedule` | `src/screens/ScheduleScreen.tsx` |
 | Events | `/explore` | `src/screens/ExploreScreen.tsx` |
 | My Tickets | `/tickets` | `src/screens/TicketsScreen.tsx` |
 | Event detail | `/events/:slug` | `src/screens/EventDetailScreen.tsx` |
 | Profile | `/profile` | `src/screens/ProfileScreen.tsx` |
 
-**Live radio is a nested page, not a tab** (`/live`, `src/screens/LiveScreen.tsx`).
-It opens from any live-radio item — the Home "Up Next" rail and its See All — and
-pushes over the tab bar with its own back affordance, the same way a story reader
-and the event detail page do. Keeping it off the tab bar is what lets the
-newsroom hold the second slot.
+**Live Radio is a nested page, not a tab.** It opens from the Home "Up Next"
+rail (its See All sends you there too) and pushes over the tab bar with its own
+back affordance, the same way a story reader and the event detail page do.
+
+`/live` is the **broadcast schedule**, not a station dial:
+
+- the banner carries whatever is on air right now — or, between programmes, the
+  next broadcast, flagged "Starts soon" — with the station's live stream on the
+  play button;
+- **Today's Schedule** lists the day in time order, using the same row design as
+  the old All Stations list, with the station tile art leading each programme;
+- **View all** opens `/live/schedule`, the whole week grouped by day, still with
+  the station artwork on every row.
+
+Home's "Up Next" rail shows exactly **three** programmes in a fixed grid — no
+horizontal scroller — and keeps the dial's imagery: flagship waveform tile, Urban
+Radio, Highlife Classics, Afrobeats Vibes (`src/lib/stations.ts` assigns the
+artwork by position in the dial).
 
 ## One content source
 
@@ -80,9 +95,10 @@ Tokens live in `src/styles/app.css` as a Tailwind v4 `@theme` block — orange
 brand `#FC5303`, warm-white paper `#F6F3EF`, near-black ink, hairline `#E9E6E0`.
 They are deliberately separate from the web app's red brand tokens.
 
-The newsroom carries its own accent (`--color-news`, `#C01B2B`) and an editorial
-serif (`--font-display`, Playfair Display) so a headline never reads as a call to
-action and a story never looks like a ticket. Everything else stays on Inter.
+The newsroom uses the same brand orange for its kickers, breaking flag and
+carousel dots — one accent across the app — with an editorial serif
+(`--font-display`, Playfair Display) for headlines only. Everything else stays on
+Inter.
 
 Screen gutters are 20 px, cards are white with a hairline border and 13–14 px
 radius, and the tab bar is 60 px with 21 px icons above 10 px labels. Icons are

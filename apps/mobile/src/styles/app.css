@@ -40,11 +40,6 @@
   --color-brand-fg: #ffffff;
   --color-live: #f8090d;
 
-  /* Newsroom accent — the editorial red, kept apart from the broadcast orange
-     so a news story never reads as a call to action. */
-  --color-news: #c01b2b;
-  --color-news-soft: #fce9ec;
-
   /* Status */
   --color-success: #1c8a44;
   --color-success-soft: #e4f5e9;

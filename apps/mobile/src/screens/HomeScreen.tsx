@@ -11,6 +11,7 @@ import { useContent } from "~/content/ContentProvider";
 import { usePlayer } from "~/content/PlayerProvider";
 import { mediaUrl } from "~/lib/api";
 import { upcomingProgrammes } from "~/lib/schedule";
+import { stationArtwork } from "~/lib/stations";
 
 import { shows as showFixtures } from "@shared/data/shows";
 
@@ -22,8 +23,8 @@ import { shows as showFixtures } from "@shared/data/shows";
 export function HomeScreen() {
   const navigate = useNavigate();
   const { stations, events, listener } = useContent();
-  // The rail lists what is on next across the schedule, not the dial.
-  const upNext = upcomingProgrammes(showFixtures, new Date(), 6);
+  // Three programmes, no scroller: "See All" opens the full broadcast schedule.
+  const upNext = upcomingProgrammes(showFixtures, new Date(), 3);
   const { play, isPlaying, station: activeStation } = usePlayer();
 
   const flagship = stations.find((station) => station.flagship) ?? stations[0];
@@ -80,11 +81,12 @@ export function HomeScreen() {
           onAction={() => navigate("/live")}
           className="px-5"
         />
-        <div className="rail mt-2.5 gap-3 bg-paper px-5 pb-1 [scroll-padding-inline:1.25rem]">
-          {upNext.map((programme) => (
+        <div className="mt-2.5 grid grid-cols-3 gap-3 px-5">
+          {upNext.map((programme, index) => (
             <UpNextCard
               key={programme.show.id}
               programme={programme}
+              artwork={stationArtwork(stations, index)}
               onSelect={() => {
                 play(flagship);
                 navigate("/live");
