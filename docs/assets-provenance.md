@@ -96,5 +96,10 @@ under `public/`. It reports `uniqueAssets=50` at the time of writing.
   by default; do not publish.
 - The people depicted or named in the mock data are **fictional** and must not be
   presented as real staff, hosts, or subjects of real events.
+- The `pulse-*` and `prototype-fm-*` images in `public/assets/images/` are
+  generated stand-in artwork for the Prototype Radio app (onboarding portrait,
+  station artwork, event and programme covers, listener avatars). They are
+  AI-generated placeholders, not photographs of real people or places, and should
+  be replaced with licensed photography before any public release.
 - Before launch, have counsel review: brand/logo usage, photograph licensing, and
   any use of real names, likenesses, or quotes.

@@ -74,6 +74,10 @@ export interface Config {
     articles: Article;
     shows: Show;
     'podcast-episodes': PodcastEpisode;
+    stations: Station;
+    events: Event;
+    tickets: Ticket;
+    listeners: Listener;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +92,10 @@ export interface Config {
     articles: ArticlesSelect<false> | ArticlesSelect<true>;
     shows: ShowsSelect<false> | ShowsSelect<true>;
     'podcast-episodes': PodcastEpisodesSelect<false> | PodcastEpisodesSelect<true>;
+    stations: StationsSelect<false> | StationsSelect<true>;
+    events: EventsSelect<false> | EventsSelect<true>;
+    tickets: TicketsSelect<false> | TicketsSelect<true>;
+    listeners: ListenersSelect<false> | ListenersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -378,6 +386,129 @@ export interface PodcastEpisode {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stations".
+ */
+export interface Station {
+  id: number;
+  slug: string;
+  name: string;
+  /**
+   * Dial position as displayed, e.g. "102.5 FM".
+   */
+  frequency: string;
+  city: string;
+  tagline: string;
+  artwork: {
+    src: string;
+    alt: string;
+    credit?: string | null;
+  };
+  /**
+   * Live stream for this station. Empty renders the player's accessible "stream not configured" state.
+   */
+  streamUrl?: string | null;
+  flagship?: boolean | null;
+  live?: boolean | null;
+  /**
+   * Stable pre-CMS fixture id — set by the seed.
+   */
+  legacyId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  venue: string;
+  city: string;
+  distanceKm: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+  image: {
+    src: string;
+    alt: string;
+    credit?: string | null;
+  };
+  tags: ('Music' | 'Comedy' | 'Food & Drink' | 'Community' | 'Festival' | 'Party' | 'Live Show')[];
+  featured?: boolean | null;
+  /**
+   * Lowest tier price in whole cedis (GHC).
+   */
+  priceFrom: number;
+  tiers: {
+    tierId: string;
+    name: string;
+    description: string;
+    price: number;
+    perks?: string[] | null;
+    icon: 'ticket' | 'crown';
+    id?: string | null;
+  }[];
+  amenities?:
+    | {
+        label: string;
+        icon: 'music' | 'drink' | 'heart' | 'star';
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Stable pre-CMS fixture id — set by the seed.
+   */
+  legacyId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tickets".
+ */
+export interface Ticket {
+  id: number;
+  event: number | Event;
+  /**
+   * Listenship owner; the mobile wallet filters by this address.
+   */
+  ownerEmail: string;
+  tierId: string;
+  tierName: string;
+  quantity: number;
+  status: 'confirmed' | 'pending' | 'past';
+  reference: string;
+  /**
+   * Stable pre-CMS fixture id — set by the seed.
+   */
+  legacyId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listeners".
+ */
+export interface Listener {
+  id: number;
+  name: string;
+  email: string;
+  avatarUrl: string;
+  favouriteStations?: (number | Station)[] | null;
+  notificationsEnabled?: boolean | null;
+  /**
+   * Stable pre-CMS fixture id — set by the seed.
+   */
+  legacyId?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -427,6 +558,22 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'podcast-episodes';
         value: number | PodcastEpisode;
+      } | null)
+    | ({
+        relationTo: 'stations';
+        value: number | Station;
+      } | null)
+    | ({
+        relationTo: 'events';
+        value: number | Event;
+      } | null)
+    | ({
+        relationTo: 'tickets';
+        value: number | Ticket;
+      } | null)
+    | ({
+        relationTo: 'listeners';
+        value: number | Listener;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -699,6 +846,107 @@ export interface PodcastEpisodesSelect<T extends boolean = true> {
         credit?: T;
       };
   tags?: T;
+  legacyId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stations_select".
+ */
+export interface StationsSelect<T extends boolean = true> {
+  slug?: T;
+  name?: T;
+  frequency?: T;
+  city?: T;
+  tagline?: T;
+  artwork?:
+    | T
+    | {
+        src?: T;
+        alt?: T;
+        credit?: T;
+      };
+  streamUrl?: T;
+  flagship?: T;
+  live?: T;
+  legacyId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events_select".
+ */
+export interface EventsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  subtitle?: T;
+  description?: T;
+  venue?: T;
+  city?: T;
+  distanceKm?: T;
+  date?: T;
+  startTime?: T;
+  endTime?: T;
+  image?:
+    | T
+    | {
+        src?: T;
+        alt?: T;
+        credit?: T;
+      };
+  tags?: T;
+  featured?: T;
+  priceFrom?: T;
+  tiers?:
+    | T
+    | {
+        tierId?: T;
+        name?: T;
+        description?: T;
+        price?: T;
+        perks?: T;
+        icon?: T;
+        id?: T;
+      };
+  amenities?:
+    | T
+    | {
+        label?: T;
+        icon?: T;
+        id?: T;
+      };
+  legacyId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tickets_select".
+ */
+export interface TicketsSelect<T extends boolean = true> {
+  event?: T;
+  ownerEmail?: T;
+  tierId?: T;
+  tierName?: T;
+  quantity?: T;
+  status?: T;
+  reference?: T;
+  legacyId?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "listeners_select".
+ */
+export interface ListenersSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  avatarUrl?: T;
+  favouriteStations?: T;
+  notificationsEnabled?: T;
   legacyId?: T;
   updatedAt?: T;
   createdAt?: T;

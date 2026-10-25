@@ -22,6 +22,20 @@ export interface AuthorProfile extends Author {
 
 export const authors: AuthorProfile[] = [
   {
+    id: "author-nana-yaa",
+    slug: "nana-yaa",
+    name: "Nana Yaa",
+    role: "Afrobeats presenter",
+    avatarUrl: "/assets/images/pulse-show-afrobeats-takeover.jpg",
+    bio: "Presents the Afrobeats strand and books the guest mixes. Started on campus radio in Legon, spent three years on the club circuit running sound, and now spends the small hours putting together a show that moves from highlife to amapiano without losing the thread.",
+    location: "Wa",
+    specialisms: ["afrobeats", "amapiano", "club culture"],
+    social: [
+      { label: "X", href: "https://x.com/" },
+      { label: "Instagram", href: "https://instagram.com/" },
+    ],
+  },
+  {
     id: "author-abu-sule",
     slug: "abu-bakari-sule",
     name: "Abu Bakari Sule",

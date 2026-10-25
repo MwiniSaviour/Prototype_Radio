@@ -99,3 +99,98 @@ export interface SocialLink {
   label: string;
   href: string;
 }
+
+/**
+ * Prototype Radio (mobile) domain types.
+ *
+ * The Capacitor app in apps/mobile reads these through the same content layer
+ * the website uses, so the CMS stays the single source of truth for the seeded
+ * stations, events and ticket wallet.
+ */
+
+export interface Station {
+  id: string;
+  slug: string;
+  name: string;
+  /** Dial position as displayed, e.g. "102.5 FM". */
+  frequency: string;
+  city: string;
+  tagline: string;
+  artwork: ImageAsset;
+  /** Live stream URL; empty string renders the "not configured" player state. */
+  streamUrl: string;
+  /** True for the station the app boots into (Prototype FM). */
+  flagship?: boolean;
+  live?: boolean;
+}
+
+export type EventTag =
+  | "Music"
+  | "Comedy"
+  | "Food & Drink"
+  | "Community"
+  | "Festival"
+  | "Party"
+  | "Live Show";
+
+export interface TicketTier {
+  id: string;
+  name: string;
+  description: string;
+  /** Whole cedis; the UI formats with a "GHC" prefix. */
+  price: number;
+  /** Perks listed on the event page. */
+  perks: string[];
+  /** Lucide-style icon stem rendered by the app's icon set. */
+  icon: "ticket" | "crown";
+}
+
+export interface EventItem {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  venue: string;
+  city: string;
+  distanceKm: number;
+  /** Local start/end times, "HH:MM". */
+  startTime: string;
+  endTime: string;
+  /** Event date, ISO (yyyy-mm-dd). The seed keeps the design's Apr/May weekends. */
+  date: IsoDate;
+  image: ImageAsset;
+  tags: EventTag[];
+  featured?: boolean;
+  priceFrom: number;
+  tiers: TicketTier[];
+  amenities: { label: string; icon: "music" | "drink" | "heart" | "star" }[];
+}
+
+export type TicketStatus = "confirmed" | "pending" | "past";
+
+export interface Ticket {
+  id: string;
+  eventId: string;
+  tierId: string;
+  tierName: string;
+  quantity: number;
+  status: TicketStatus;
+  /** Order reference shown on the ticket detail sheet. */
+  reference: string;
+}
+
+export interface ListenerProfile {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl: string;
+  favouriteStationIds: string[];
+  notificationsEnabled: boolean;
+}
+
+export interface WalletSummary {
+  tickets: number;
+  events: number;
+  stations: number;
+}

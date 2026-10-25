@@ -246,6 +246,21 @@ export const shows: Show[] = [
     category: desk("entertainment"),
   },
   {
+    id: "show-afrobeats-takeover",
+    slug: "afrobeats-takeover",
+    name: "Afrobeats Takeover",
+    tagline: "The records that filled the clubs, played back at you.",
+    description:
+      "Ten hours of west African dance music, from the current Afrobeats chart back to the highlife records it grew out of. Guest selectors drop in around the middle of the night, and the last two hours belong to whatever the request line has been quietly collecting all week.",
+    hosts: [host("author-nana-yaa")],
+    schedule: [{ day: "friday", start: "03:00", end: "13:00" }],
+    image: {
+      src: "/assets/images/pulse-show-afrobeats-takeover.jpg",
+      alt: "Afrobeats Takeover cover art: a presenter laughing into a studio microphone against a burnt-orange wall",
+    },
+    category: desk("entertainment"),
+  },
+  {
     id: "show-night-frequency",
     slug: "the-night-frequency",
     name: "The Night Frequency",

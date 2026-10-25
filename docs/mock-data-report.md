@@ -93,8 +93,8 @@ script (see §5).
 |---|---|---|
 | `articles.ts` | Full news articles: title, dek, multi-paragraph body, category, author, tags, dates, reading time, hero image + alt, featured/breaking flags | **23** |
 | `categories.ts` | Editorial taxonomy with accent token, icon, article count | **10** |
-| `authors.ts` | Presenters/journalists: bio, location, specialisms, avatar, social | **8** |
-| `shows.ts` | Radio programmes with weekday schedules, hosts, category, cover | **15** |
+| `authors.ts` | Presenters/journalists: bio, location, specialisms, avatar, social | **9** |
+| `shows.ts` | Radio programmes with weekday schedules, hosts, category, cover | **21** |
 | `podcasts.ts` | Podcast series episodes: season/episode number, duration, host show, cover | **12** |
 | `nav.ts` | Primary nav, footer columns, socials, breaking ticker, weekly schedule derived from `shows` | — |
 | `index.ts` | Single re-export entry point | — |
@@ -138,7 +138,7 @@ integrity (IDs, slugs, categories, authors, shows, image existence, alt text,
 date sanity, reading-time vs length, category icon presence). Current output:
 
 ```
-articles=23 categories=10 authors=8 shows=15 episodes=12 uniqueAssets=50
+articles=23 categories=10 authors=9 shows=21 episodes=12 uniqueAssets=51
 OK: all referential integrity checks passed.
 ```
 
