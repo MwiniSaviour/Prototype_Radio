@@ -9,22 +9,49 @@ import { articles } from "@shared/data/articles";
 const byNewest = (a: Article, b: Article) =>
   new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
 
-/** Stories carrying the breaking flag, newest first. */
-export const breakingStories: Article[] = articles.filter((a) => a.breaking).sort(byNewest);
+/** Editor's picks first, then the most recent. */
+const byProminence = (a: Article, b: Article) =>
+  Number(Boolean(b.featured)) - Number(Boolean(a.featured)) || byNewest(a, b);
 
-/** The lead carousel: the editor's picks first, then the most recent stories. */
-export const leadStories: Article[] = (() => {
-  const featured = articles.filter((a) => a.featured).sort(byNewest);
-  const rest = articles.filter((a) => !a.featured).sort(byNewest);
-  return [...featured, ...rest].slice(0, 10);
+/**
+ * Split a desk's stories into the carousel and the list that follows it.
+ *
+ * Featured stories lead the carousel, everything else falls back to newest
+ * first, so filtering by desk keeps the same rhythm as the unfiltered page.
+ */
+export function selectStories(desk: string | null): {
+  breaking: Article[];
+  leads: Article[];
+  latest: Article[];
+} {
+  const pool = storiesIn(desk).slice().sort(byProminence);
+  return {
+    breaking: pool.filter((article) => article.breaking),
+    leads: pool.slice(0, 10),
+    latest: pool.slice(10),
+  };
+}
+
+/** Every desk from the shared taxonomy, with how many stories it holds. */
+export const newsCategories = (() => {
+  const counts = new Map<string, { name: string; count: number }>();
+  for (const article of articles) {
+    const { slug, name } = article.category;
+    const entry = counts.get(slug) ?? { name, count: 0 };
+    entry.count += 1;
+    counts.set(slug, entry);
+  }
+  return [...counts.entries()]
+    .map(([slug, { name, count }]) => ({ slug, name, count }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 })();
 
-/** Everything that is not already leading the carousel. */
-export const latestStories: Article[] = (() => {
-  const leads = new Set(leadStories.map((a) => a.id));
-  return articles.filter((a) => !leads.has(a.id)).sort(byNewest);
-})();
+/** Stories from one desk, or every story when no desk is chosen. */
+export function storiesIn(slug: string | null): Article[] {
+  return slug ? articles.filter((article) => article.category.slug === slug) : articles;
+}
 
+/** One story by slug, for the reader screen. */
 export function findArticle(slug: string): Article | undefined {
   return articles.find((article) => article.slug === slug);
 }

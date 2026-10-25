@@ -18,6 +18,7 @@ export type IconName =
   | "profile"
   | "search"
   | "filter"
+  | "menu"
   | "chevron-right"
   | "chevron-left"
   | "arrow-right"
@@ -106,6 +107,14 @@ const strokePaths: Record<Exclude<IconName, "dot" | "play" | "pause">, React.Rea
     <>
       <circle cx="11" cy="11" r="6.2" />
       <path d="m15.6 15.6 3.4 3.4" />
+    </>
+  ),
+  /** Hamburger: the newsroom's category menu. */
+  menu: (
+    <>
+      <path d="M4 7h16" strokeWidth="1.9" />
+      <path d="M4 12h16" strokeWidth="1.9" />
+      <path d="M4 17h10" strokeWidth="1.9" />
     </>
   ),
   filter: (

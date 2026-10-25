@@ -30,7 +30,7 @@ export function LiveHeroCard({ station }: { station: Station }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-[74%] bg-gradient-to-t from-black/85 via-black/38 to-transparent" />
 
-      <div className="relative flex h-[178px] flex-col justify-between p-3">
+      <div className="relative flex h-[158px] flex-col justify-between p-3">
         <LivePill className="self-start" />
 
         <div className="flex items-end justify-between gap-3">

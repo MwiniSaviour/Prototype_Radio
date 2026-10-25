@@ -42,6 +42,11 @@ interface ContentState {
   tickets: Ticket[];
   listener: ListenerProfile;
   wallet: WalletSummary;
+  /**
+   * The most-booked event that has not happened yet — what "Trending Now"
+   * surfaces. Derived from the wallet's tickets, so it moves when someone books.
+   */
+  trendingEvent: { event: EventItem; booked: number } | null;
   isLoading: boolean;
   /** Adds a purchase to the local wallet and persists it for the session. */
   addTickets: (input: { event: EventItem; tier: TicketTier; quantity: number }) => Ticket;
@@ -299,6 +304,34 @@ export function ContentProvider({ children }: { children: ReactNode }) {
     };
   }, [listener.favouriteStationIds.length, tickets]);
 
+  /**
+   * Trending Now = the upcoming event with the most tickets booked.
+   *
+   * Bookings are counted from the wallet's confirmed tickets (seeded ones plus
+   * anything booked in the session), so the row is a live fact rather than a
+   * hand-picked fixture. Ties fall back to the soonest date, then to the
+   * editor's featured pick, so the row is never empty while events exist.
+   */
+  const trendingEvent = useMemo(() => {
+    const bookedByEvent = new Map<string, number>();
+    for (const ticket of tickets) {
+      if (ticket.status === "past") continue;
+      bookedByEvent.set(ticket.eventId, (bookedByEvent.get(ticket.eventId) ?? 0) + ticket.quantity);
+    }
+
+    const ranked = events
+      .map((event) => ({ event, booked: bookedByEvent.get(event.id) ?? 0 }))
+      .sort((a, b) => {
+        if (b.booked !== a.booked) return b.booked - a.booked;
+        const aTime = new Date(a.event.date).getTime();
+        const bTime = new Date(b.event.date).getTime();
+        if (aTime !== bTime) return aTime - bTime;
+        return Number(Boolean(b.event.featured)) - Number(Boolean(a.event.featured));
+      });
+
+    return ranked[0] ?? null;
+  }, [events, tickets]);
+
   const value = useMemo<ContentState>(
     () => ({
       source,
@@ -307,6 +340,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       tickets,
       listener,
       wallet,
+      trendingEvent,
       isLoading,
       addTickets,
       setNotifications,
@@ -324,6 +358,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
       source,
       stations,
       tickets,
+      trendingEvent,
       wallet,
     ],
   );

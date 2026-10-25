@@ -30,7 +30,7 @@ export function FeaturedEventCard({
       className={cn(
         "relative isolate block w-full overflow-hidden rounded-[14px] bg-media text-left shadow-card",
         "transition active:scale-[0.995]",
-        featured ? "h-[228px]" : "h-[142px]",
+        featured ? "h-[228px]" : "h-[136px]",
       )}
       aria-label={`${event.title} — ${event.venue}, ${badge.weekday} ${badge.day} ${badge.month}`}
     >

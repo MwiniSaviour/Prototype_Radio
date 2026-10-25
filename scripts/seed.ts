@@ -273,22 +273,27 @@ for (const article of articles) {
 
 console.log('Seeding the Prototype Radio station...')
 const stationIds = new Map<string, number>()
-// The app carries a single station. Anything else still in the collection is a
-// leftover from an earlier seed, so it is removed rather than left to surface in
-// the app as a station that no longer exists.
-const fixtureStationLegacyIds = new Set(stations.map((station) => station.id))
-const staleStations = await payload.find({
-  collection: 'stations' as never,
-  where: { legacyId: { not_in: ['__none__', ...fixtureStationLegacyIds] } },
-  depth: 0,
-  limit: 100,
-  overrideAccess: true,
-  pagination: false,
-} as never)
-for (const stale of (staleStations as { docs: { id: number; legacyId?: string }[] }).docs) {
-  await payload.delete({ collection: 'stations' as never, id: stale.id, overrideAccess: true } as never)
-  console.log(`removed   stations         ${stale.legacyId ?? stale.id} (id ${stale.id})`)
+// Renamed or dropped fixtures would otherwise linger in the CMS as orphans the
+// app keeps serving. These collections are fixture-owned, so anything whose
+// legacyId is no longer in the fixture file is deleted.
+async function pruneToFixtures(collection: SeedCollection, keep: string[]): Promise<void> {
+  const found = await payload.find({
+    collection: collection as never,
+    where: { legacyId: { not_in: ['__none__', ...keep] } },
+    depth: 0,
+    limit: 500,
+    overrideAccess: true,
+    pagination: false,
+  } as never)
+  for (const stale of (found as { docs: { id: number; legacyId?: string }[] }).docs) {
+    await payload.delete({ collection: collection as never, id: stale.id, overrideAccess: true } as never)
+    console.log(`removed   ${collection.padEnd(16)} ${stale.legacyId ?? stale.id} (id ${stale.id})`)
+  }
 }
+
+await pruneToFixtures('stations', stations.map((station) => station.id))
+await pruneToFixtures('events', events.map((event) => event.id))
+await pruneToFixtures('tickets', tickets.map((ticket) => ticket.id))
 for (const station of stations) {
   const id = await upsert('stations', {
     slug: station.slug,

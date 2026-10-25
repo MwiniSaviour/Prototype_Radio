@@ -5,7 +5,8 @@ import { Icon } from "~/components/ui/Icon";
 import { cn } from "~/lib/cn";
 import { mediaUrl } from "~/lib/api";
 import { timeAgo } from "~/lib/format";
-import { breakingStories, latestStories, leadStories } from "~/lib/news";
+import { CategoryMenu } from "~/components/news/CategoryMenu";
+import { newsCategories, selectStories } from "~/lib/news";
 import type { Article } from "@shared/lib/types";
 
 const prefersReducedMotion = () =>
@@ -17,19 +18,35 @@ const prefersReducedMotion = () =>
  * The breaking strip rotates through the flagged stories, the lead story with
  * its headline and deck is a swipeable carousel of the editor's picks, and "The
  * latest" stacks the remaining stories full width so the deck copy still reads
- * at 390px.
+ * at 390px. The masthead's menu filters all three by desk.
  */
 export function NewsScreen() {
   const navigate = useNavigate();
   const [showAll, setShowAll] = useState(false);
-  const listed = showAll ? latestStories : latestStories.slice(0, 5);
+  const [desk, setDesk] = useState<string | null>(null);
+
+  // One filter feeds every section: the strip, the carousel and the list.
+  const { breaking, leads, latest } = selectStories(desk);
+  const listed = showAll ? latest : latest.slice(0, 5);
+  const deskName = newsCategories.find((category) => category.slug === desk)?.name ?? null;
 
   return (
     <div className="pb-6">
-      <h1 className="sr-only">News</h1>
-      <BreakingStrip onOpen={(slug) => navigate(`/news/${slug}`)} />
-      <LeadCarousel onOpen={(slug) => navigate(`/news/${slug}`)} />
+      <div className="flex items-center justify-between gap-3 px-5 pt-3">
+        <h1 className="text-[22px] font-bold leading-tight tracking-[-0.025em] text-ink">News</h1>
+        <CategoryMenu categories={newsCategories} active={desk} onSelect={setDesk} />
+      </div>
 
+      <BreakingStrip stories={breaking} onOpen={(slug) => navigate(`/news/${slug}`)} />
+      <LeadCarousel
+        stories={leads}
+        onOpen={(slug) => navigate(`/news/${slug}`)}
+        deskName={deskName}
+      />
+
+      {/* A small desk fills the carousel alone, so the list only exists when
+          there is something older to file under it. */}
+      {listed.length > 0 ? (
       <section className="mt-7">
         <div className="flex items-end justify-between gap-3 border-t border-line-strong/70 px-5 pt-4">
           <h2 className="font-display text-[25px] font-bold leading-none tracking-[-0.015em] text-ink">
@@ -53,24 +70,33 @@ export function NewsScreen() {
           ))}
         </ul>
       </section>
+      ) : null}
     </div>
   );
 }
 
 /** Red breaking bar: rotates through the flagged stories, tappable. */
-function BreakingStrip({ onOpen }: { onOpen: (slug: string) => void }) {
+function BreakingStrip({
+  stories,
+  onOpen,
+}: {
+  stories: Article[];
+  onOpen: (slug: string) => void;
+}) {
   const [index, setIndex] = useState(0);
-  const story = breakingStories[index] ?? breakingStories[0];
+  const story = stories[index] ?? stories[0];
+
+  // A filter change can shorten the list under the current index.
+  useEffect(() => {
+    setIndex(0);
+  }, [stories]);
 
   useEffect(() => {
     // One flagged story means nothing to rotate through.
-    if (breakingStories.length < 2 || prefersReducedMotion()) return;
-    const id = window.setInterval(
-      () => setIndex((value) => (value + 1) % breakingStories.length),
-      6000,
-    );
+    if (stories.length < 2 || prefersReducedMotion()) return;
+    const id = window.setInterval(() => setIndex((value) => (value + 1) % stories.length), 6000);
     return () => window.clearInterval(id);
-  }, []);
+  }, [stories]);
 
   if (!story) return null;
 
@@ -87,9 +113,9 @@ function BreakingStrip({ onOpen }: { onOpen: (slug: string) => void }) {
         <span className="line-clamp-2 text-[12px] font-medium leading-[1.35] text-ink">
           {story.title}
         </span>
-        {breakingStories.length > 1 ? (
+        {stories.length > 1 ? (
           <span className="shrink-0 self-center text-[9.5px] font-semibold tabular-nums text-ink/45">
-            {index + 1}/{breakingStories.length}
+            {index + 1}/{stories.length}
           </span>
         ) : null}
         <Icon name="arrow-right" size={14} className="shrink-0 self-center text-ink/60" />
@@ -99,10 +125,17 @@ function BreakingStrip({ onOpen }: { onOpen: (slug: string) => void }) {
 }
 
 /** The lead story and its deck, one slide per editor's pick. */
-function LeadCarousel({ onOpen }: { onOpen: (slug: string) => void }) {
+function LeadCarousel({
+  stories,
+  onOpen,
+  deskName,
+}: {
+  stories: Article[];
+  onOpen: (slug: string) => void;
+  deskName: string | null;
+}) {
   const railRef = useRef<HTMLDivElement | null>(null);
   const [index, setIndex] = useState(0);
-  const stories = leadStories;
   const pausedRef = useRef(0);
 
   const goTo = (next: number, smooth = true) => {
@@ -163,7 +196,7 @@ function LeadCarousel({ onOpen }: { onOpen: (slug: string) => void }) {
               </div>
 
               <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.16em] text-brand">
-                The big story
+                {deskName ?? "The big story"}
               </p>
               <h2 className="mt-1.5 font-display text-[27px] font-bold leading-[1.1] tracking-[-0.01em] text-ink">
                 {article.title}

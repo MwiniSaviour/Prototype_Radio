@@ -1,21 +1,22 @@
+import { PulseBars } from "~/components/ui/PulseLogo";
 import { mediaUrl } from "~/lib/api";
 import { clock } from "~/lib/format";
 import { airingDay, type UpcomingProgramme } from "~/lib/schedule";
+import type { TileArt } from "~/lib/tiles";
 
 /**
- * One tile in the Home "Up Next" rail: the programme's own cover art, then the
- * three lines the design asks for — programme name, start time, presenter.
- *
- * The rail used to carry the station tile art, when the app shipped four
- * stations. There is one station now, so repeating its logo on every tile would
- * say nothing; the programme artwork is what distinguishes one slot from the next.
+ * One tile in the Home "Up Next" rail: the tower's tile art (see lib/tiles), then
+ * the three lines the design asks for — programme name, start time, presenter.
  */
 export function UpNextCard({
   programme,
+  artwork,
   onSelect,
   now = new Date(),
 }: {
   programme: UpcomingProgramme;
+  /** Tile art for this position in the rail. */
+  artwork: TileArt;
   onSelect: () => void;
   now?: Date;
 }) {
@@ -31,13 +32,19 @@ export function UpNextCard({
       aria-label={`${show.name}, ${day} at ${clock(slot.start)}, presented by ${presenter ?? "the station"}`}
     >
       <span className="relative block aspect-square w-full overflow-hidden rounded-[12px] bg-media">
-        <img
-          src={mediaUrl(show.image.src)}
-          alt={show.image.alt}
-          className="absolute inset-0 h-full w-full object-cover"
-          loading="lazy"
-          draggable={false}
-        />
+        {artwork.src ? (
+          <img
+            src={mediaUrl(artwork.src)}
+            alt={artwork.alt}
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+            draggable={false}
+          />
+        ) : (
+          <span className="absolute inset-0 grid place-items-center bg-[#0a0a0b]">
+            <PulseBars height={26} />
+          </span>
+        )}
       </span>
 
       <span className="mt-[7px] line-clamp-2 block min-h-[26px] text-[10.5px] font-semibold leading-[1.25] tracking-[-0.015em] text-ink">

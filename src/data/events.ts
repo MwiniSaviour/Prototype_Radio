@@ -1,6 +1,6 @@
 /**
  * Fictional demo data for UI prototyping — the ticketed events in the Prototype
- * Radio mock. Venues are real Accra landmarks (Labadi Beach, Alliance
+ * Radio mock. Venues are real Upper West landmarks (Labadi Beach, Alliance
  * Française, the Trade Fair Centre) but every event, line-up and price here is
  * invented; nothing is on sale. Event artwork is generated (see
  * docs/assets-provenance.md).
@@ -19,9 +19,9 @@ export const events: EventItem[] = [
     title: "Sunset Live Sessions",
     subtitle: "Music • Food • Good Vibes",
     description:
-      "The Sunset Live Sessions brings together great music, local talent, food and a vibrant crowd at Labadi Beach. Experience the best of Accra's music scene in a stunning coastal setting.",
+      "The Sunset Live Sessions brings together great music, local talent, food and a vibrant crowd at Labadi Beach. Experience the best of Wa's music scene in a stunning coastal setting.",
     venue: "Labadi Beach",
-    city: "Accra",
+    city: "Wa",
     distanceKm: 6.2,
     date: "2025-04-26",
     startTime: "18:00",
@@ -65,7 +65,7 @@ export const events: EventItem[] = [
     description:
       "A seated evening with a twelve-piece highlife band working through the golden catalogue, recorded for later broadcast on Prototype FM.",
     venue: "National Theatre",
-    city: "Accra",
+    city: "Wa",
     distanceKm: 9.4,
     date: "2025-02-15",
     startTime: "19:00",
@@ -92,14 +92,14 @@ export const events: EventItem[] = [
     ],
   },
   {
-    id: "event-accra-comedy-night",
-    slug: "accra-comedy-night",
-    title: "Accra Comedy Night",
+    id: "event-wa-comedy-night",
+    slug: "wa-comedy-night",
+    title: "Wa Comedy Night",
     subtitle: "Stand-up • New material • Late bar",
     description:
       "A monthly stand-up night in the Alliance Française garden: four comics, one host and a lot of new material being tested on a friendly room.",
     venue: "Alliance Française",
-    city: "Accra",
+    city: "Wa",
     distanceKm: 6.2,
     date: "2025-04-27",
     startTime: "19:30",
@@ -142,7 +142,7 @@ export const events: EventItem[] = [
     description:
       "The beachfront turns into a dance floor: resident DJs, a live percussion set and Afrobeats until the tide comes in.",
     venue: "Labadi Beach",
-    city: "Accra",
+    city: "Wa",
     distanceKm: 7.1,
     date: "2025-05-02",
     startTime: "20:00",
@@ -183,9 +183,9 @@ export const events: EventItem[] = [
     title: "Urban Vibes Festival",
     subtitle: "Two stages • Food market • Design fair",
     description:
-      "A full-day city festival at the Trade Fair Centre: two stages of urban music, a food market from markets across Greater Accra and a design fair for independent makers.",
+      "A full-day city festival at the Trade Fair Centre: two stages of urban music, a food market from markets across the Upper West Region and a design fair for independent makers.",
     venue: "Trade Fair Centre",
-    city: "Accra",
+    city: "Wa",
     distanceKm: 12.4,
     date: "2025-05-10",
     startTime: "12:00",
@@ -247,7 +247,7 @@ export const tickets: Ticket[] = [
   },
   {
     id: "ticket-comedy-night",
-    eventId: "event-accra-comedy-night",
+    eventId: "event-wa-comedy-night",
     tierId: "tier-comedy-vip",
     tierName: "VIP Experience",
     quantity: 2,

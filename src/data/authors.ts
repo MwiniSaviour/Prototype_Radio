@@ -28,7 +28,7 @@ export const authors: AuthorProfile[] = [
     role: "Afrobeats presenter",
     avatarUrl: "/assets/images/pulse-show-afrobeats-takeover.jpg",
     bio: "Presents the Afrobeats strand and books the guest mixes. Started on campus radio in Legon, spent three years on the club circuit running sound, and now spends the small hours putting together a show that moves from highlife to amapiano without losing the thread.",
-    location: "Accra",
+    location: "Wa",
     specialisms: ["afrobeats", "amapiano", "club culture"],
     social: [
       { label: "X", href: "https://x.com/" },
