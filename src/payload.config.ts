@@ -8,9 +8,13 @@ import sharp from "sharp";
 import { Articles } from "./collections/Articles";
 import { Authors } from "./collections/Authors";
 import { Categories } from "./collections/Categories";
+import { Events } from "./collections/Events";
+import { Listeners } from "./collections/Listeners";
 import { Media } from "./collections/Media";
 import { PodcastEpisodes } from "./collections/PodcastEpisodes";
 import { Shows } from "./collections/Shows";
+import { Stations } from "./collections/Stations";
+import { Tickets } from "./collections/Tickets";
 import { Users } from "./collections/Users";
 import { SiteSettings } from "./globals/SiteSettings";
 
@@ -30,7 +34,21 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Authors, Articles, Shows, PodcastEpisodes],
+  collections: [
+    Users,
+    Media,
+    Categories,
+    Authors,
+    Articles,
+    Shows,
+    PodcastEpisodes,
+    // Pulse Radio (mobile): the dial list, ticketed events and the listener's
+    // wallet + account, all seeded from the same fixtures the website uses.
+    Stations,
+    Events,
+    Tickets,
+    Listeners,
+  ],
   globals: [SiteSettings],
   db: postgresAdapter({
     pool: {

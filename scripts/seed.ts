@@ -4,8 +4,10 @@ import { articles } from '../src/data/articles'
 import { authors } from '../src/data/authors'
 import { categories } from '../src/data/categories'
 import { breakingTicker, footerColumns, primaryNav, socialLinks } from '../src/data/nav'
+import { events, listener, tickets } from '../src/data/events'
 import { podcastEpisodes } from '../src/data/podcasts'
 import { shows } from '../src/data/shows'
+import { stations } from '../src/data/stations'
 import { siteConfig } from '../src/lib/constants'
 import type { ArticleBlock } from '../src/lib/types'
 import type { Config as GeneratedConfig } from '../src/payload-types'
@@ -13,7 +15,16 @@ import config from '../src/payload.config'
 
 const payload = await getPayload({ config })
 
-type SeedCollection = 'categories' | 'authors' | 'shows' | 'podcast-episodes' | 'articles'
+type SeedCollection =
+  | 'categories'
+  | 'authors'
+  | 'shows'
+  | 'podcast-episodes'
+  | 'articles'
+  | 'stations'
+  | 'events'
+  | 'tickets'
+  | 'listeners'
 type Status = 'created' | 'updated' | 'unchanged'
 
 type SeedData<C extends SeedCollection> = Omit<
@@ -55,6 +66,10 @@ const collections: SeedCollection[] = [
   'shows',
   'podcast-episodes',
   'articles',
+  'stations',
+  'events',
+  'tickets',
+  'listeners',
 ]
 
 const tally: Record<SeedCollection, Record<Status, number>> = {
@@ -63,6 +78,10 @@ const tally: Record<SeedCollection, Record<Status, number>> = {
   shows: { created: 0, updated: 0, unchanged: 0 },
   'podcast-episodes': { created: 0, updated: 0, unchanged: 0 },
   articles: { created: 0, updated: 0, unchanged: 0 },
+  stations: { created: 0, updated: 0, unchanged: 0 },
+  events: { created: 0, updated: 0, unchanged: 0 },
+  tickets: { created: 0, updated: 0, unchanged: 0 },
+  listeners: { created: 0, updated: 0, unchanged: 0 },
 }
 
 /**
@@ -252,6 +271,92 @@ for (const article of articles) {
   })
 }
 
+console.log('Seeding Pulse Radio stations...')
+const stationIds = new Map<string, number>()
+for (const station of stations) {
+  const id = await upsert('stations', {
+    slug: station.slug,
+    name: station.name,
+    frequency: station.frequency,
+    city: station.city,
+    tagline: station.tagline,
+    artwork: {
+      src: station.artwork.src,
+      alt: station.artwork.alt,
+      credit: station.artwork.credit ?? null,
+    },
+    streamUrl: station.streamUrl,
+    flagship: station.flagship ?? false,
+    live: station.live ?? false,
+    legacyId: station.id,
+  })
+  stationIds.set(station.id, id)
+}
+
+console.log('Seeding events...')
+const eventIds = new Map<string, number>()
+for (const event of events) {
+  const id = await upsert('events', {
+    slug: event.slug,
+    title: event.title,
+    subtitle: event.subtitle,
+    description: event.description,
+    venue: event.venue,
+    city: event.city,
+    distanceKm: event.distanceKm,
+    // Payload date fields store an ISO timestamp; the fixtures carry a plain
+    // yyyy-mm-dd, so it is normalised at the boundary.
+    date: new Date(`${event.date}T00:00:00.000Z`).toISOString(),
+    startTime: event.startTime,
+    endTime: event.endTime,
+    image: {
+      src: event.image.src,
+      alt: event.image.alt,
+      credit: event.image.credit ?? null,
+    },
+    tags: [...event.tags],
+    featured: event.featured ?? false,
+    priceFrom: event.priceFrom,
+    tiers: event.tiers.map((tier) => ({
+      tierId: tier.id,
+      name: tier.name,
+      description: tier.description,
+      price: tier.price,
+      perks: [...tier.perks],
+      icon: tier.icon,
+    })),
+    amenities: event.amenities.map((amenity) => ({ label: amenity.label, icon: amenity.icon })),
+    legacyId: event.id,
+  })
+  eventIds.set(event.id, id)
+}
+
+console.log('Seeding tickets...')
+for (const ticket of tickets) {
+  await upsert('tickets', {
+    event: requireId(eventIds, ticket.eventId, 'event', ticket.id),
+    ownerEmail: listener.email,
+    tierId: ticket.tierId,
+    tierName: ticket.tierName,
+    quantity: ticket.quantity,
+    status: ticket.status,
+    reference: ticket.reference,
+    legacyId: ticket.id,
+  })
+}
+
+console.log('Seeding listeners...')
+await upsert('listeners', {
+  name: listener.name,
+  email: listener.email,
+  avatarUrl: listener.avatarUrl,
+  favouriteStations: listener.favouriteStationIds.map((stationId) =>
+    requireId(stationIds, stationId, 'station', listener.id),
+  ),
+  notificationsEnabled: listener.notificationsEnabled,
+  legacyId: listener.id,
+})
+
 console.log('Seeding site settings...')
 const settingsData = {
   siteName: siteConfig.name,
@@ -299,6 +404,10 @@ const rowCounts: Record<SeedCollection, number> = {
     await payload.count({ collection: 'podcast-episodes', overrideAccess: true })
   ).totalDocs,
   articles: (await payload.count({ collection: 'articles', overrideAccess: true })).totalDocs,
+  stations: (await payload.count({ collection: 'stations', overrideAccess: true })).totalDocs,
+  events: (await payload.count({ collection: 'events', overrideAccess: true })).totalDocs,
+  tickets: (await payload.count({ collection: 'tickets', overrideAccess: true })).totalDocs,
+  listeners: (await payload.count({ collection: 'listeners', overrideAccess: true })).totalDocs,
 }
 const userCount = (await payload.count({ collection: 'users', overrideAccess: true })).totalDocs
 const settingsRows = (await payload.findGlobal({ slug: 'site-settings', depth: 0 })).createdAt ? 1 : 0

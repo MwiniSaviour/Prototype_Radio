@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Pulse Radio">
+  <rect width="48" height="48" rx="12" fill="#FC5303"/>
+  <g stroke="#fff" stroke-width="3" stroke-linecap="round">
+    <path d="M14 21v6"/>
+    <path d="M20 15v18"/>
+    <path d="M26 18v12"/>
+    <path d="M32 21v6"/>
+  </g>
+</svg>
