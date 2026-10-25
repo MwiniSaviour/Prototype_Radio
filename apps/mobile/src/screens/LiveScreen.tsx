@@ -1,6 +1,8 @@
+import { BackButton } from "~/components/layout/StatusBar";
+import { useGoBack } from "~/lib/navigation";
 import { PulseBars } from "~/components/ui/PulseLogo";
 import { Icon } from "~/components/ui/Icon";
-import { LivePill, ScreenHeader } from "~/components/ui/primitives";
+import { LivePill } from "~/components/ui/primitives";
 import { Waveform } from "~/components/ui/Waveform";
 import { useContent } from "~/content/ContentProvider";
 import { usePlayer } from "~/content/PlayerProvider";
@@ -8,18 +10,27 @@ import { cn } from "~/lib/cn";
 import { mediaUrl } from "~/lib/api";
 
 /**
- * The Live tab. The mock only shows its tab-bar icon, so this screen reuses the
- * established language: the now-playing panel from Home, then every station in
- * the dial as a full-width row.
+ * Live radio. A nested page rather than a tab: it opens from any live-radio item
+ * (Home's Up Next rail) and pushes over the tab bar, so it carries its own back
+ * affordance. The content is the now-playing panel and every station on the dial.
  */
 export function LiveScreen() {
+  const goBack = useGoBack();
   const { stations } = useContent();
   const { station, isPlaying, toggle, status, pause } = usePlayer();
   const playingThis = isPlaying && station.id === station?.id;
 
   return (
     <div className="pb-5">
-      <ScreenHeader title="Live Radio" subtitle="Four stations, one dial." className="pt-0.5" />
+      <header className="flex items-start gap-2 px-5 pt-2">
+        <BackButton tone="dark" onClick={goBack} label="Back" />
+        <div className="min-w-0 flex-1 pt-0.5">
+          <h1 className="text-[22px] font-bold leading-tight tracking-[-0.025em] text-ink">
+            Live Radio
+          </h1>
+          <p className="mt-0.5 text-[12.5px] leading-snug text-muted">Four stations, one dial.</p>
+        </div>
+      </header>
 
       <section className="mt-3.5 px-5">
         <div className="relative isolate overflow-hidden rounded-[18px] bg-media p-4 shadow-card">

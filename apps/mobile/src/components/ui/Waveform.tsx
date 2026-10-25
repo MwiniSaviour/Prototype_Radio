@@ -3,7 +3,7 @@ import { usePlayer } from "~/content/PlayerProvider";
 
 /**
  * The brand's waveform, used three ways in the mock: as hero artwork, as the
- * "now playing" affordance on the trending row, and as the Live tab marker.
+ * "now playing" affordance on the trending row and the Up Next rail.
  *
  * While a station is playing the bars animate (staggered scaleY); under
  * `prefers-reduced-motion` they keep their static profile so nothing jitters.

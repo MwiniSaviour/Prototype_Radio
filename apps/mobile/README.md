@@ -1,19 +1,26 @@
-# Pulse Radio — mobile app (Capacitor)
+# Prototype Radio — mobile app (Capacitor)
 
-The six screens from the Pulse Radio mockup, built as a Capacitor shell around a
-Vite + React + Tailwind bundle. It runs in the browser during development and
-ships to iOS and Android from the same bundle.
+A Capacitor shell around a Vite + React + Tailwind bundle. It runs in the browser
+during development and ships to iOS and Android from the same bundle.
+
+The tab bar is **Home · News · Events · Tickets · Profile**.
 
 | Screen | Route | File |
 | --- | --- | --- |
 | Onboarding | `/welcome` | `src/screens/OnboardingScreen.tsx` |
 | Home | `/` | `src/screens/HomeScreen.tsx` |
-| Explore | `/explore` | `src/screens/ExploreScreen.tsx` |
+| News | `/news` | `src/screens/NewsScreen.tsx` |
+| Story reader | `/news/:slug` | `src/screens/ArticleScreen.tsx` |
+| Events | `/explore` | `src/screens/ExploreScreen.tsx` |
 | My Tickets | `/tickets` | `src/screens/TicketsScreen.tsx` |
 | Event detail | `/events/:slug` | `src/screens/EventDetailScreen.tsx` |
 | Profile | `/profile` | `src/screens/ProfileScreen.tsx` |
 
-Plus the pushes the mock implies: Live, Search, and the account sub-pages.
+**Live radio is a nested page, not a tab** (`/live`, `src/screens/LiveScreen.tsx`).
+It opens from any live-radio item — the Home "Up Next" rail and its See All — and
+pushes over the tab bar with its own back affordance, the same way a story reader
+and the event detail page do. Keeping it off the tab bar is what lets the
+newsroom hold the second slot.
 
 ## One content source
 
@@ -23,8 +30,12 @@ Nothing is duplicated from the web app. The app reads the same monorepo content:
   (`/api/stations`, `/api/events`, `/api/tickets`, `/api/listeners`). Those
   collections are defined in `src/collections/` at the repo root and filled by
   `npm run seed`.
-- **Fixtures** — programmes, presenters and cover art come from `src/data/*` via
-  the `@shared` alias (the same files the web build imports).
+- **Fixtures** — programmes, presenters, articles and cover art come from
+  `src/data/*` via the `@shared` alias (the same files the web build imports).
+  The newsroom screen derives its lead carousel, breaking strip and "The latest"
+  list from `src/data/articles.ts` in `src/lib/news.ts`; the Home "Up Next" rail
+  derives the next broadcasts from each show's own schedule in
+  `src/lib/schedule.ts` — no second copy of either.
 - **Images** — every photograph and logo is served from the repo's
   `public/assets/images/`, mounted as Vite's `publicDir`. There is no second copy
   anywhere in `apps/mobile`.
@@ -68,6 +79,10 @@ android`); they are not checked in.
 Tokens live in `src/styles/app.css` as a Tailwind v4 `@theme` block — orange
 brand `#FC5303`, warm-white paper `#F6F3EF`, near-black ink, hairline `#E9E6E0`.
 They are deliberately separate from the web app's red brand tokens.
+
+The newsroom carries its own accent (`--color-news`, `#C01B2B`) and an editorial
+serif (`--font-display`, Playfair Display) so a headline never reads as a call to
+action and a story never looks like a ticket. Everything else stays on Inter.
 
 Screen gutters are 20 px, cards are white with a hairline border and 13–14 px
 radius, and the tab bar is 60 px with 21 px icons above 10 px labels. Icons are

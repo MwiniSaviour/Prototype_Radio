@@ -109,7 +109,7 @@ export function StatusBadge({ status }: { status: "confirmed" | "pending" | "pas
   );
 }
 
-/** Section heading + trailing "See All" link, as used on Home and Explore. */
+/** Section heading + trailing "See All" link, as used on Home and Events. */
 export function SectionHeading({
   title,
   action,

@@ -3,10 +3,15 @@ import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "~/lib/cn";
 import { Icon, type IconName } from "~/components/ui/Icon";
 
+/**
+ * Five destinations. Live radio is no longer a tab: it is a nested page that
+ * opens from any live-radio card (see Home's Up Next rail), so the newsroom
+ * takes the second slot.
+ */
 const TABS: { to: string; label: string; icon: IconName }[] = [
   { to: "/", label: "Home", icon: "home" },
-  { to: "/live", label: "Live", icon: "live" },
-  { to: "/explore", label: "Explore", icon: "explore" },
+  { to: "/news", label: "News", icon: "news" },
+  { to: "/explore", label: "Events", icon: "explore" },
   { to: "/tickets", label: "Tickets", icon: "ticket" },
   { to: "/profile", label: "Profile", icon: "profile" },
 ];

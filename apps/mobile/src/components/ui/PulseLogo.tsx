@@ -26,7 +26,7 @@ export function PulseLogo({
     <span
       className={cn("inline-flex items-center gap-[9px]", className)}
       style={{ height: 30 * scale }}
-      aria-label="Pulse Radio"
+      aria-label="Prototype Radio"
       role="img"
     >
       <svg
@@ -51,12 +51,12 @@ export function PulseLogo({
             className="font-extrabold uppercase"
             style={{
               color: wordColor,
-              fontSize: 20 * scale,
-              letterSpacing: "0.055em",
+              fontSize: 17.5 * scale,
+              letterSpacing: "0.02em",
               lineHeight: 1,
             }}
           >
-            Pulse
+            Prototype
           </span>
           <span
             className="font-semibold uppercase"

@@ -4,23 +4,26 @@ import { Icon } from "~/components/ui/Icon";
 import { PulseLogo } from "~/components/ui/PulseLogo";
 import { SectionHeading } from "~/components/ui/primitives";
 import { LiveHeroCard } from "~/components/radio/LiveHeroCard";
-import { StationCard } from "~/components/radio/StationCard";
+import { UpNextCard } from "~/components/radio/UpNextCard";
 import { TrendingShowRow } from "~/components/radio/TrendingShowRow";
 import { FeaturedEventCard } from "~/components/events/FeaturedEventCard";
 import { useContent } from "~/content/ContentProvider";
 import { usePlayer } from "~/content/PlayerProvider";
 import { mediaUrl } from "~/lib/api";
+import { upcomingProgrammes } from "~/lib/schedule";
 
 import { shows as showFixtures } from "@shared/data/shows";
 
 /**
- * Home: brand header, the flagship live player, the Live Radio rail, the next
- * ticketed event and a "Trending Now" show row — the order and spacing of the
- * design's second screen.
+ * Home: brand header, the flagship live player, the "Up Next" programme rail,
+ * the next ticketed event and a "Trending Now" show row — the order and spacing
+ * of the design's second screen.
  */
 export function HomeScreen() {
   const navigate = useNavigate();
   const { stations, events, listener } = useContent();
+  // The rail lists what is on next across the schedule, not the dial.
+  const upNext = upcomingProgrammes(showFixtures, new Date(), 6);
   const { play, isPlaying, station: activeStation } = usePlayer();
 
   const flagship = stations.find((station) => station.flagship) ?? stations[0];
@@ -36,7 +39,7 @@ export function HomeScreen() {
   return (
     <div className="pb-4">
       {/* The design has no visible page title; screen readers still need one h1. */}
-      <h1 className="sr-only">Pulse Radio — Home</h1>
+      <h1 className="sr-only">Prototype Radio — Home</h1>
       <header className="flex items-center justify-between px-5 pt-1.5 pb-3.5">
         <PulseLogo />
         <div className="flex items-center gap-3">
@@ -66,19 +69,24 @@ export function HomeScreen() {
       <LiveHeroCard station={flagship} />
 
       <section className="mt-5">
+        {/* The parenthetical in the brief — "Up Next (Broadcast)" — reads as the
+            desk label, so it becomes the eyebrow over the section heading. */}
+        <p className="px-5 text-[10px] font-bold uppercase tracking-[0.16em] text-muted">
+          Broadcast
+        </p>
         <SectionHeading
-          title="Live Radio"
+          title="Up Next"
           action="See All"
           onAction={() => navigate("/live")}
           className="px-5"
         />
-        <div className="rail mt-2.5 gap-2.5 bg-paper px-5 pb-1 [scroll-padding-inline:1.25rem]">
-          {stations.map((station) => (
-            <StationCard
-              key={station.id}
-              station={station}
+        <div className="rail mt-2.5 gap-3 bg-paper px-5 pb-1 [scroll-padding-inline:1.25rem]">
+          {upNext.map((programme) => (
+            <UpNextCard
+              key={programme.show.id}
+              programme={programme}
               onSelect={() => {
-                play(station);
+                play(flagship);
                 navigate("/live");
               }}
             />

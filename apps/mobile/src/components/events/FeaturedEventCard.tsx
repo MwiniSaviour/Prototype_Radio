@@ -8,7 +8,7 @@ import type { EventItem } from "@shared/lib/types";
 /**
  * Two variants of the same event card live in the mock:
  *  - `wide` on Home: artwork, date chip, title, venue and time, chevron.
- *  - `featured` on Explore: taller artwork, tags and a "Get Tickets" call to
+ *  - `featured` on Events: taller artwork, tags and a "Get Tickets" call to
  *    action with the "from GHC…" price.
  */
 export function FeaturedEventCard({

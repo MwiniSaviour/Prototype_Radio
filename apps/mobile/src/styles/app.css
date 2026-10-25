@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * Pulse Radio — design tokens.
+ * Prototype Radio — design tokens.
  *
  * Every measurement in the app is derived from the mock: the screen is laid out
  * at 390 × 844 CSS px, the page gutter is 16px, cards are 16px radius and the
@@ -12,6 +12,9 @@
 @theme {
   --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Editorial serif, as the newsroom screens use for headlines. */
+  --font-display: "Playfair Display Variable", "Playfair Display", Georgia,
+    "Times New Roman", serif;
 
   /* Ground + surfaces */
   --color-paper: #f6f3ef;
@@ -36,6 +39,11 @@
   --color-brand-soft: #fdeadf;
   --color-brand-fg: #ffffff;
   --color-live: #f8090d;
+
+  /* Newsroom accent — the editorial red, kept apart from the broadcast orange
+     so a news story never reads as a call to action. */
+  --color-news: #c01b2b;
+  --color-news-soft: #fce9ec;
 
   /* Status */
   --color-success: #1c8a44;

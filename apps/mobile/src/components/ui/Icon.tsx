@@ -11,6 +11,7 @@ import type { SVGProps } from "react";
 export type IconName =
   | "home"
   | "live"
+  | "news"
   | "explore"
   | "ticket"
   | "ticket-stub"
@@ -61,6 +62,15 @@ const strokePaths: Record<Exclude<IconName, "dot" | "play" | "pause">, React.Rea
       <path d="M19.4 11.4v1.2" strokeWidth="2.1" />
     </>
   ),
+  /** Front page: a sheet with a masthead rule and a headline block. */
+  news: (
+    <>
+      <rect x="4" y="3.6" width="16" height="16.8" rx="2.6" />
+      <path d="M7.4 7.9h9.2" strokeWidth="1.9" />
+      <path d="M7.4 11.3h5" />
+      <path d="M7.4 14.7h9.2" />
+    </>
+  ),
   explore: (
     <>
       <circle cx="12" cy="12" r="8.6" />
@@ -69,10 +79,14 @@ const strokePaths: Record<Exclude<IconName, "dot" | "play" | "pause">, React.Rea
       <circle cx="12" cy="12" r="0.95" fill="currentColor" stroke="none" />
     </>
   ),
+  /**
+   * Ticket: a modern stub — rounded body, a notch cut into each long edge and a
+   * perforation down the middle where the stub tears off.
+   */
   ticket: (
     <>
-      <path d="M12 3.4c1.1 0 1.6.9 2.3 1.5.7.6 1.7.4 2.6.8.9.4 1.1 1.4 1.6 2.2.4.9 1.4 1.3 1.7 2.2.3.9-.3 1.8-.3 2.9s.6 2 .3 2.9c-.3.9-1.3 1.3-1.7 2.2-.5.8-.7 1.8-1.6 2.2-.9.4-1.9.2-2.6.8-.7.6-1.2 1.5-2.3 1.5s-1.6-.9-2.3-1.5c-.7-.6-1.7-.4-2.6-.8-.9-.4-1.1-1.4-1.6-2.2-.4-.9-1.4-1.3-1.7-2.2-.3-.9.3-1.8.3-2.9s-.6-2-.3-2.9c.3-.9 1.3-1.3 1.7-2.2.5-.8.7-1.8 1.6-2.2.9-.4 1.9-.2 2.6-.8C10.4 4.3 10.9 3.4 12 3.4z" />
-      <circle cx="12" cy="12" r="1.15" fill="currentColor" stroke="none" />
+      <path d="M7.6 4.2h8.8a2.6 2.6 0 0 1 2.6 2.6v1.05a2.15 2.15 0 0 0 0 4.3v1.05a2.6 2.6 0 0 1-2.6 2.6H7.6A2.6 2.6 0 0 1 5 13.2v-1.05a2.15 2.15 0 0 0 0-4.3V6.8a2.6 2.6 0 0 1 2.6-2.6Z" />
+      <path d="M13.4 6.6v1.5M13.4 10.1v1.5M13.4 13.6v1.5" strokeWidth="1.5" strokeLinecap="round" />
     </>
   ),
   /** Ticket stub: the outline form the mock uses in the account list. */

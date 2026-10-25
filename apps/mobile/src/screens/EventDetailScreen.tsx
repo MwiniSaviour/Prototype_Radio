@@ -47,7 +47,7 @@ export function EventDetailScreen() {
           onClick={() => navigate("/explore")}
           className="rounded-full bg-brand px-5 py-2.5 text-[13.5px] font-semibold text-white"
         >
-          Back to Explore
+          Back to Events
         </button>
       </div>
     );

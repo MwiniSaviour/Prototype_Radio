@@ -12,7 +12,7 @@ const FILTERS = ["All", "Music", "Comedy", "Food & Drink", "Community"] as const
 type Filter = (typeof FILTERS)[number];
 
 /**
- * Explore: search, category chips, one featured event and the nearby list.
+ * Events: search, category chips, one featured event and the upcoming list.
  *
  * Chips filter by event tag (the CMS stores the same tag strings), and the
  * search field matches event, venue and city so it behaves like the site's
@@ -48,7 +48,7 @@ export function ExploreScreen() {
   return (
     <div className="pb-4">
       <ScreenHeader
-        title="Explore"
+        title="Events"
         subtitle="Events, shows, and experiences near you."
         className="pt-0.5"
       />
@@ -129,7 +129,7 @@ export function ExploreScreen() {
       </section>
 
       <section className="mt-5">
-        <SectionHeading title="Nearby Events" className="px-5" />
+        <SectionHeading title="Upcoming Events" className="px-5" />
         <ul className="mt-2.5 space-y-2 px-5">
           {nearby.map((event) => (
             <li key={event.id}>

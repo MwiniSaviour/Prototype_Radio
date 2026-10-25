@@ -114,7 +114,7 @@ export function TicketsScreen() {
         <p className="mx-5 mt-8 rounded-2xl border border-dashed border-line-strong/70 px-4 py-8 text-center text-[13px] leading-relaxed text-muted">
           {tab === "past"
             ? "No past tickets yet. Events you have attended will show up here."
-            : "No upcoming tickets. Browse Explore to find something on soon."}
+            : "No upcoming tickets. Browse Events to find something on soon."}
         </p>
       ) : null}
 

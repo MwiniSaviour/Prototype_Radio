@@ -8,7 +8,9 @@ import { PlayerProvider, usePlayer } from "~/content/PlayerProvider";
 import { ExploreScreen } from "~/screens/ExploreScreen";
 import { EventDetailScreen } from "~/screens/EventDetailScreen";
 import { HomeScreen } from "~/screens/HomeScreen";
+import { ArticleScreen } from "~/screens/ArticleScreen";
 import { LiveScreen } from "~/screens/LiveScreen";
+import { NewsScreen } from "~/screens/NewsScreen";
 import { OnboardingScreen } from "~/screens/OnboardingScreen";
 import { ProfileScreen } from "~/screens/ProfileScreen";
 import {
@@ -27,8 +29,13 @@ import { isNativeShell } from "~/lib/platform";
  * the account sub-pages are full-screen pushes — exactly what the mock shows
  * (no tab bar on the event page).
  */
-const TAB_ROUTES = ["/", "/live", "/explore", "/tickets", "/profile", "/search"];
-const FULLSCREEN_ROUTES = ["/events/"];
+const TAB_ROUTES = ["/", "/news", "/explore", "/tickets", "/profile", "/search"];
+/**
+ * Pushes over the tab bar. Live radio is one of them: it opens from a live
+ * radio card (Home → Up Next) rather than from a tab, and a story opens the
+ * reader the same way.
+ */
+const FULLSCREEN_ROUTES = ["/events/", "/news/", "/live"];
 
 function Shell() {
   const location = useLocation();
@@ -66,6 +73,8 @@ function Shell() {
           >
             <Routes>
               <Route path="/" element={<HomeScreen />} />
+              <Route path="/news" element={<NewsScreen />} />
+              <Route path="/news/:slug" element={<ArticleScreen />} />
               <Route path="/live" element={<LiveScreen />} />
               <Route path="/explore" element={<ExploreScreen />} />
               <Route path="/tickets" element={<TicketsScreen />} />
