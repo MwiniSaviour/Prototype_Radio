@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Icon } from "~/components/ui/Icon";
-import { BackButton } from "~/components/layout/StatusBar";
+import { BackButton } from "~/components/layout/BackButton";
 import { DateBadge, Tag } from "~/components/ui/primitives";
 import { useContent } from "~/content/ContentProvider";
 import { dateBadge, distance } from "~/lib/format";

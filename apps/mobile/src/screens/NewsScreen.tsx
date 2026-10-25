@@ -63,6 +63,7 @@ function BreakingStrip({ onOpen }: { onOpen: (slug: string) => void }) {
   const story = breakingStories[index] ?? breakingStories[0];
 
   useEffect(() => {
+    // One flagged story means nothing to rotate through.
     if (breakingStories.length < 2 || prefersReducedMotion()) return;
     const id = window.setInterval(
       () => setIndex((value) => (value + 1) % breakingStories.length),
@@ -86,6 +87,11 @@ function BreakingStrip({ onOpen }: { onOpen: (slug: string) => void }) {
         <span className="line-clamp-2 text-[12px] font-medium leading-[1.35] text-ink">
           {story.title}
         </span>
+        {breakingStories.length > 1 ? (
+          <span className="shrink-0 self-center text-[9.5px] font-semibold tabular-nums text-ink/45">
+            {index + 1}/{breakingStories.length}
+          </span>
+        ) : null}
         <Icon name="arrow-right" size={14} className="shrink-0 self-center text-ink/60" />
       </button>
     </div>

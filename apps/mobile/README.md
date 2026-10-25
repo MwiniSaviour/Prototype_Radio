@@ -32,10 +32,31 @@ back affordance, the same way a story reader and the event detail page do.
 - **View all** opens `/live/schedule`, the whole week grouped by day, still with
   the station artwork on every row.
 
-Home's "Up Next" rail shows exactly **three** programmes in a fixed grid — no
-horizontal scroller — and keeps the dial's imagery: flagship waveform tile, Urban
-Radio, Highlife Classics, Afrobeats Vibes (`src/lib/stations.ts` assigns the
-artwork by position in the dial).
+Home's "Up Next" rail shows exactly **three** programmes in a fixed grid, with no
+horizontal scroller, using each programme's own cover art.
+
+### One station
+
+The app is built around **one** station, Prototype FM (`src/data/stations.ts`).
+The payload, player, schedule and profile all resolve through that list, so there
+is no dial of stations the app does not carry. Consequences:
+
+- `Live Radio` names the station and its broadcast count, not "4 stations";
+- Profile's third tile reads **1 Station**, and account → **Your Station** shows
+  the one stream;
+- the seed deletes any station documents left over from an earlier seed.
+
+### No per-row play buttons
+
+The live stream is one continuous feed, so a schedule row is only ever a listing.
+The single play action lives in the Live Radio banner; rows carry artwork, slot,
+programme and presenter. Nothing in the app offers playback it cannot deliver.
+
+### No simulated status bar
+
+The OS owns the status strip. The app draws no clock, notch or battery glyph; it
+pads with `safe-area-inset-top` and lets the real system bar sit over the page
+(`--color-paper` ground, so the glyphs stay legible).
 
 ## One content source
 

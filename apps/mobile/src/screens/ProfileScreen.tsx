@@ -8,7 +8,7 @@ import { mediaUrl } from "~/lib/api";
 const MENU: { label: string; to: string; icon: IconName; badge?: number }[] = [
   { label: "My Tickets", to: "/tickets", icon: "ticket-stub" },
   { label: "My Events", to: "/profile/events", icon: "calendar" },
-  { label: "Favorite Stations", to: "/profile/stations", icon: "heart" },
+  { label: "Your Station", to: "/profile/stations", icon: "heart" },
   { label: "Notifications", to: "/profile/notifications", icon: "bell", badge: 2 },
   { label: "Settings", to: "/profile/settings", icon: "settings" },
   { label: "Help & Support", to: "/profile/help", icon: "help" },
@@ -82,7 +82,7 @@ export function ProfileScreen() {
             <Icon name="bell" size={19} />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-[13px] font-semibold leading-tight text-ink">Get the best of Pulse</p>
+            <p className="text-[13px] font-semibold leading-tight text-ink">Get the best of Prototype</p>
             <p className="mt-0.5 text-[11px] leading-[1.35] text-muted">
               Turn on notifications for event updates, new shows and exclusive offers.
             </p>
@@ -99,14 +99,18 @@ export function ProfileScreen() {
 }
 
 function Stat({ label, value }: { label: string; value: number }) {
+  // The app has one station, so the third tile reads "1 Station" rather than
+  // "1 Stations" — the label follows the count.
+  const shown = value === 1 && label === "Stations" ? "Station" : label;
+
   return (
     <div className="flex flex-1 flex-col items-center py-3.5">
-      <dt className="sr-only">{label}</dt>
+      <dt className="sr-only">{shown}</dt>
       <dd className="text-center">
         <span className="block text-[19px] font-bold leading-none tracking-[-0.02em] text-ink tabular-nums">
           {value}
         </span>
-        <span className="mt-2 block text-[12px] font-medium leading-none text-muted">{label}</span>
+        <span className="mt-2 block text-[12px] font-medium leading-none text-muted">{shown}</span>
       </dd>
     </div>
   );

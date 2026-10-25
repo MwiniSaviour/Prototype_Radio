@@ -11,7 +11,6 @@ import { useContent } from "~/content/ContentProvider";
 import { usePlayer } from "~/content/PlayerProvider";
 import { mediaUrl } from "~/lib/api";
 import { upcomingProgrammes } from "~/lib/schedule";
-import { stationArtwork } from "~/lib/stations";
 
 import { shows as showFixtures } from "@shared/data/shows";
 
@@ -41,7 +40,7 @@ export function HomeScreen() {
     <div className="pb-4">
       {/* The design has no visible page title; screen readers still need one h1. */}
       <h1 className="sr-only">Prototype Radio — Home</h1>
-      <header className="flex items-center justify-between px-5 pt-1.5 pb-3.5">
+      <header className="flex items-center justify-between px-5 pt-3 pb-3.5">
         <PulseLogo />
         <div className="flex items-center gap-3">
           <button
@@ -82,11 +81,10 @@ export function HomeScreen() {
           className="px-5"
         />
         <div className="mt-2.5 grid grid-cols-3 gap-3 px-5">
-          {upNext.map((programme, index) => (
+          {upNext.map((programme) => (
             <UpNextCard
               key={programme.show.id}
               programme={programme}
-              artwork={stationArtwork(stations, index)}
               onSelect={() => {
                 play(flagship);
                 navigate("/live");

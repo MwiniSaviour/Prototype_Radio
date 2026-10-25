@@ -52,7 +52,7 @@ interface ContentState {
 
 const ContentContext = createContext<ContentState | null>(null);
 
-const STORAGE_KEY = "pulse-radio-wallet-v1";
+const STORAGE_KEY = "prototype-radio-wallet-v1";
 
 /* ------------------------------------------------------------------ mapping */
 

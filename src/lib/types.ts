@@ -101,7 +101,7 @@ export interface SocialLink {
 }
 
 /**
- * Pulse Radio (mobile) domain types.
+ * Prototype Radio (mobile) domain types.
  *
  * The Capacitor app in apps/mobile reads these through the same content layer
  * the website uses, so the CMS stays the single source of truth for the seeded
@@ -119,7 +119,7 @@ export interface Station {
   artwork: ImageAsset;
   /** Live stream URL; empty string renders the "not configured" player state. */
   streamUrl: string;
-  /** True for the station the app boots into (Pulse 102.5 FM). */
+  /** True for the station the app boots into (Prototype FM). */
   flagship?: boolean;
   live?: boolean;
 }

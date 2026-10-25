@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { BackButton } from "~/components/layout/StatusBar";
+import { BackButton } from "~/components/layout/BackButton";
 import { ScheduleRow } from "~/components/radio/ScheduleRow";
 import { Icon } from "~/components/ui/Icon";
 import { LivePill } from "~/components/ui/primitives";
@@ -11,7 +11,6 @@ import { mediaUrl } from "~/lib/api";
 import { clock } from "~/lib/format";
 import { useGoBack } from "~/lib/navigation";
 import { currentBroadcast, todaySchedule } from "~/lib/schedule";
-import { stationArtwork } from "~/lib/stations";
 
 import { shows as showFixtures } from "@shared/data/shows";
 
@@ -19,9 +18,8 @@ import { shows as showFixtures } from "@shared/data/shows";
  * Live Radio — the broadcast schedule.
  *
  * The banner carries whatever is on air now (or, between programmes, the next
- * broadcast), "Today's Schedule" lists the day in time order using the station
- * tile art, and "View all schedule" opens the full week. The station dial lives
- * in the banner's play action rather than in its own list.
+ * broadcast) and owns the single play action for the live stream. "Today's
+ * Schedule" lists the day in time order, and "View all" opens the full week.
  */
 export function LiveScreen() {
   const goBack = useGoBack();
@@ -32,7 +30,7 @@ export function LiveScreen() {
   const now = new Date();
   const onAir = currentBroadcast(showFixtures, now);
   const today = todaySchedule(showFixtures, now);
-  const flagship = stations.find((item) => item.flagship) ?? stations[0];
+  const flagship = stations[0];
   const playingThis = Boolean(flagship) && isPlaying && activeStation.id === flagship.id;
 
   return (
@@ -44,7 +42,7 @@ export function LiveScreen() {
             Live Radio
           </h1>
           <p className="mt-0.5 text-[12.5px] leading-snug text-muted">
-            {today.length} broadcasts today on {stations.length} stations.
+            {today.length} broadcasts today on {flagship?.name ?? "Prototype FM"}.
           </p>
         </div>
       </header>
@@ -52,9 +50,9 @@ export function LiveScreen() {
       {onAir ? (
         <section className="mt-3.5 px-5">
           <div className="relative isolate overflow-hidden rounded-[18px] bg-media p-4 shadow-card">
-            {onAir.show.image.src ? (
+            {flagship ? (
               <img
-                src={mediaUrl(flagship?.artwork.src ?? onAir.show.image.src)}
+                src={mediaUrl(flagship.artwork.src)}
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 h-full w-full object-cover opacity-55"
@@ -133,17 +131,9 @@ export function LiveScreen() {
         </div>
 
         <ul className="mt-2.5 space-y-2 px-5">
-          {today.map((programme, index) => (
+          {today.map((programme) => (
             <li key={`${programme.show.id}-${programme.slot.start}`}>
-              <ScheduleRow
-                programme={programme}
-                artwork={stationArtwork(stations, index)}
-                playing={Boolean(flagship) && playingThis && programme.live}
-                onPlay={() => {
-                  if (!flagship) return;
-                  playingThis ? pause() : play(flagship);
-                }}
-              />
+              <ScheduleRow programme={programme} />
             </li>
           ))}
         </ul>

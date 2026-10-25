@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Icon } from "~/components/ui/Icon";
-import { BackButton } from "~/components/layout/StatusBar";
+import { BackButton } from "~/components/layout/BackButton";
 import { DateBadge } from "~/components/ui/primitives";
 import { useContent } from "~/content/ContentProvider";
 import { cn } from "~/lib/cn";

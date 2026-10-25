@@ -1,5 +1,5 @@
 /**
- * Fictional demo data for UI prototyping — the ticketed events in the Pulse
+ * Fictional demo data for UI prototyping — the ticketed events in the Prototype
  * Radio mock. Venues are real Accra landmarks (Labadi Beach, Alliance
  * Française, the Trade Fair Centre) but every event, line-up and price here is
  * invented; nothing is on sale. Event artwork is generated (see
@@ -63,7 +63,7 @@ export const events: EventItem[] = [
     title: "Highlife Legends Night",
     subtitle: "Live band • Throwback night",
     description:
-      "A seated evening with a twelve-piece highlife band working through the golden catalogue, recorded for later broadcast on Highlife Classics.",
+      "A seated evening with a twelve-piece highlife band working through the golden catalogue, recorded for later broadcast on Prototype FM.",
     venue: "National Theatre",
     city: "Accra",
     distanceKm: 9.4,
@@ -72,7 +72,7 @@ export const events: EventItem[] = [
     endTime: "23:00",
     image: {
       src: "/assets/images/pulse-station-highlife.jpg",
-      alt: "Highlife Classics artwork used for the Highlife Legends Night listing",
+      alt: "Highlife Classics cover art used for the Highlife Legends Night listing",
     },
     tags: ["Music", "Live Show"],
     priceFrom: 90,
@@ -231,7 +231,7 @@ export const listener: ListenerProfile = {
   name: "Saviour Mwini",
   email: "saviour@pulse.com",
   avatarUrl: "/assets/images/pulse-avatar-saviour.jpg",
-  favouriteStationIds: ["station-pulse-102-5", "station-highlife-classics", "station-urban-radio"],
+  favouriteStationIds: ["station-prototype-fm"],
   notificationsEnabled: true,
 };
 

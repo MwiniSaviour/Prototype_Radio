@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { BackButton } from "~/components/layout/StatusBar";
+import { BackButton } from "~/components/layout/BackButton";
 import { mediaUrl } from "~/lib/api";
 import { timeAgo } from "~/lib/format";
 import { findArticle } from "~/lib/news";

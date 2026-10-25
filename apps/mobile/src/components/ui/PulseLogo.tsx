@@ -1,7 +1,7 @@
 import { cn } from "~/lib/cn";
 
 /**
- * The Pulse wordmark: five rounded waveform bars + the PULSE / RADIO lock-up.
+ * The Prototype wordmark: five rounded waveform bars + the PROTOTYPE / RADIO lock-up.
  *
  * The bars are the brand's only logo graphic — drawn in SVG (not a raster asset)
  * so the mark stays crisp on every density and can flip to white over imagery,

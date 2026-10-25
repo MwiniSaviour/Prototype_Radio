@@ -3,7 +3,7 @@ import type { CollectionConfig } from "payload";
 import { isAdmin, isAdminOrEditor } from "./Users";
 
 /**
- * Listener accounts for the Pulse Radio app. Deliberately not an auth
+ * Listener accounts for the Prototype Radio app. Deliberately not an auth
  * collection yet — the design ships a signed-in demo listener (Profile tab) and
  * the backend has no account story to share with the website. Making this
  * `auth: true` later keeps the same document shape.

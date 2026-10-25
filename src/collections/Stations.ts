@@ -3,7 +3,7 @@ import type { CollectionConfig } from "payload";
 import { isAdmin, isAdminOrEditor } from "./Users";
 
 /**
- * Pulse Radio stations. The web app keeps its shows/podcasts in `shows`; this
+ * Prototype Radio station. The web app keeps its shows/podcasts in `shows`; this
  * collection is the dial list the mobile app's "Live Radio" rail reads, and it
  * is seeded from the same fixtures (src/data/stations.ts).
  */

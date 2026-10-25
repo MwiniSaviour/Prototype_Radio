@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { Icon } from "~/components/ui/Icon";
-import { BackButton } from "~/components/layout/StatusBar";
+import { BackButton } from "~/components/layout/BackButton";
 import { Tag } from "~/components/ui/primitives";
 import { Toggle } from "~/screens/ProfileScreen";
 import { useContent } from "~/content/ContentProvider";
@@ -78,14 +78,14 @@ export function MyEventsScreen() {
 }
 
 export function FavoriteStationsScreen() {
-  const { stations, listener } = useContent();
+  const { stations } = useContent();
   const { toggle, station, isPlaying } = usePlayer();
-  const favourites = stations.filter((item) => listener.favouriteStationIds.includes(item.id));
-  const list = favourites.length ? favourites : stations;
+  // One station, so this is simply the station the app carries.
+  const list = stations;
 
   return (
     <div className="pb-6">
-      <SubScreenHeader title="Favorite Stations" subtitle="Your saved dial positions." />
+      <SubScreenHeader title="Your Station" subtitle="The station this app is built around." />
       <ul className="mt-4 space-y-2 px-3.5">
         {list.map((item) => (
           <li key={item.id}>
@@ -130,12 +130,12 @@ export function NotificationsScreen() {
   const items = [
     { title: "Event updates", body: "Line-up changes, gate times and cancellations.", on: true },
     { title: "New shows", body: "When a new programme joins the schedule.", on: true },
-    { title: "Exclusive offers", body: "Early ticket windows for Pulse events.", on: false },
+    { title: "Exclusive offers", body: "Early ticket windows for Prototype events.", on: false },
   ];
 
   return (
     <div className="pb-6">
-      <SubScreenHeader title="Notifications" subtitle="Choose what Pulse can tell you about." />
+      <SubScreenHeader title="Notifications" subtitle="Choose what Prototype can tell you about." />
       <ul className="mt-4 space-y-2 px-3.5">
         <li className="flex items-center gap-3 rounded-[15px] border border-line/90 bg-surface/70 p-3.5">
           <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-brand-soft text-brand">

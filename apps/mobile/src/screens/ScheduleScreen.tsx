@@ -1,28 +1,21 @@
-import { BackButton } from "~/components/layout/StatusBar";
+import { BackButton } from "~/components/layout/BackButton";
 import { ScheduleRow } from "~/components/radio/ScheduleRow";
 import { useContent } from "~/content/ContentProvider";
-import { usePlayer } from "~/content/PlayerProvider";
 import { cn } from "~/lib/cn";
 import { useGoBack } from "~/lib/navigation";
 import { weekSchedule } from "~/lib/schedule";
-import { stationArtwork } from "~/lib/stations";
 
 import { shows as showFixtures } from "@shared/data/shows";
 
 /**
  * The full broadcast schedule, grouped by day. Same row design as Today's
- * Schedule and the old All Stations list — the station tile art leads each
- * programme, rather than the web version's text-only timetable.
+ * Schedule — programme artwork leads each row, rather than the web version's
+ * text-only timetable.
  */
 export function ScheduleScreen() {
   const goBack = useGoBack("/live");
   const { stations } = useContent();
-  const { play, isPlaying, station: activeStation } = usePlayer();
-
   const week = weekSchedule(showFixtures, new Date());
-  const flagship = stations.find((item) => item.flagship) ?? stations[0];
-  const playingThis = Boolean(flagship) && isPlaying && activeStation.id === flagship.id;
-  let artworkIndex = 0;
 
   return (
     <div className="pb-8">
@@ -33,7 +26,7 @@ export function ScheduleScreen() {
             Broadcast Schedule
           </h1>
           <p className="mt-0.5 text-[12.5px] leading-snug text-muted">
-            Every programme on {stations.length} stations, all week.
+            Every programme on {stations[0]?.name ?? "Prototype FM"}, all week.
           </p>
         </div>
       </header>
@@ -60,21 +53,11 @@ export function ScheduleScreen() {
           </div>
 
           <ul className="mt-2 space-y-2 px-5">
-            {day.programmes.map((programme) => {
-              const artwork = stationArtwork(stations, artworkIndex++);
-              return (
-                <li key={`${programme.show.id}-${programme.slot.start}`}>
-                  <ScheduleRow
-                    programme={programme}
-                    artwork={artwork}
-                    playing={Boolean(flagship) && playingThis && programme.live}
-                    onPlay={() => {
-                      if (flagship) play(flagship);
-                    }}
-                  />
-                </li>
-              );
-            })}
+            {day.programmes.map((programme) => (
+              <li key={`${programme.show.id}-${programme.slot.start}`}>
+                <ScheduleRow programme={programme} />
+              </li>
+            ))}
           </ul>
         </section>
       ))}

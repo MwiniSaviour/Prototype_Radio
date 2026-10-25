@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
-import { StatusBar } from "~/components/layout/StatusBar";
 import { TabBar } from "~/components/layout/TabBar";
 import { ContentProvider } from "~/content/ContentProvider";
 import { PlayerProvider, usePlayer } from "~/content/PlayerProvider";
@@ -23,7 +22,6 @@ import {
 } from "~/screens/ProfileSubScreens";
 import { SearchScreen } from "~/screens/SearchScreen";
 import { TicketsScreen } from "~/screens/TicketsScreen";
-import { isNativeShell } from "~/lib/platform";
 
 /**
  * Routes that keep the tab bar. The onboarding flow, the event detail page and
@@ -63,11 +61,9 @@ function Shell() {
         </Routes>
       ) : (
         <>
-          {isNativeShell() ? (
-            <div className="safe-top shrink-0" />
-          ) : (
-            <StatusBar className="shrink-0" />
-          )}
+          {/* No drawn status bar: the OS owns that strip. On device the inset
+              below keeps content clear of it; in the browser it is simply zero. */}
+          <div className="safe-top shrink-0" />
           <main
             ref={scrollRef}
             className="no-scrollbar min-h-0 flex-1 overflow-y-auto overscroll-y-contain pt-1.5"

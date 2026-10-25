@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Icon } from "~/components/ui/Icon";
-import { StatusBar } from "~/components/layout/StatusBar";
 import { PulseLogo } from "~/components/ui/PulseLogo";
 import { cn } from "~/lib/cn";
 
@@ -15,7 +14,7 @@ const SLIDES = [
   {
     headline: ["Live Radio,", "Every Hour."],
     accent: "Accra to the World.",
-    body: "Four stations, one dial. Wake up with Highlife Classics, drive home with Afrobeats Vibes.",
+    body: "One station, all day. Wake up with Good Morning Wa, drive home with the Evening Bulletin.",
   },
   {
     headline: ["Your Tickets,", "One Wallet."],
@@ -45,8 +44,9 @@ export function OnboardingScreen() {
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/92 via-black/45 to-transparent" />
 
       <div className="relative flex h-full flex-col px-5">
-        {/* The mock keeps the status bar over the photo, in white. */}
-        <StatusBar tone="light" />
+        {/* Full-bleed photo behind the device's own status bar; the safe-area
+            padding keeps the wordmark clear of it on a notched phone. */}
+        <div className="safe-top shrink-0" />
         <div className="flex pt-5">
           <PulseLogo tone="light" size="lg" className="scale-[1.3] origin-left" />
         </div>

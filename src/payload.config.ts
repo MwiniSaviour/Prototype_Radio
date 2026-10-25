@@ -42,7 +42,7 @@ export default buildConfig({
     Articles,
     Shows,
     PodcastEpisodes,
-    // Pulse Radio (mobile): the dial list, ticketed events and the listener's
+    // Prototype Radio (mobile): the station, ticketed events and the listener's
     // wallet + account, all seeded from the same fixtures the website uses.
     Stations,
     Events,
