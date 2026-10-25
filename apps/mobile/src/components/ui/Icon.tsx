@@ -276,6 +276,18 @@ export function Icon({ name, size = 24, filled = false, ...props }: IconProps) {
     );
   }
 
+  // A saved heart is a solid glyph, the way a bookmark reads at a glance.
+  if (name === "heart" && filled) {
+    return (
+      <svg {...common}>
+        <path
+          d="M12 20s-6.8-4.2-8.2-8A4.4 4.4 0 0 1 12 7.4 4.4 4.4 0 0 1 20.2 12c-1.4 3.8-8.2 8-8.2 8z"
+          fill="currentColor"
+        />
+      </svg>
+    );
+  }
+
   if (name === "pause") {
     return (
       <svg {...common}>

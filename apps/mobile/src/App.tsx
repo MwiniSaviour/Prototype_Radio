@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 
 import { TabBar } from "~/components/layout/TabBar";
 import { ContentProvider } from "~/content/ContentProvider";
+import { FavoritesProvider } from "~/content/FavoritesProvider";
 import { PlayerProvider, usePlayer } from "~/content/PlayerProvider";
 import { ExploreScreen } from "~/screens/ExploreScreen";
 import { EventDetailScreen } from "~/screens/EventDetailScreen";
@@ -14,7 +15,7 @@ import { NewsScreen } from "~/screens/NewsScreen";
 import { OnboardingScreen } from "~/screens/OnboardingScreen";
 import { ProfileScreen } from "~/screens/ProfileScreen";
 import {
-  FavoriteStationsScreen,
+  FavoritesScreen,
   HelpScreen,
   MyEventsScreen,
   NotificationsScreen,
@@ -78,7 +79,9 @@ function Shell() {
               <Route path="/tickets" element={<TicketsScreen />} />
               <Route path="/profile" element={<ProfileScreen />} />
               <Route path="/profile/events" element={<MyEventsScreen />} />
-              <Route path="/profile/stations" element={<FavoriteStationsScreen />} />
+              <Route path="/profile/favorites" element={<FavoritesScreen />} />
+              {/* The old "Your Station" address still resolves for anyone with it saved. */}
+              <Route path="/profile/stations" element={<FavoritesScreen />} />
               <Route path="/profile/notifications" element={<NotificationsScreen />} />
               <Route path="/profile/settings" element={<SettingsScreen />} />
               <Route path="/profile/help" element={<HelpScreen />} />
@@ -100,9 +103,11 @@ function Shell() {
 export function App() {
   return (
     <ContentProvider>
-      <PlayerProvider>
-        <Shell />
-      </PlayerProvider>
+      <FavoritesProvider>
+        <PlayerProvider>
+          <Shell />
+        </PlayerProvider>
+      </FavoritesProvider>
     </ContentProvider>
   );
 }

@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Icon } from "~/components/ui/Icon";
+import { ScalmintFooter } from "~/components/layout/ScalmintFooter";
 import { DateBadge, ScreenHeader, StatusBadge } from "~/components/ui/primitives";
 import { useContent } from "~/content/ContentProvider";
 import { cn } from "~/lib/cn";
@@ -117,6 +118,8 @@ export function TicketsScreen() {
             : "No upcoming tickets. Browse Events to find something on soon."}
         </p>
       ) : null}
+
+      <ScalmintFooter className="mt-5" />
 
       <div className="mt-5 flex items-center justify-center gap-1.5" aria-hidden="true">
         {[0, 1, 2].map((dot) => (

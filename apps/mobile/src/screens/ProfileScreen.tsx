@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom";
 
 import { Icon, type IconName } from "~/components/ui/Icon";
+import { ScalmintFooter } from "~/components/layout/ScalmintFooter";
 import { useContent } from "~/content/ContentProvider";
+import { useFavorites } from "~/content/FavoritesProvider";
 import { cn } from "~/lib/cn";
 import { mediaUrl } from "~/lib/api";
 
 const MENU: { label: string; to: string; icon: IconName; badge?: number }[] = [
   { label: "My Tickets", to: "/tickets", icon: "ticket-stub" },
   { label: "My Events", to: "/profile/events", icon: "calendar" },
-  { label: "Your Station", to: "/profile/stations", icon: "heart" },
+  { label: "Favorites", to: "/profile/favorites", icon: "heart" },
   { label: "Notifications", to: "/profile/notifications", icon: "bell", badge: 2 },
   { label: "Settings", to: "/profile/settings", icon: "settings" },
   { label: "Help & Support", to: "/profile/help", icon: "help" },
@@ -21,6 +23,8 @@ const MENU: { label: string; to: string; icon: IconName; badge?: number }[] = [
  */
 export function ProfileScreen() {
   const { listener, wallet, setNotifications } = useContent();
+  // The third stat counts what the listener saved, not how many stations exist.
+  const { count: savedCount } = useFavorites();
 
   return (
     <div className="pb-4">
@@ -49,7 +53,7 @@ export function ProfileScreen() {
         <Divider />
         <Stat label="Events" value={wallet.events} />
         <Divider />
-        <Stat label="Stations" value={wallet.stations} />
+        <Stat label="Favorites" value={savedCount} />
       </dl>
 
       <nav aria-label="Account">
@@ -94,23 +98,21 @@ export function ProfileScreen() {
           />
         </div>
       </section>
+
+      <ScalmintFooter />
     </div>
   );
 }
 
 function Stat({ label, value }: { label: string; value: number }) {
-  // The app has one station, so the third tile reads "1 Station" rather than
-  // "1 Stations" — the label follows the count.
-  const shown = value === 1 && label === "Stations" ? "Station" : label;
-
   return (
     <div className="flex flex-1 flex-col items-center py-3.5">
-      <dt className="sr-only">{shown}</dt>
+      <dt className="sr-only">{label}</dt>
       <dd className="text-center">
         <span className="block text-[19px] font-bold leading-none tracking-[-0.02em] text-ink tabular-nums">
           {value}
         </span>
-        <span className="mt-2 block text-[12px] font-medium leading-none text-muted">{shown}</span>
+        <span className="mt-2 block text-[12px] font-medium leading-none text-muted">{label}</span>
       </dd>
     </div>
   );

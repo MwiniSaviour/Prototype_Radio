@@ -5,10 +5,11 @@ import { BackButton } from "~/components/layout/BackButton";
 import { Tag } from "~/components/ui/primitives";
 import { Toggle } from "~/screens/ProfileScreen";
 import { useContent } from "~/content/ContentProvider";
-import { usePlayer } from "~/content/PlayerProvider";
-import { PulseBars } from "~/components/ui/PulseLogo";
+import { useFavorites } from "~/content/FavoritesProvider";
+import { ScalmintFooter } from "~/components/layout/ScalmintFooter";
+import { findArticle } from "~/lib/news";
 import { mediaUrl } from "~/lib/api";
-import { cedis, dateBadge } from "~/lib/format";
+import { cedis, dateBadge, timeAgo } from "~/lib/format";
 
 /**
  * The account menu's destinations. None of them appears in the mock beyond the
@@ -73,54 +74,110 @@ export function MyEventsScreen() {
           );
         })}
       </ul>
+      <ScalmintFooter />
     </div>
   );
 }
 
-export function FavoriteStationsScreen() {
-  const { stations } = useContent();
-  const { toggle, station, isPlaying } = usePlayer();
-  // One station, so this is simply the station the app carries.
-  const list = stations;
+export function FavoritesScreen() {
+  const navigate = useNavigate();
+  const { favorites, removeFavorite } = useFavorites();
+  const { getEvent } = useContent();
+
+  // Resolve each saved item against the same fixtures/CMS the rest of the app
+  // reads, so a favourite is a pointer, never a second copy of the content.
+  const rows = favorites
+    .map((favorite) => {
+      if (favorite.kind === "news") {
+        const article = findArticle(favorite.slug);
+        return article
+          ? {
+              favorite,
+              title: article.title,
+              meta: `${article.category.name} · ${timeAgo(article.publishedAt)}`,
+              art: article.image,
+              to: `/news/${article.slug}`,
+              badge: "Story",
+            }
+          : null;
+      }
+      const event = getEvent(favorite.slug);
+      return event
+        ? {
+            favorite,
+            title: event.title,
+            meta: `${event.venue}, ${event.city}`,
+            art: event.image,
+            to: `/events/${event.slug}`,
+            badge: "Event",
+          }
+        : null;
+    })
+    .filter((row): row is NonNullable<typeof row> => row !== null);
 
   return (
-    <div className="pb-6">
-      <SubScreenHeader title="Your Station" subtitle="The station this app is built around." />
-      <ul className="mt-4 space-y-2 px-3.5">
-        {list.map((item) => (
-          <li key={item.id}>
-            <button
-              type="button"
-              onClick={() => toggle(item)}
-              className="flex w-full items-center gap-3.5 rounded-[15px] border border-line/90 bg-surface/70 p-2.5 text-left transition active:scale-[0.99]"
-            >
-              <span className="block h-[58px] w-[58px] shrink-0 overflow-hidden rounded-[11px] bg-media">
-                {item.flagship ? (
-                  <span className="grid h-full w-full place-items-center bg-[#0a0a0b]">
-                    <PulseBars height={24} />
+    <div className="pb-2">
+      <SubScreenHeader
+        title="Favorites"
+        subtitle={
+          rows.length
+            ? `${rows.length} saved ${rows.length === 1 ? "item" : "items"} — stories and events.`
+            : "Stories and events you save show up here."
+        }
+      />
+
+      {rows.length === 0 ? (
+        <div className="mx-5 mt-5 rounded-[15px] border border-dashed border-line-strong/70 px-4 py-9 text-center">
+          <Icon name="heart" size={20} className="mx-auto text-muted-soft" />
+          <p className="mt-2 text-[13px] font-semibold text-ink">Nothing saved yet</p>
+          <p className="mt-1 text-[12px] leading-snug text-muted">
+            Tap the heart on a story or an event to keep it here.
+          </p>
+        </div>
+      ) : (
+        <ul className="mt-4 space-y-2 px-3.5">
+          {rows.map((row) => (
+            <li key={`${row.favorite.kind}:${row.favorite.slug}`}>
+              <div className="flex items-center gap-3.5 rounded-[15px] border border-line/90 bg-surface/70 p-2.5">
+                <button
+                  type="button"
+                  onClick={() => navigate(row.to)}
+                  className="flex min-w-0 flex-1 items-center gap-3.5 text-left transition active:scale-[0.99]"
+                >
+                  <span className="block h-[58px] w-[58px] shrink-0 overflow-hidden rounded-[11px] bg-media">
+                    <img
+                      src={mediaUrl(row.art.src)}
+                      alt={row.art.alt}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
                   </span>
-                ) : (
-                  <img
-                    src={mediaUrl(item.artwork.src)}
-                    alt={item.artwork.alt}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                )}
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[14.5px] font-semibold text-ink">{item.name}</span>
-                <span className="mt-0.5 block text-[12px] text-muted">{item.frequency}</span>
-              </span>
-              <Icon
-                name={item.id === station.id && isPlaying ? "pause" : "play"}
-                size={18}
-                className="text-brand"
-              />
-            </button>
-          </li>
-        ))}
-      </ul>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[10px] font-bold uppercase tracking-[0.14em] text-brand">
+                      {row.badge}
+                    </span>
+                    <span className="mt-0.5 line-clamp-2 block text-[13.5px] font-semibold leading-snug text-ink">
+                      {row.title}
+                    </span>
+                    <span className="mt-1 block truncate text-[11.5px] text-muted">{row.meta}</span>
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => removeFavorite(row.favorite.kind, row.favorite.slug)}
+                  aria-label={`Remove ${row.title} from favorites`}
+                  aria-pressed="true"
+                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full transition active:scale-95"
+                >
+                  <Icon name="heart" size={17} filled className="text-brand" />
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <ScalmintFooter />
     </div>
   );
 }
@@ -165,6 +222,7 @@ export function NotificationsScreen() {
         Preferences are stored on this device. Push delivery is enabled by the Capacitor shell once a
         notification provider is configured.
       </p>
+      <ScalmintFooter />
     </div>
   );
 }
@@ -192,6 +250,7 @@ export function SettingsScreen() {
       <p className="mx-5 mt-3 text-[11.5px] leading-snug text-muted-soft">
         Account editing arrives with listener auth; this build signs in as the seeded demo listener.
       </p>
+      <ScalmintFooter />
     </div>
   );
 }
@@ -226,10 +285,12 @@ export function HelpScreen() {
       <div className="mx-3.5 mt-3 rounded-[15px] bg-brand-soft/60 p-3.5">
         <p className="text-[13px] font-semibold text-ink">Still stuck?</p>
         <p className="mt-1 text-[12px] leading-relaxed text-muted">
-          Email <span className="font-semibold text-brand">support@pulse.com</span> and the team will
-          get back to you within one working day.
+          Email <span className="font-semibold text-brand">support@prototype.fm</span> and the team
+          will get back to you within one working day, or call{" "}
+          <span className="font-semibold text-brand tabular-nums">052703858</span>.
         </p>
       </div>
+      <ScalmintFooter />
     </div>
   );
 }

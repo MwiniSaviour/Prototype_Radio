@@ -5,6 +5,7 @@ import { Icon } from "~/components/ui/Icon";
 import { BackButton } from "~/components/layout/BackButton";
 import { DateBadge } from "~/components/ui/primitives";
 import { useContent } from "~/content/ContentProvider";
+import { useFavorites } from "~/content/FavoritesProvider";
 import { cn } from "~/lib/cn";
 import { cedis, clock, dateBadge, distance } from "~/lib/format";
 import { mediaUrl } from "~/lib/api";
@@ -29,7 +30,8 @@ export function EventDetailScreen() {
     Object.fromEntries((getEvent(slug ?? "")?.tiers ?? []).map((tier) => [tier.id, 1])),
   );
   const [confirmation, setConfirmation] = useState<string | null>(null);
-  const [saved, setSaved] = useState(false);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const saved = event ? isFavorite("event", event.slug) : false;
 
   // Running total, surfaced in the confirmation line after a purchase.
   const total = useMemo(() => {
@@ -110,8 +112,8 @@ export function EventDetailScreen() {
             </button>
             <button
               type="button"
-              onClick={() => setSaved((value) => !value)}
-              aria-label={saved ? "Remove from favourites" : "Save this event"}
+              onClick={() => toggleFavorite("event", event.slug)}
+              aria-label={saved ? "Remove from favorites" : "Save this event"}
               aria-pressed={saved}
               className="grid h-9 w-9 place-items-center rounded-full text-white transition active:scale-95"
             >

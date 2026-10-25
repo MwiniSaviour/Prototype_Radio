@@ -33,7 +33,8 @@ back affordance, the same way a story reader and the event detail page do.
   the station artwork on every row.
 
 Home's "Up Next" rail shows exactly **three** programmes in a fixed grid, with no
-horizontal scroller, using each programme's own cover art.
+horizontal scroller, using the dial's tile art (waveform, Urban Radio, Highlife
+Classics).
 
 ### One station
 
@@ -42,9 +43,31 @@ The payload, player, schedule and profile all resolve through that list, so ther
 is no dial of stations the app does not carry. Consequences:
 
 - `Live Radio` names the station and its broadcast count, not "4 stations";
-- Profile's third tile reads **1 Station**, and account → **Your Station** shows
-  the one stream;
+- Profile's third tile counts **saved items** rather than stations, and account →
+  **Favorites** lists them (see below);
 - the seed deletes any station documents left over from an earlier seed.
+
+### Favorites
+
+`ContentProvider` + `FavoritesProvider` split the two kinds of state: content
+comes from the CMS (fixtures are the offline cache), while saves live on the
+device under `prototype-radio-favorites-v1` — the same convention as the wallet.
+A favorite is only a `{ kind, slug }` pointer, resolved against the shared
+fixtures at render time, so nothing is duplicated.
+
+- Save from the reader (heart in the header) or the event page (heart over the
+  artwork); the filled heart is a solid glyph.
+- Profile's **Favorites** tile and menu row both read the same count, so saving
+  anything increments it immediately.
+- `/profile/favorites` lists stories and events together, newest first, each with
+  a one-tap remove. `/profile/stations` (the old address) resolves to it.
+
+### Builder credit
+
+Every profile screen — Profile, My Events, Favorites, Notifications, Settings,
+Help & Support — and My Tickets ends in `ScalmintFooter`: **Powered by Scalmint**
+(links to https://scalmint.com, new tab) above **Contact 052703858** (a `tel:`
+link).
 
 ### No per-row play buttons
 

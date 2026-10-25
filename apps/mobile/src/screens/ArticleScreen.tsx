@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 
 import { BackButton } from "~/components/layout/BackButton";
+import { Icon } from "~/components/ui/Icon";
+import { useFavorites } from "~/content/FavoritesProvider";
 import { mediaUrl } from "~/lib/api";
 import { timeAgo } from "~/lib/format";
 import { findArticle } from "~/lib/news";
@@ -15,6 +17,8 @@ export function ArticleScreen() {
   const { slug = "" } = useParams();
   const goBack = useGoBack("/news");
   const article = findArticle(slug);
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const saved = article ? isFavorite("news", article.slug) : false;
 
   if (!article) {
     return (
@@ -29,8 +33,19 @@ export function ArticleScreen() {
 
   return (
     <article className="pb-8">
-      <div className="px-5 pt-2">
+      <div className="flex items-center justify-between px-5 pt-2">
         <BackButton onClick={goBack} tone="dark" label="Back to News" />
+        {article ? (
+          <button
+            type="button"
+            onClick={() => toggleFavorite("news", article.slug)}
+            aria-label={saved ? "Remove story from favorites" : "Save this story"}
+            aria-pressed={saved}
+            className="grid h-10 w-10 place-items-center rounded-full text-ink transition active:scale-95"
+          >
+            <Icon name="heart" size={21} filled={saved} className={saved ? "text-brand" : "text-ink/70"} />
+          </button>
+        ) : null}
       </div>
 
       <header className="mt-3 px-5">
