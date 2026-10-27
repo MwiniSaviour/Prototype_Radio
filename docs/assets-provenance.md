@@ -11,13 +11,21 @@ commercial release; the legal notes at the bottom are load-bearing.
 | Class | Count | Origin | Licence status |
 |---|---|---|---|
 | Brand logo / icons (`logo/`) | 6 | Extracted from the live Radio Waa PWA manifest + site | **Trademark — owner only.** Not licensed for reuse. |
-| Photographs (`images/wa-*`) | 10 | Downloaded from the live Radio Waa site / web | **Unknown — do not ship.** See per-file notes. |
-| Generated cover art (`images/cover-*`) | 38 | SVG generated for this prototype | **Owned by this project** — free to use/modify. |
-| Generated avatars (`images/avatar-*`) | 8 | SVG generated for this prototype | **Owned by this project.** Fictional people. |
-| Podcast cover art (`images/podcast-*`) | 5 | SVG generated for this prototype | **Owned by this project.** |
+| News photography (`images/news-*`) | 24 | Web image search of Ghanaian news outlets (Ghanaian Times, Graphic, GNA, YEN, Modern Ghana) and agency photography | **Unverified — prototype only.** See §2. |
+| Programme photography (`images/show-*`) | 21 | Web image search: radio studio, live music and open photo libraries (Pexels, Unsplash, radio.co) | **Unverified — prototype only.** See §2. |
+| Events & station photography (`images/event-*`, `images/tile-*`, `live-studio`, `prototype-fm-artwork`, `onboarding-hero`) | 10 | Same searches as above | **Unverified — prototype only.** See §2. |
+| Portrait photography (`images/avatar-*`) | 11 | Open portrait libraries surfaced by the same searches | **Unverified — prototype only.** Fictional staff. |
+| Source fixtures (`images/wa-*`) | 1 | Downloaded from Ghanaian outlets while researching the live site | **Unverified — prototype only.** |
+| Open Graph card (`images/og-default.png`) | 1 | Cropped from `news-water-rationing.jpg` by this project | Derived — same status as its source. |
 | Line icons (`icons/icon-*`) | 12 | SVG generated for this prototype | **Owned by this project.** |
 
-Total files: **79**.
+**Every generated placeholder is gone.** The `cover-*`, `podcast-*` and
+`avatar-*` SVGs (stacked bars, circles and two-letter monograms) were deleted in
+this round: the newsroom, the schedule, the podcast shelf and the bylines are now
+photographic on both the website and the app, which share this one `public/`
+folder.
+
+Total files: **75**.
 
 ---
 
@@ -38,52 +46,48 @@ protected. These files were captured from the live site's PWA manifest
 The live PWA manifest confirms brand identity used by the real app:
 `name: "Radiowaa 92.1 FM"`, `theme_color: #dc2626`, `background_color: #ffffff`.
 
-> **Action before any real deployment:** replace every file in `logo/` with
-> licensed brand assets supplied by the broadcaster, or with a placeholder
-> wordmark. Do not ship the captured files.
+---
 
-## 2. `images/wa-*` — photographs (UNKNOWN LICENCE, do not ship)
+## 2. Photography (`images/news-*`, `show-*`, `podcast-*`, `event-*`, `avatar-*`, `wa-*`)
 
-Ten photographs downloaded while researching the live site. Each is attributed to
-a plausible subject (a shea tree, an NDC briefing, a road inspection). We do
-**not** have reliable licence or photographer information for these; they are
-included purely so the layout renders with photographic content during review.
+Sourced with a web image search, one subject at a time, then cropped to the
+layout's aspect ratios with ImageMagick (`-resize … ^ -gravity center -crop`,
+`-strip -quality 84`). Files are renamed to what they depict, not to the search
+term, so the fixtures stay readable:
 
-| File | Plausible subject |
-|---|---|
-| `wa-shea-tree.png` | Shea tree in Upper West savanna |
-| `wa-ndc-chairman.jpg` | Regional party chairman at a briefing |
-| `wa-ndc-organiser.jpg` | Party organiser at a registration drive |
-| `wa-mtn-digital-inclusion.jpg` | Mobile mast over rural rooftops |
-| `wa-roads-inspection.jpg` | Graded feeder road under inspection |
-| `wa-wechiau-custody-death.jpeg` | District police station at dusk |
-| `wa-youth-drugs-jirapa.jpeg` | Health outreach session |
-| `wa-skills-training.jpeg` | Groundnut processing trainees |
-| `wa-anwelle-students.jpg` | Students walking to an exam centre |
-| `wa-fintech-voices.jpg` | Mobile money agent counter |
+| Group | Files | Researched subject |
+|---|---|---|
+| Lead + newsroom | `news-water-rationing`, `news-malaria-clinic`, `news-shea-season`, `news-groundnut-market`, `news-market-square`, `news-mobile-coverage`, `news-mobile-money`, `news-mobile-money-agents`, `news-transmitter`, `news-road-audit`, `news-wa-road`, `news-wa-landmark`, `news-harmattan`, `news-exams-walk`, `news-dumba-festival`, `news-hip-hop-studio`, `news-sdd-league`, `news-upper-west-united`, `news-assembly-budget`, `news-custody-inquiry`, `news-community-clinic`, `news-recovery-centre` | Water tankers and standpipes in Ghana, shea and groundnut co-operatives, markets, mobile-money kiosks, telecom masts, feeder-road inspections, a Wa high street, the Nakore mosque, harmattan haze, classrooms, a Dumba procession, a recording session, Ghanaian league football, press briefings, clinics |
+| Schedule | `show-*` (21) | On-air studios and presenters, a mixing desk, a gavel, turntables, a stadium, a table of Ghanaian food, a live band, a night crowd |
+| Podcasts | (reuses `show-*`) | Each episode now carries its series' photograph, so the shelf matches `shows` |
+| Events | `event-*` (5) | Concert crowds, club lighting, a stand-up set |
+| Portraits | `avatar-*` (11) | Fictional staff headshots (see the legal note — no real person is claimed) |
+| Source fixture | `wa-ndc-chairman` | Retained from the earlier research pass |
 
-> **Action before any real deployment:** replace with licensed stock, brand-owned
-> photography, or the remaining generated cover art. At minimum, confirm each
-> file's licence or delete it.
+Representative source pages, for the record: `ghanaiantimes.com.gh` (water
+queue), `graphic.com.gh` (harmattan, feeder-road inspection, Dumba), `gna.org.gh`
+(Dumba), `yen.com.gh` (community water), `en.wikipedia.org/wiki/Wa,_Ghana`
+(Wa high street, Nakore mosque), `pexels.com`, `unsplash.com`, `radio.co` and
+Getty-syndicated photography for the studio, stage and stadium frames.
 
-## 3. Generated artwork (safe to use)
+> **Attribution is approximate.** These came from a search index rather than from
+> a licence purchase, so per-file credit and rights are **not** established.
 
-All `cover-*`, `avatar-*`, `podcast-*`, and `icon-*` SVG files were generated by
-script for this prototype (800×800 SVG for covers/podcasts/avatars; 24px line
-icons). They are owned by this project, carry no third-party rights, and may be
-edited freely. They were authored to match the prototype's palette
-(dark ground `#191721`, gold accent `#f2b75c`) so the design reads coherently
-without licensed art.
+> **Action before any real deployment:** replace every photograph here with
+> licensed stock or brand-owned photography, or verify each file's licence
+> individually. Do not publish this set.
 
-The two covers `cover-assembly-finance.svg` and `cover-transmitter-network.svg`
-were added specifically to cover the Politics and Technology article slugs that
-had no photographic counterpart.
+## 3. Icons
+
+The twelve `icons/icon-*` SVGs were generated by script for this prototype (24px
+line icons). They are owned by this project, carry no third-party rights, and may
+be edited freely.
 
 ## 4. Validation
 
 `node src/data/validate.mjs` asserts that every image referenced by the mock data
-is (a) a root-relative path, (b) not a remote hot-link, and (c) present on disk
-under `public/`. It reports `uniqueAssets=50` at the time of writing.
+is (a) a root-relative path, (b) not a remote hot-link, (c) present on disk under
+`public/`, and (d) decodes as an image. It reports `uniqueAssets=52`.
 
 ---
 
@@ -92,14 +96,15 @@ under `public/`. It reports `uniqueAssets=50` at the time of writing.
 - "Radio Waa", its wordmark, logo, and on-air identity are trademarks of their
   owner. Internal use while prototyping is fine; **public/commercial reuse
   requires the owner's permission or a licence.**
-- The `wa-*` photographs carry **unknown** provenance. Treat as all-rights-reserved
-  by default; do not publish.
+- Every photograph in `images/` (`news-*`, `show-*`, `podcast-*`, `event-*`,
+  `tile-*`, `avatar-*`, `wa-*`, `live-studio`, `onboarding-hero`,
+  `prototype-fm-artwork`, `og-default`) carries **unverified** provenance. Treat
+  as all-rights-reserved by default; do not publish without clearing rights.
 - The people depicted or named in the mock data are **fictional** and must not be
   presented as real staff, hosts, or subjects of real events.
-- The `pulse-*` and `prototype-fm-*` images in `public/assets/images/` are
-  generated stand-in artwork for the Prototype Radio app (onboarding portrait,
-  station artwork, event and programme covers, listener avatars). They are
-  AI-generated placeholders, not photographs of real people or places, and should
-  be replaced with licensed photography before any public release.
+- The people photographed in `avatar-*` and `onboarding-hero` are **not** the
+  fictional staff named in the fixtures. They are stock portraits, used only to
+  make the layout read as a real newsroom; nothing here should be presented as a
+  real member of staff or a real listener.
 - Before launch, have counsel review: brand/logo usage, photograph licensing, and
   any use of real names, likenesses, or quotes.

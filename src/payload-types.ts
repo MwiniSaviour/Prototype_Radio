@@ -252,7 +252,7 @@ export interface Author {
   name: string;
   role: string;
   /**
-   * Served image path, e.g. /assets/images/avatar-abu-bakari-sule.svg or /media/<file>.
+   * Served image path, e.g. /assets/images/avatar-abu-bakari-sule.jpg or /media/<file>.
    */
   avatarUrl?: string | null;
   bio: string;

@@ -27,8 +27,8 @@ export const events: EventItem[] = [
     startTime: "18:00",
     endTime: "22:00",
     image: {
-      src: "/assets/images/pulse-event-sunset-live.jpg",
-      alt: "Crowd with raised hands in front of palm trees at sunset during the Sunset Live Sessions at Labadi Beach",
+      src: "/assets/images/event-sunset-live.jpg",
+      alt: "A crowd with hands raised in front of a lit stage",
     },
     tags: ["Music", "Festival"],
     featured: true,
@@ -71,8 +71,8 @@ export const events: EventItem[] = [
     startTime: "19:00",
     endTime: "23:00",
     image: {
-      src: "/assets/images/pulse-station-highlife.jpg",
-      alt: "Highlife Classics cover art used for the Highlife Legends Night listing",
+      src: "/assets/images/event-highlife-night.jpg",
+      alt: "A live band playing under stage lights",
     },
     tags: ["Music", "Live Show"],
     priceFrom: 90,
@@ -105,8 +105,8 @@ export const events: EventItem[] = [
     startTime: "19:30",
     endTime: "22:00",
     image: {
-      src: "/assets/images/pulse-event-comedy-night.jpg",
-      alt: "Stand-up comedian holding a microphone under a warm spotlight on a small club stage",
+      src: "/assets/images/event-comedy-night.jpg",
+      alt: "A comedian at the microphone under a warm spotlight",
     },
     tags: ["Comedy", "Live Show"],
     priceFrom: 180,
@@ -148,8 +148,8 @@ export const events: EventItem[] = [
     startTime: "20:00",
     endTime: "02:00",
     image: {
-      src: "/assets/images/pulse-event-afrobeats-zone.jpg",
-      alt: "Silhouetted crowd with hands raised under purple and orange lights at AfroBeats Zone",
+      src: "/assets/images/event-afrobeats-zone.jpg",
+      alt: "A crowd dancing under purple club lights",
     },
     tags: ["Music", "Party"],
     priceFrom: 100,
@@ -191,8 +191,8 @@ export const events: EventItem[] = [
     startTime: "12:00",
     endTime: "23:00",
     image: {
-      src: "/assets/images/pulse-event-urban-vibes.jpg",
-      alt: "Illuminated festival pavilions and crowds at night during the Urban Vibes Festival",
+      src: "/assets/images/event-urban-vibes.jpg",
+      alt: "Festival-goers in front of an illuminated main stage",
     },
     tags: ["Music", "Festival", "Food & Drink"],
     priceFrom: 150,
@@ -230,7 +230,7 @@ export const listener: ListenerProfile = {
   id: "listener-saviour-mwini",
   name: "Saviour Mwini",
   email: "saviour@pulse.com",
-  avatarUrl: "/assets/images/pulse-avatar-saviour.jpg",
+  avatarUrl: "/assets/images/avatar-saviour.jpg",
   favouriteStationIds: ["station-prototype-fm"],
   notificationsEnabled: true,
 };

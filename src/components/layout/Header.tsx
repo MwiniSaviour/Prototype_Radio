@@ -5,13 +5,11 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import type { Category, Show, ShowSlot } from "@/lib/types";
 import { siteConfig } from "@/lib/constants";
-import { formatClock, formatDate } from "@/lib/format";
+import { formatClock } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { Container } from "../ui/Container";
-import { IconButtonLink } from "../ui/IconButton";
-import { IconClose, IconHeadphones, IconMenu, IconSearch } from "../ui/icons";
+import { IconClose, IconMenu, IconSearch, IconWaveform } from "../ui/icons";
 import { MobileMenu } from "./MobileMenu";
-import { ThemeToggle } from "./ThemeToggle";
 import { Wordmark } from "./Wordmark";
 
 /**
@@ -27,69 +25,77 @@ function isActivePath(pathname: string, href: string): boolean {
 }
 
 export interface SiteHeaderProps {
+  /** Kept for the on-air line in the utility bar; the layout already resolves it. */
   currentShow: Show | null;
   nextShow: { show: Show; slot: ShowSlot } | null;
   categories: Category[];
 }
 
-function OnAirStrip({
-  currentShow,
-  nextShow,
-}: {
-  currentShow: Show | null;
-  nextShow: { show: Show; slot: ShowSlot } | null;
-}) {
+const dateline = new Intl.DateTimeFormat("en-GB", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+
+function UtilityBar() {
+  const today = dateline.format(new Date()).toUpperCase();
+
   return (
-    <div className="border-b border-line bg-surface">
-      <Container className="flex h-9 items-center justify-between gap-4 text-xs text-muted">
+    <div className="hidden border-b border-line/80 md:block">
+      <Container className="flex h-[30px] items-center justify-between gap-6 text-[10.5px] font-medium tracking-[0.1em] text-muted uppercase">
         <p className="flex min-w-0 items-center gap-2">
-          {currentShow ? (
-            <>
-              <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
-                <span className="absolute inline-flex h-full w-full motion-safe:animate-ping rounded-full bg-brand opacity-70" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
-              </span>
-              <span className="font-semibold uppercase tracking-[0.16em] text-brand">On air</span>
-              <span className="truncate font-medium text-ink">{currentShow.name}</span>
-            </>
-          ) : nextShow ? (
-            <span className="truncate">
-              Off air — back with <span className="font-medium text-ink">{nextShow.show.name}</span>{" "}
-              at {formatClock(nextShow.slot.start)}
-            </span>
-          ) : (
-            <span>Off air</span>
-          )}
+          <span className="truncate">{today}</span>
+          <span aria-hidden="true" className="text-line-strong">
+            ·
+          </span>
+          <span className="shrink-0">Wa, Ghana</span>
         </p>
-        <p className="hidden shrink-0 sm:block" aria-hidden="true">
-          {formatDate(new Date().toISOString())}
-        </p>
+
+        <div className="flex shrink-0 items-center gap-5">
+          <Link href="/about" className="hidden transition-colors hover:text-ink sm:block">
+            Advertise
+          </Link>
+          <Link
+            href="/about#reach-the-newsroom"
+            className="hidden transition-colors hover:text-ink sm:block"
+          >
+            Contact
+          </Link>
+          <Link
+            href="/search"
+            aria-label="Search Prototype Radio"
+            className="grid h-5 w-5 place-items-center text-ink/70 transition-colors hover:text-ink"
+          >
+            <IconSearch className="h-[15px] w-[15px]" aria-hidden="true" />
+          </Link>
+        </div>
       </Container>
     </div>
   );
 }
 
-export function SiteHeader({ currentShow, nextShow, categories }: SiteHeaderProps) {
+export function SiteHeader({ categories }: SiteHeaderProps) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
-
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur supports-[backdrop-filter]:bg-paper/75">
-      <OnAirStrip currentShow={currentShow} nextShow={nextShow} />
+    <header className="sticky top-0 z-40 border-b border-line bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/85">
+      <UtilityBar />
 
-      <Container className="flex h-16 items-center justify-between gap-4">
+      <Container className="flex h-[58px] items-center justify-between gap-6 sm:h-[72px]">
         <Link
           href="/"
-          className="rounded-md focus-visible:focus-ring"
+          className="shrink-0 rounded-sm focus-visible:focus-ring"
           aria-current={pathname === "/" ? "page" : undefined}
+          aria-label="Prototype Radio — home"
         >
           <Wordmark />
         </Link>
 
         <nav aria-label="Primary" className="hidden lg:block">
-          <ul className="flex items-center gap-1">
+          <ul className="flex items-center gap-0.5 xl:gap-2">
             {siteConfig.nav.map((item) => {
               const active = isActivePath(pathname, item.href);
               return (
@@ -98,9 +104,11 @@ export function SiteHeader({ currentShow, nextShow, categories }: SiteHeaderProp
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "rounded-full px-3.5 py-2 text-sm font-medium transition-colors duration-150",
-                      "hover:bg-surface-2 focus-visible:focus-ring",
-                      active ? "text-brand" : "text-ink",
+                      "relative block px-2.5 py-6 text-[13.5px] font-medium whitespace-nowrap transition-colors duration-150 xl:px-3",
+                      "after:absolute after:inset-x-2.5 after:bottom-[18px] after:h-[2px] after:rounded-full after:bg-brand after:transition-opacity after:duration-150",
+                      active
+                        ? "text-ink after:opacity-100"
+                        : "text-ink/85 after:opacity-0 hover:text-brand hover:after:opacity-40",
                     )}
                   >
                     {item.label}
@@ -111,27 +119,31 @@ export function SiteHeader({ currentShow, nextShow, categories }: SiteHeaderProp
           </ul>
         </nav>
 
-        <div className="flex items-center gap-1.5">
-          <IconButtonLink href="/search" label="Search articles" className="hidden sm:inline-flex">
-            <IconSearch className="h-5 w-5" aria-hidden="true" />
-          </IconButtonLink>
-          <ThemeToggle />
+        <div className="flex shrink-0 items-center gap-3 sm:gap-4">
+          <Link
+            href="/search"
+            aria-label="Search articles"
+            className="hidden h-8 w-8 place-items-center text-ink transition-colors hover:text-brand sm:grid"
+          >
+            <IconSearch className="h-[18px] w-[18px]" aria-hidden="true" />
+          </Link>
           <Link
             href="/shows"
-            className="hidden h-9 items-center gap-2 rounded-full bg-brand px-4 text-sm font-semibold text-brand-fg shadow-card transition-colors duration-150 hover:bg-brand-hover focus-visible:focus-ring sm:inline-flex"
+            className="group hidden h-10 items-center gap-2.5 rounded-[3px] bg-panel px-4 text-[12.5px] font-semibold tracking-[0.02em] text-white transition-colors duration-150 hover:bg-black sm:inline-flex dark:border dark:border-line-strong dark:bg-surface-2 dark:text-ink dark:hover:bg-surface"
           >
-            <IconHeadphones className="h-4 w-4" aria-hidden="true" />
-            Listen live
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-brand" />
+            Listen Live
+            <IconWaveform className="h-4 w-4 text-white/55 dark:text-ink/45" aria-hidden="true" />
           </Link>
+
           <button
             type="button"
             id={MENU_TRIGGER_ID}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
-            title={menuOpen ? "Close menu" : "Open menu"}
             onClick={() => setMenuOpen((open) => !open)}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-ink transition-colors duration-150 hover:bg-surface-2 focus-visible:focus-ring lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-line text-ink transition-colors hover:bg-surface-2 focus-visible:focus-ring lg:hidden"
           >
             {menuOpen ? (
               <IconClose className="h-5 w-5" aria-hidden="true" />
@@ -147,4 +159,11 @@ export function SiteHeader({ currentShow, nextShow, categories }: SiteHeaderProp
       ) : null}
     </header>
   );
+}
+
+/** Small helper used by the app shell's on-air copy (kept next to the header). */
+export function onAirLine(currentShow: Show | null, nextShow: { show: Show; slot: ShowSlot } | null) {
+  if (currentShow) return `On air now · ${currentShow.name}`;
+  if (nextShow) return `Back at ${formatClock(nextShow.slot.start)} with ${nextShow.show.name}`;
+  return "Off air";
 }

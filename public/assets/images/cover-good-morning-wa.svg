@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Good Morning Wa cover art">
-  <rect width="800" height="800" fill="#191721"/>
-  <rect x="40" y="40" width="720" height="720" rx="48" fill="none" stroke="#f2b75c" stroke-width="4" opacity="0.6"/>
-  <g fill="#c01b2b"><rect x="160" y="370" width="28" height="60" rx="14"/><rect x="220" y="321.5" width="28" height="157" rx="14"/><rect x="280" y="273" width="28" height="254" rx="14"/><rect x="340" y="344.5" width="28" height="111" rx="14"/><rect x="400" y="296" width="28" height="208" rx="14"/><rect x="460" y="367.5" width="28" height="65" rx="14"/><rect x="520" y="319" width="28" height="162" rx="14"/><rect x="580" y="270.5" width="28" height="259" rx="14"/><rect x="640" y="342" width="28" height="116" rx="14"/></g>
-  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="56" font-weight="700" fill="#fbfaf7">Good Morning Wa</text>
-  <text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="4" fill="#f2b75c">MONDAY - FRIDAY 05:30</text>
-</svg>

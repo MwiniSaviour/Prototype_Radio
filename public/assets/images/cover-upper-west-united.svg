@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Upper West United cover art">
-  <rect width="800" height="800" fill="#191721"/>
-  <rect x="40" y="40" width="720" height="720" rx="48" fill="none" stroke="#f2b75c" stroke-width="4" opacity="0.6"/>
-  <circle cx="400" cy="280" r="96" fill="#fbfaf7"/><path d="M400 190l44 32-17 52h-54l-17-52z" fill="#c01b2b"/><path d="M400 184v192" stroke="#191721" stroke-width="8" opacity="0.25"/>
-  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#fbfaf7">Upper West United</text>
-  <text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="4" fill="#f2b75c">SPORT</text>
-</svg>

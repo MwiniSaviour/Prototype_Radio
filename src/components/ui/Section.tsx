@@ -13,7 +13,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(function Section(
   ref,
 ) {
   return (
-    <section ref={ref} className={cn("py-10 sm:py-14", className)} {...props}>
+    <section ref={ref} className={cn("py-8 sm:py-10", className)} {...props}>
       {containered ? <Container size={containerSize}>{children}</Container> : children}
     </section>
   );

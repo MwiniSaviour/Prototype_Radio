@@ -85,13 +85,13 @@ export async function TodaysShows({
     <section aria-labelledby={headingId} className={cn("min-w-0", className)}>
       <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
         <div className="min-w-0">
-          <p className="flex items-center gap-2 text-[0.6875rem] font-bold tracking-[0.2em] text-brand uppercase">
-            <IconWaveform className="h-4 w-4 shrink-0" aria-hidden="true" />
-            ON AIR &amp; UP NEXT
+          <p className="flex items-center gap-2 text-[0.625rem] font-bold tracking-[0.16em] uppercase">
+            <IconWaveform className="h-3.5 w-3.5 shrink-0 text-brand" aria-hidden="true" />
+            <span className="text-brand">On air &amp; up next</span>
           </p>
           <h2
             id={headingId}
-            className="mt-2.5 font-display text-3xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-4xl"
+            className="mt-2 font-display text-[28px] leading-[1.08] font-bold tracking-[-0.012em] text-ink sm:text-[32px]"
           >
             Today&rsquo;s Shows
           </h2>
@@ -99,17 +99,17 @@ export async function TodaysShows({
 
         <Link
           href="/shows"
-          className="group/link inline-flex shrink-0 items-center gap-2 rounded-sm pb-1 text-sm font-semibold text-muted transition-colors hover:text-ink focus-visible:focus-ring"
+          className="group/link inline-flex shrink-0 items-center gap-1.5 pb-1 text-[11.5px] font-semibold text-muted transition-colors hover:text-brand focus-visible:focus-ring"
         >
           View All Shows
           <IconArrowRight
-            className="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1 motion-reduce:group-hover/link:translate-x-0"
+            className="h-3.5 w-3.5 transition-transform duration-200 group-hover/link:translate-x-1 motion-reduce:group-hover/link:translate-x-0"
             aria-hidden="true"
           />
         </Link>
       </div>
 
-      <ul className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+      <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {entries.map(({ show, start, end }) => {
           const badge = badgeFor(show);
           const hosts = show.hosts.map((host) => host.name).join(" & ");
@@ -119,13 +119,13 @@ export async function TodaysShows({
             <li key={show.id} className="h-full">
               <article
                 className={cn(
-                  "group relative isolate flex h-full flex-col overflow-hidden rounded-card border border-line bg-surface",
-                  "transition-[border-color,box-shadow,transform] duration-200",
-                  "hover:-translate-y-0.5 hover:border-brand/35 hover:shadow-pop",
-                  "focus-within:border-brand/35 motion-reduce:transform-none motion-reduce:hover:translate-y-0",
+                  "group relative isolate flex h-full flex-col overflow-hidden border border-line bg-surface",
+                  "transition-[border-color,box-shadow] duration-200",
+                  "hover:border-line-strong hover:shadow-card",
+                  "focus-within:border-brand/40",
                 )}
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-surface-2">
+                <div className="relative aspect-[16/8.4] overflow-hidden bg-surface-2">
                   <Image
                     src={show.image.src}
                     alt={show.image.alt}
@@ -134,15 +134,15 @@ export async function TodaysShows({
                     className="object-cover motion-safe:transition-transform motion-safe:duration-500 motion-safe:group-hover:scale-[1.035]"
                   />
                   {badge ? (
-                    <span className="absolute top-2.5 left-2.5 inline-flex items-center rounded-full bg-brand px-2.5 py-1 text-[0.625rem] font-bold tracking-wider text-brand-fg uppercase">
+                    <span className="absolute top-2.5 left-2.5 inline-flex items-center rounded-[3px] bg-brand px-2 py-1 text-[9.5px] font-bold tracking-[0.12em] text-white uppercase">
                       {badge}
                     </span>
                   ) : null}
                 </div>
 
-                <div className="flex flex-1 flex-col p-4">
+                <div className="flex flex-1 flex-col px-3.5 pt-3 pb-3">
                   <div className="flex items-start justify-between gap-3">
-                    <h3 className="min-w-0 font-display text-base leading-snug font-bold tracking-tight text-ink">
+                    <h3 className="min-w-0 font-display text-[18px] leading-snug font-bold tracking-[-0.01em] text-ink">
                       {/* The ::after overlay makes the whole card a hit target;
                           no other interactive elements share this area. */}
                       <Link
@@ -158,21 +158,19 @@ export async function TodaysShows({
                     />
                   </div>
 
-                  <p className="mt-2 text-xs text-muted tabular-nums">
+                  <p className="mt-1 flex items-center gap-1.5 text-[10.5px] text-muted tabular-nums">
                     {formatClock(start)} – {formatClock(end)}
-                    <span aria-hidden="true" className="mx-1.5 text-line">
-                      |
-                    </span>
+                    <span aria-hidden="true" className="h-2.5 w-px bg-line" />
                     {days}
                   </p>
 
-                  <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-muted">
+                  <p className="mt-2 line-clamp-2 flex-1 text-[11.5px] leading-[1.5] text-muted">
                     {show.tagline}
                   </p>
 
-                  <div className="mt-3 flex items-center gap-2 border-t border-line pt-3">
+                  <div className="mt-3 flex items-center gap-2 border-t border-line pt-2.5">
                     <Avatar name={show.hosts[0].name} src={show.hosts[0].avatarUrl} size="xs" />
-                    <p className="truncate text-xs text-muted">
+                    <p className="truncate text-[10.5px] text-muted">
                       Hosted by <span className="font-medium text-ink">{hosts}</span>
                     </p>
                   </div>

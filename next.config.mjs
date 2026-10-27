@@ -12,6 +12,24 @@ import { withPayload } from "@payloadcms/next/withPayload";
 const nextConfig = {
   reactStrictMode: true,
 
+  // The dev-mode badge sits over the player bar in previews; the console is the
+  // place to read build state.
+  devIndicators: false,
+
+  /*
+   * The dev server is reached through the sandbox's preview proxy, so its Host
+   * header is not localhost. Next 16 rejects cross-origin dev requests unless
+   * the origin is listed here — without this the preview loads HTML but every
+   * /_next asset is blocked.
+   */
+  allowedDevOrigins: [
+    "*.e2b.app",
+    "*.arena.ai",
+    "*.usercontent.goog",
+    "localhost",
+    "127.0.0.1",
+  ],
+
   images: {
     // bionic libc has no glibc sharp prebuild, so the /_next/image optimizer
     // cannot run on this platform. Re-enable optimization (drop `unoptimized`)

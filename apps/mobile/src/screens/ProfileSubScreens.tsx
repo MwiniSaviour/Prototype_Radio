@@ -23,7 +23,7 @@ function SubScreenHeader({ title, subtitle }: { title: string; subtitle?: string
     <header className="flex items-start gap-2 px-5 pt-2">
       <BackButton tone="dark" onClick={() => navigate(-1)} label="Back" />
       <div className="min-w-0 flex-1 pt-0.5">
-        <h1 className="text-[22px] font-bold leading-tight tracking-[-0.025em] text-ink">{title}</h1>
+        <h1 className="font-display text-[24px] leading-tight font-bold tracking-[-0.014em] text-ink">{title}</h1>
         {subtitle ? <p className="mt-0.5 text-[12.5px] leading-snug text-muted">{subtitle}</p> : null}
       </div>
     </header>
@@ -49,9 +49,9 @@ export function MyEventsScreen() {
               <button
                 type="button"
                 onClick={() => navigate(`/events/${event.slug}`)}
-                className="flex w-full items-center gap-3.5 rounded-[15px] border border-line/90 bg-surface/70 p-2.5 text-left transition active:scale-[0.99]"
+                className="flex w-full items-center gap-3.5 rounded-[5px] border border-line/90 bg-surface/70 p-2.5 text-left transition active:scale-[0.99]"
               >
-                <span className="block h-[62px] w-[62px] shrink-0 overflow-hidden rounded-[11px] bg-media">
+                <span className="block h-[62px] w-[62px] shrink-0 overflow-hidden rounded-[4px] bg-media">
                   <img
                     src={mediaUrl(event.image.src)}
                     alt={event.image.alt}
@@ -127,7 +127,7 @@ export function FavoritesScreen() {
       />
 
       {rows.length === 0 ? (
-        <div className="mx-5 mt-5 rounded-[15px] border border-dashed border-line-strong/70 px-4 py-9 text-center">
+        <div className="mx-5 mt-5 rounded-[5px] border border-dashed border-line-strong/70 px-4 py-9 text-center">
           <Icon name="heart" size={20} className="mx-auto text-muted-soft" />
           <p className="mt-2 text-[13px] font-semibold text-ink">Nothing saved yet</p>
           <p className="mt-1 text-[12px] leading-snug text-muted">
@@ -138,13 +138,13 @@ export function FavoritesScreen() {
         <ul className="mt-4 space-y-2 px-3.5">
           {rows.map((row) => (
             <li key={`${row.favorite.kind}:${row.favorite.slug}`}>
-              <div className="flex items-center gap-3.5 rounded-[15px] border border-line/90 bg-surface/70 p-2.5">
+              <div className="flex items-center gap-3.5 rounded-[5px] border border-line/90 bg-surface/70 p-2.5">
                 <button
                   type="button"
                   onClick={() => navigate(row.to)}
                   className="flex min-w-0 flex-1 items-center gap-3.5 text-left transition active:scale-[0.99]"
                 >
-                  <span className="block h-[58px] w-[58px] shrink-0 overflow-hidden rounded-[11px] bg-media">
+                  <span className="block h-[58px] w-[58px] shrink-0 overflow-hidden rounded-[4px] bg-media">
                     <img
                       src={mediaUrl(row.art.src)}
                       alt={row.art.alt}
@@ -194,8 +194,8 @@ export function NotificationsScreen() {
     <div className="pb-6">
       <SubScreenHeader title="Notifications" subtitle="Choose what Prototype can tell you about." />
       <ul className="mt-4 space-y-2 px-3.5">
-        <li className="flex items-center gap-3 rounded-[15px] border border-line/90 bg-surface/70 p-3.5">
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-brand-soft text-brand">
+        <li className="flex items-center gap-3 rounded-[5px] border border-line/90 bg-surface/70 p-3.5">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[4px] bg-brand-soft text-brand">
             <Icon name="bell" size={18} />
           </span>
           <span className="min-w-0 flex-1 text-[13.5px] font-semibold text-ink">Push notifications</span>
@@ -208,7 +208,7 @@ export function NotificationsScreen() {
         {items.map((item) => (
           <li
             key={item.title}
-            className="flex items-start gap-3 rounded-[15px] border border-line/90 bg-surface/70 p-3.5"
+            className="flex items-start gap-3 rounded-[5px] border border-line/90 bg-surface/70 p-3.5"
           >
             <span className="min-w-0 flex-1">
               <span className="block text-[13.5px] font-semibold text-ink">{item.title}</span>
@@ -239,7 +239,7 @@ export function SettingsScreen() {
   return (
     <div className="pb-6">
       <SubScreenHeader title="Settings" subtitle="Your account and app details." />
-      <ul className="mx-5 mt-4 divide-y divide-line/70 rounded-[15px] border border-line/90 bg-surface/70">
+      <ul className="mx-5 mt-4 divide-y divide-line/70 rounded-[5px] border border-line/90 bg-surface/70">
         {rows.map((row) => (
           <li key={row.label} className="flex items-center justify-between gap-3 px-3.5 py-3">
             <span className="text-[13px] text-muted">{row.label}</span>
@@ -276,13 +276,13 @@ export function HelpScreen() {
       <SubScreenHeader title="Help & Support" subtitle="Answers to the usual questions." />
       <ul className="mt-4 space-y-2 px-3.5">
         {faqs.map((faq) => (
-          <li key={faq.q} className="rounded-[15px] border border-line/90 bg-surface/70 p-3.5">
+          <li key={faq.q} className="rounded-[5px] border border-line/90 bg-surface/70 p-3.5">
             <p className="text-[13.5px] font-semibold text-ink">{faq.q}</p>
             <p className="mt-1 text-[12px] leading-relaxed text-muted">{faq.a}</p>
           </li>
         ))}
       </ul>
-      <div className="mx-3.5 mt-3 rounded-[15px] bg-brand-soft/60 p-3.5">
+      <div className="mx-3.5 mt-3 rounded-[5px] bg-brand-soft/60 p-3.5">
         <p className="text-[13px] font-semibold text-ink">Still stuck?</p>
         <p className="mt-1 text-[12px] leading-relaxed text-muted">
           Email <span className="font-semibold text-brand">support@prototype.fm</span> and the team

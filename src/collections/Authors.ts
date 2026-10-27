@@ -21,7 +21,7 @@ export const Authors: CollectionConfig = {
       name: "avatarUrl",
       type: "text",
       admin: {
-        description: "Served image path, e.g. /assets/images/avatar-abu-bakari-sule.svg or /media/<file>.",
+        description: "Served image path, e.g. /assets/images/avatar-abu-bakari-sule.jpg or /media/<file>.",
       },
     },
     { name: "bio", type: "textarea", required: true },

@@ -27,11 +27,11 @@ export function ScheduleRow({ programme }: { programme: ScheduledProgramme }) {
   return (
     <div
       className={cn(
-        "flex w-full items-center gap-3 rounded-[14px] border p-2",
+        "flex w-full items-center gap-3 rounded-[5px] border p-2",
         live ? "border-brand/35 bg-brand-soft/50" : "border-line/90 bg-surface/70",
       )}
     >
-      <span className="relative block h-[68px] w-[76px] shrink-0 overflow-hidden rounded-[10px] bg-media">
+      <span className="relative block h-[68px] w-[76px] shrink-0 overflow-hidden rounded-[4px] bg-media">
         <img
           src={mediaUrl(show.image.src)}
           alt={show.image.alt}

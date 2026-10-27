@@ -23,11 +23,11 @@ export function CategoryNav({ categories, activeSlug, className }: CategoryNavPr
                 href={link.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "inline-flex rounded-full border px-3.5 py-1.5 text-sm font-medium",
+                  "inline-flex rounded-[3px] border px-3 py-[6px] text-[11.5px] font-semibold tracking-[0.06em] uppercase",
                   "transition-colors duration-150 focus-visible:focus-ring",
                   active
-                    ? "border-brand bg-brand text-brand-fg"
-                    : "border-line bg-surface text-ink hover:border-ink/25 hover:bg-surface-2",
+                    ? "border-brand bg-brand text-white"
+                    : "border-line bg-surface text-ink/80 hover:border-line-strong hover:text-ink",
                 )}
               >
                 {link.label}

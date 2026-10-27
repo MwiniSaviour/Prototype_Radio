@@ -38,7 +38,7 @@ export function LiveScreen() {
       <header className="flex items-start gap-2 px-5 pt-2">
         <BackButton tone="dark" onClick={goBack} label="Back" />
         <div className="min-w-0 flex-1 pt-0.5">
-          <h1 className="text-[22px] font-bold leading-tight tracking-[-0.025em] text-ink">
+          <h1 className="font-display text-[24px] leading-tight font-bold tracking-[-0.014em] text-ink">
             Live Radio
           </h1>
           <p className="mt-0.5 text-[12.5px] leading-snug text-muted">
@@ -49,7 +49,7 @@ export function LiveScreen() {
 
       {onAir ? (
         <section className="mt-3.5 px-5">
-          <div className="relative isolate overflow-hidden rounded-[18px] bg-media p-4 shadow-card">
+          <div className="relative isolate overflow-hidden rounded-[5px] bg-media p-4 shadow-card">
             {flagship ? (
               <img
                 src={mediaUrl(flagship.artwork.src)}

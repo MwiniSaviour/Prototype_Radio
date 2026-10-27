@@ -21,9 +21,9 @@ export function EventListCard({
     <button
       type="button"
       onClick={onSelect}
-      className="flex w-full items-start gap-3 rounded-[14px] border border-line/90 bg-surface/70 p-2 text-left shadow-[0_1px_2px_rgb(23_26_31/0.03)] transition active:scale-[0.99] active:bg-surface"
+      className="flex w-full items-start gap-3 rounded-[5px] border border-line/90 bg-surface/70 p-2 text-left shadow-[0_1px_2px_rgb(23_26_31/0.03)] transition active:scale-[0.99] active:bg-surface"
     >
-      <span className="relative block h-[96px] w-[86px] shrink-0 overflow-hidden rounded-[11px] bg-media">
+      <span className="relative block h-[96px] w-[86px] shrink-0 overflow-hidden rounded-[4px] bg-media">
         <img
           src={mediaUrl(event.image.src)}
           alt={event.image.alt}

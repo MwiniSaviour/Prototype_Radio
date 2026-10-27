@@ -153,7 +153,7 @@ export function EventDetailScreen() {
           {event.amenities.map((amenity) => (
             <li
               key={amenity.label}
-              className="flex shrink-0 items-center gap-1.5 rounded-[10px] bg-surface-2 px-2.5 py-[9px] text-[11.5px] font-medium text-[#333a45]"
+              className="flex shrink-0 items-center gap-1.5 rounded-[4px] bg-surface-2 px-2.5 py-[9px] text-[11.5px] font-medium text-[#333a45]"
             >
               <Icon
                 name={amenity.icon === "drink" ? "drink" : amenity.icon === "heart" ? "heart" : amenity.icon === "star" ? "sparkle" : "music"}
@@ -175,12 +175,12 @@ export function EventDetailScreen() {
             return (
               <li
                 key={tier.id}
-                className="rounded-[13px] border border-line/90 bg-surface/75 p-3 shadow-[0_1px_2px_rgb(23_26_31/0.03)]"
+                className="rounded-[4px] border border-line/90 bg-surface/75 p-3 shadow-[0_1px_2px_rgb(23_26_31/0.03)]"
               >
                 {/* The mock sets the price and the quantity stepper in one right-hand
                     column, with the tier name and its perks holding the left column. */}
                 <div className="flex items-start gap-2.5">
-                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[10px] bg-brand-soft text-brand">
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-[4px] bg-brand-soft text-brand">
                     <Icon name={tier.icon === "crown" ? "crown" : "gift"} size={18} />
                   </span>
                   <div className="min-w-0 flex-1">
@@ -208,7 +208,7 @@ export function EventDetailScreen() {
           type="button"
           onClick={buy}
           className={cn(
-            "mt-4 flex h-[46px] w-full items-center justify-center gap-2 rounded-[11px] bg-brand text-[14.5px] font-semibold text-white",
+            "mt-4 flex h-[46px] w-full items-center justify-center gap-2 rounded-[4px] bg-brand text-[14.5px] font-semibold text-white",
             "shadow-[0_14px_28px_-14px_rgb(252_83_3/0.85)] transition active:scale-[0.99] active:bg-brand-pressed",
           )}
         >
@@ -221,7 +221,7 @@ export function EventDetailScreen() {
       {confirmation ? (
         <div
           role="status"
-          className="animate-rise mx-5 mt-4 flex items-start gap-2.5 rounded-[14px] bg-success-soft px-3.5 py-3"
+          className="animate-rise mx-5 mt-4 flex items-start gap-2.5 rounded-[5px] bg-success-soft px-3.5 py-3"
         >
           <Icon name="check-circle" size={17} className="mt-px shrink-0 text-success" />
           <div className="min-w-0">
@@ -255,7 +255,7 @@ function Stepper({
   onDecrement: () => void;
 }) {
   return (
-    <div className="flex h-[32px] items-center gap-1 rounded-[8px] border border-line bg-paper px-1">
+    <div className="flex h-[32px] items-center gap-1 rounded-[5px] border border-line bg-paper px-1">
       <button
         type="button"
         onClick={onDecrement}

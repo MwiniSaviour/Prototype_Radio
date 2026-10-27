@@ -49,7 +49,7 @@ export function SearchScreen() {
       <h1 className="sr-only">Search</h1>
       <header className="flex items-center gap-2 px-5 pt-2">
         <BackButton tone="dark" onClick={() => navigate(-1)} label="Close search" />
-        <label className="flex h-[46px] flex-1 items-center gap-2.5 rounded-[13px] border border-line bg-surface/80 px-3.5 focus-within:border-brand/40">
+        <label className="flex h-[46px] flex-1 items-center gap-2.5 rounded-[4px] border border-line bg-surface/80 px-3.5 focus-within:border-brand/40">
           <Icon name="search" size={18} className="shrink-0 text-[#3c4657]" />
           <input
             autoFocus
@@ -94,9 +94,9 @@ export function SearchScreen() {
                 <button
                   type="button"
                   onClick={() => navigate("/live")}
-                  className="flex w-full items-center gap-3 rounded-[14px] border border-line/90 bg-surface/70 p-2.5 text-left"
+                  className="flex w-full items-center gap-3 rounded-[5px] border border-line/90 bg-surface/70 p-2.5 text-left"
                 >
-                  <span className="block h-11 w-11 overflow-hidden rounded-[10px] bg-media">
+                  <span className="block h-11 w-11 overflow-hidden rounded-[4px] bg-media">
                     <img
                       src={mediaUrl(station.artwork.src)}
                       alt={station.artwork.alt}
@@ -128,9 +128,9 @@ export function SearchScreen() {
                 <button
                   type="button"
                   onClick={() => navigate(`/events/${event.slug}`)}
-                  className="flex w-full items-center gap-3 rounded-[14px] border border-line/90 bg-surface/70 p-2.5 text-left"
+                  className="flex w-full items-center gap-3 rounded-[5px] border border-line/90 bg-surface/70 p-2.5 text-left"
                 >
-                  <span className="relative block h-[62px] w-[62px] shrink-0 overflow-hidden rounded-[11px] bg-media">
+                  <span className="relative block h-[62px] w-[62px] shrink-0 overflow-hidden rounded-[4px] bg-media">
                     <img
                       src={mediaUrl(event.image.src)}
                       alt={event.image.alt}

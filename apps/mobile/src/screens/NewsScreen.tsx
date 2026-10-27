@@ -33,7 +33,7 @@ export function NewsScreen() {
   return (
     <div className="pb-6">
       <div className="flex items-center justify-between gap-3 px-5 pt-3">
-        <h1 className="text-[22px] font-bold leading-tight tracking-[-0.025em] text-ink">News</h1>
+        <h1 className="font-display text-[24px] leading-tight font-bold tracking-[-0.014em] text-ink">News</h1>
         <CategoryMenu categories={newsCategories} active={desk} onSelect={setDesk} />
       </div>
 

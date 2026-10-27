@@ -41,14 +41,14 @@ export default async function PodcastsPage() {
 
   return (
     <>
-      <Container className="py-8">
+      <Container className="pt-5 pb-6">
         <Breadcrumbs items={[{ label: "Podcasts" }]} />
 
         <header className="max-w-2xl">
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+          <h1 className="font-display text-[32px] leading-[1.1] font-bold tracking-[-0.012em] text-ink sm:text-[40px]">
             Podcasts
           </h1>
-          <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">
+          <p className="mt-2.5 text-[14px] leading-[1.55] text-muted">
             {pluralize(episodeCount, "episode")} across{" "}
             {pluralize(series.length, "series")}. Every episode is free to listen to
             and share — no account, no app required.
@@ -61,8 +61,8 @@ export default async function PodcastsPage() {
         the full width: a 3-up row card with a 80px cover and a 40px play button
         already leaves ~140px for the headline, and any less wraps it badly.
       */}
-      <Section containerSize="wide">
-        <div className="grid items-start gap-10 min-[1440px]:grid-cols-[minmax(0,1fr)_19rem] min-[1440px]:gap-12">
+      <Section containerSize="wide" className="pt-2">
+        <div className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_366px] xl:gap-[34px]">
           <section aria-labelledby="listen-anytime-heading" className="min-w-0">
             <ListenAnytime
               headingId="listen-anytime-heading"
@@ -74,7 +74,7 @@ export default async function PodcastsPage() {
             />
           </section>
 
-          <aside className="min-[1440px]:sticky min-[1440px]:top-32">
+          <aside className="xl:sticky xl:top-32">
             <NewsletterRail />
           </aside>
         </div>
