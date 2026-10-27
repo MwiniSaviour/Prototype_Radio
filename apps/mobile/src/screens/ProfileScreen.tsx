@@ -81,8 +81,8 @@ export function ProfileScreen() {
       </nav>
 
       <section className="mt-5 px-5">
-        <div className="flex items-center gap-3 rounded-[13px] border border-line/90 bg-surface/70 p-3 shadow-[0_1px_2px_rgb(23_26_31/0.03)]">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[11px] bg-brand-soft text-brand">
+        <div className="flex items-center gap-3 rounded-[4px] border border-line/90 bg-surface/70 p-3 shadow-[0_1px_2px_rgb(23_26_31/0.03)]">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[4px] bg-brand-soft text-brand">
             <Icon name="bell" size={19} />
           </span>
           <div className="min-w-0 flex-1">

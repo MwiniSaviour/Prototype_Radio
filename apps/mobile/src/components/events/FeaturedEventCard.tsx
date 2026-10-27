@@ -28,7 +28,7 @@ export function FeaturedEventCard({
       type="button"
       onClick={onSelect}
       className={cn(
-        "relative isolate block w-full overflow-hidden rounded-[14px] bg-media text-left shadow-card",
+        "relative isolate block w-full overflow-hidden rounded-[5px] bg-media text-left shadow-card",
         "transition active:scale-[0.995]",
         featured ? "h-[228px]" : "h-[136px]",
       )}
@@ -94,7 +94,7 @@ export function FeaturedEventCard({
                 <span className="text-[12px] font-medium leading-none text-brand">
                   from <span className="text-[14px] font-bold">{cedis(event.priceFrom)}</span>
                 </span>
-                <span className="inline-flex h-[34px] items-center rounded-[10px] bg-brand px-4 text-[13px] font-semibold text-white shadow-[0_8px_18px_-10px_rgb(252_83_3/0.9)]">
+                <span className="inline-flex h-[34px] items-center rounded-[4px] bg-brand px-4 text-[13px] font-semibold text-white shadow-[0_8px_18px_-10px_rgb(252_83_3/0.9)]">
                   Get Tickets
                 </span>
               </span>

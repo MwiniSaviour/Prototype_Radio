@@ -29,9 +29,9 @@ export function TrendingEventRow({
       type="button"
       onClick={onSelect}
       aria-label={`${event.title}, ${badge.weekday} ${badge.day} ${badge.month}, ${event.venue}, ${booked} booked`}
-      className="flex w-full items-center gap-3 rounded-[14px] border border-line/90 bg-surface/70 p-2 text-left transition active:scale-[0.99] active:bg-surface"
+      className="flex w-full items-center gap-3 rounded-[5px] border border-line/90 bg-surface/70 p-2 text-left transition active:scale-[0.99] active:bg-surface"
     >
-      <span className="relative block h-[68px] w-[76px] shrink-0 overflow-hidden rounded-[10px] bg-media">
+      <span className="relative block h-[68px] w-[76px] shrink-0 overflow-hidden rounded-[4px] bg-media">
         <img
           src={mediaUrl(event.image.src)}
           alt={event.image.alt}

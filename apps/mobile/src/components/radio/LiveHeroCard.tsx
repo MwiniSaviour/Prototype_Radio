@@ -17,7 +17,7 @@ export function LiveHeroCard({ station }: { station: Station }) {
 
   return (
     <section
-      className="relative isolate mx-5 overflow-hidden rounded-[14px] bg-media shadow-card"
+      className="relative isolate mx-5 overflow-hidden rounded-[5px] bg-media shadow-card"
       aria-label={`${station.name} live player`}
     >
       <img

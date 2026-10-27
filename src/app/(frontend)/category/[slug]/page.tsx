@@ -40,7 +40,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const categories = await getCategories();
 
   return (
-    <Container className="py-8">
+    <Container className="pt-5 pb-10">
       <Breadcrumbs
         items={[
           { label: "Categories", href: "/category" },
@@ -48,28 +48,26 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         ]}
       />
 
-      <header className="max-w-2xl">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+      <header className="max-w-3xl">
+        <p className="text-[10.5px] font-bold tracking-[0.14em] text-brand uppercase">
           {pluralize(categoryArticles.length, "story", "stories")}
         </p>
-        <h1 className="mt-2 font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
+        <h1 className="mt-2 font-display text-[32px] leading-[1.1] font-bold tracking-[-0.012em] text-ink sm:text-[40px]">
           {category.name}
         </h1>
-        <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">
-          {category.description}
-        </p>
+        <p className="mt-2.5 text-[14px] leading-[1.55] text-muted">{category.description}</p>
       </header>
 
-      <div className="mt-6 border-y border-line py-4">
+      <div className="mt-6 border-y border-line py-3">
         <CategoryNav categories={categories} activeSlug={category.slug} />
       </div>
 
-      <section aria-label={`${category.name} stories`} className="mt-8">
+      <section aria-label={`${category.name} stories`} className="mt-7">
         <h2 className="sr-only">All {category.name} stories</h2>
         <ArticleGrid
           articles={categoryArticles}
           variant="default"
-          columns={2}
+          columns={3}
           emptyTitle={`No ${category.name} stories yet`}
           emptyDescription="This desk is still warming up. Check back shortly."
         />

@@ -14,7 +14,7 @@ export function LivePill({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-[7px] bg-live font-bold text-white",
+        "inline-flex items-center gap-1 rounded-[3px] bg-brand font-bold text-white",
         size === "sm" ? "px-1.5 py-[3px] text-[9px]" : "px-[7px] py-[4px] text-[10px]",
         className,
       )}
@@ -43,10 +43,10 @@ export function DateBadge({
 }) {
   const dims =
     size === "sm"
-      ? { box: "h-[38px] w-[33px] rounded-[8px]", weekday: "text-[7.5px]", day: "text-[13.5px]", month: "text-[7.5px]", gap: "gap-0" }
+      ? { box: "h-[38px] w-[33px] rounded-[5px]", weekday: "text-[7.5px]", day: "text-[13.5px]", month: "text-[7.5px]", gap: "gap-0" }
       : size === "lg"
-        ? { box: "h-[50px] w-[44px] rounded-[10px]", weekday: "text-[8.5px]", day: "text-[17px]", month: "text-[8.5px]", gap: "gap-0" }
-        : { box: "h-[42px] w-[37px] rounded-[9px]", weekday: "text-[8px]", day: "text-[15px]", month: "text-[8px]", gap: "gap-0" };
+        ? { box: "h-[50px] w-[44px] rounded-[4px]", weekday: "text-[8.5px]", day: "text-[17px]", month: "text-[8.5px]", gap: "gap-0" }
+        : { box: "h-[42px] w-[37px] rounded-[5px]", weekday: "text-[8px]", day: "text-[15px]", month: "text-[8px]", gap: "gap-0" };
 
   return (
     <span
@@ -72,7 +72,7 @@ export function Tag({ children, tone = "neutral" }: { children: React.ReactNode;
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-[6px] px-[7px] py-[4px] text-[10.5px] font-medium leading-none",
+        "inline-flex items-center rounded-[4px] px-[7px] py-[4px] text-[10.5px] font-medium leading-none",
         tone === "neutral"
           ? "bg-[#ece7df] text-[#5a6068]"
           : "bg-white/18 text-white ring-1 ring-white/20 backdrop-blur-sm",
@@ -123,14 +123,17 @@ export function SectionHeading({
 }) {
   return (
     <div className={cn("flex items-end justify-between gap-3", className)}>
-      <h2 className="text-[17.5px] font-bold leading-tight tracking-[-0.015em] text-ink">{title}</h2>
+      <h2 className="font-display text-[21px] leading-[1.1] font-bold tracking-[-0.012em] text-ink">
+        {title}
+      </h2>
       {action ? (
         <button
           type="button"
           onClick={onAction}
-          className="-mb-0.5 shrink-0 text-[12px] font-medium text-muted transition active:opacity-60"
+          className="-mb-0.5 flex shrink-0 items-center gap-1 text-[11.5px] font-semibold text-muted transition active:opacity-60"
         >
           {action}
+          <Icon name="chevron-right" size={12} className="translate-y-[0.5px]" />
         </button>
       ) : null}
     </div>

@@ -34,21 +34,21 @@ export function SectionHeading({
     <div className={cn("flex flex-wrap items-end justify-between gap-4", className)}>
       <div className="max-w-2xl">
         {eyebrow ? (
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-brand">
+          <p className="mb-1.5 text-[10px] font-bold tracking-[0.14em] text-brand uppercase">
             {eyebrow}
           </p>
         ) : null}
         <Heading
           id={headingId}
           className={cn(
-            "font-display text-2xl leading-tight font-bold tracking-tight text-ink sm:text-3xl",
+            "font-display text-[26px] leading-[1.1] font-bold tracking-[-0.012em] text-ink sm:text-[32px]",
             headingClassName,
           )}
         >
           {title}
         </Heading>
         {description ? (
-          <p className="mt-2 text-[0.9375rem] leading-relaxed text-muted">{description}</p>
+          <p className="mt-2 text-[13px] leading-[1.55] text-muted">{description}</p>
         ) : null}
       </div>
       {action ? (

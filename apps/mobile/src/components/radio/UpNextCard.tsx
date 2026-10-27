@@ -31,7 +31,7 @@ export function UpNextCard({
       className="block w-full text-left transition active:scale-[0.97]"
       aria-label={`${show.name}, ${day} at ${clock(slot.start)}, presented by ${presenter ?? "the station"}`}
     >
-      <span className="relative block aspect-square w-full overflow-hidden rounded-[12px] bg-media">
+      <span className="relative block aspect-square w-full overflow-hidden rounded-[4px] bg-media">
         {artwork.src ? (
           <img
             src={mediaUrl(artwork.src)}

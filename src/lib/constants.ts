@@ -1,25 +1,34 @@
 import type { NavItem, SocialLink } from "./types";
 
 export const siteConfig = {
-  name: process.env.NEXT_PUBLIC_SITE_NAME ?? "Radio Waa",
-  shortName: "WAA",
-  legalName: "Radio Waa Broadcasting",
-  tagline: "Live radio. Real stories. Every hour.",
+  name: process.env.NEXT_PUBLIC_SITE_NAME ?? "Prototype Radio",
+  shortName: "PROTOTYPE",
+  legalName: "Prototype Radio Broadcasting",
+  tagline: "The Voice of Wa.",
   description:
-    "Radio Waa is an independent broadcaster and newsroom: live shows around the clock, in-depth reporting from the communities we serve, and podcasts you can take with you.",
+    "Prototype Radio is a broadcaster and newsroom in Wa, Upper West Region: live shows around the clock, reporting from the communities we serve, and podcasts you can take with you.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://radio-waa.example",
   locale: "en_US",
   /** localStorage key for the persisted theme choice (see ThemeToggle + layout script). */
   themeStorageKey: "radio-waa-theme",
   themeColors: {
-    light: "#FBFAF7",
-    dark: "#0F0E13",
+    light: "#F7F5F1",
+    dark: "#0F0E0D",
   },
+  /*
+   * The masthead's section rail. Ordered like a newspaper front page: the
+   * homepage, the desks the station reports on, then the listening surfaces.
+   */
   nav: [
-    { label: "Home", href: "/" },
+    { label: "News", href: "/" },
+    { label: "Ghana", href: "/category/local-news" },
+    { label: "Politics", href: "/category/politics" },
+    { label: "Business", href: "/category/business" },
+    { label: "Tech", href: "/category/technology" },
+    { label: "Sports", href: "/category/sports" },
+    { label: "Culture", href: "/category/entertainment" },
     { label: "Shows", href: "/shows" },
     { label: "Podcasts", href: "/podcasts" },
-    { label: "About", href: "/about" },
   ] satisfies NavItem[],
   footerNav: [
     {

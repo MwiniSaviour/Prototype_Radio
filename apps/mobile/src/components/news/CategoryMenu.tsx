@@ -75,7 +75,7 @@ export function CategoryMenu({
           ref={panelRef}
           role="menu"
           aria-label="News categories"
-          className="animate-fade absolute right-0 top-11 z-30 w-[248px] overflow-hidden rounded-[14px] border border-line bg-surface shadow-raised"
+          className="animate-fade absolute right-0 top-11 z-30 w-[248px] overflow-hidden rounded-[5px] border border-line bg-surface shadow-raised"
         >
           <div className="flex items-center justify-between border-b border-line px-3.5 py-2.5">
             <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted">

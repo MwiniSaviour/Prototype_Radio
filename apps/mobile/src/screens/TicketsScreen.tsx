@@ -34,7 +34,7 @@ export function TicketsScreen() {
       <ScreenHeader title="My Tickets" subtitle="Your upcoming and past events." className="pt-0.5" />
 
       <div className="mt-3.5 px-5">
-        <div className="flex rounded-[12px] bg-surface-3/70 p-[2px]" role="tablist" aria-label="Ticket history">
+        <div className="flex rounded-[4px] bg-surface-3/70 p-[2px]" role="tablist" aria-label="Ticket history">
           {(["upcoming", "past"] as const).map((value) => {
             const isActive = tab === value;
             return (
@@ -45,7 +45,7 @@ export function TicketsScreen() {
                 type="button"
                 onClick={() => setTab(value)}
                 className={cn(
-                  "h-[35px] flex-1 rounded-[10px] text-[13px] font-semibold capitalize transition",
+                  "h-[35px] flex-1 rounded-[4px] text-[13px] font-semibold capitalize transition",
                   isActive
                     ? "bg-brand text-white shadow-[0_6px_16px_-8px_rgb(252_83_3/0.9)]"
                     : "text-[#3c4657]",
@@ -67,9 +67,9 @@ export function TicketsScreen() {
               <button
                 type="button"
                 onClick={() => navigate(`/events/${event.slug}`)}
-                className="flex w-full items-start gap-3 rounded-[13px] border border-line/90 bg-surface/70 p-2 text-left shadow-[0_1px_2px_rgb(23_26_31/0.03)] transition active:scale-[0.99]"
+                className="flex w-full items-start gap-3 rounded-[4px] border border-line/90 bg-surface/70 p-2 text-left shadow-[0_1px_2px_rgb(23_26_31/0.03)] transition active:scale-[0.99]"
               >
-                <span className="relative block h-[96px] w-[86px] shrink-0 overflow-hidden rounded-[11px] bg-media">
+                <span className="relative block h-[96px] w-[86px] shrink-0 overflow-hidden rounded-[4px] bg-media">
                   <img
                     src={mediaUrl(event.image.src)}
                     alt={event.image.alt}

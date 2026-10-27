@@ -4,7 +4,11 @@ import { cn } from "@/lib/utils";
 type ContainerSize = "default" | "narrow" | "wide";
 
 const sizes: Record<ContainerSize, string> = {
-  default: "max-w-6xl",
+  /**
+   * 1330px box with 40px gutters: at 1536 the content edges land on 143/1393,
+   * the measure the reference front page uses.
+   */
+  default: "max-w-[83.125rem]",
   narrow: "max-w-3xl",
   wide: "max-w-[88rem]",
 };
@@ -20,7 +24,7 @@ export const Container = forwardRef<HTMLDivElement, ContainerProps>(function Con
   return (
     <div
       ref={ref}
-      className={cn("mx-auto w-full px-4 sm:px-6 lg:px-8", sizes[size], className)}
+      className={cn("mx-auto w-full px-4 sm:px-6 lg:px-10", sizes[size], className)}
       {...props}
     />
   );

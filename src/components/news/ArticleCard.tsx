@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Article } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/Badge";
 import { IconArrowRight } from "@/components/ui/icons";
 import { Byline } from "./Byline";
 
@@ -27,18 +26,18 @@ const imageSizes: Record<ArticleCardVariant, string> = {
 };
 
 const imageAspect: Record<ArticleCardVariant, string> = {
-  hero: "aspect-[16/10] sm:aspect-[16/9]",
+  hero: "aspect-[16/10] sm:aspect-[1000/285]",
   feature: "aspect-[4/3]",
-  default: "aspect-[16/10]",
+  default: "aspect-[16/10.2]",
   compact: "aspect-square",
   list: "aspect-video",
 };
 
 function CategoryBadge({ article }: { article: Article }) {
   return (
-    <Badge variant="brand" size="sm">
+    <span className="text-[10px] font-bold tracking-[0.14em] text-brand uppercase">
       {article.category.name}
-    </Badge>
+    </span>
   );
 }
 
@@ -51,7 +50,7 @@ function ArticleImage({
   variant: ArticleCardVariant;
   priority: boolean;
 }) {
-  const rounded = variant === "compact" ? "rounded-lg" : "rounded-card";
+  const rounded = variant === "compact" ? "rounded-[3px]" : "rounded-[2px]";
 
   return (
     <div
@@ -88,7 +87,7 @@ export function ArticleCard({
   const heading = headingLevel ?? (variant === "hero" || variant === "feature" ? 2 : 3);
   const Heading = heading === 2 ? "h2" : "h3";
   const href = `/article/${article.slug}`;
-  const titleClasses = "font-display font-bold tracking-tight text-ink group-hover:text-brand motion-safe:transition-colors motion-safe:duration-150";
+  const titleClasses = "font-display font-bold tracking-[-0.01em] text-ink group-hover:text-brand motion-safe:transition-colors motion-safe:duration-150";
 
   if (variant === "hero") {
     return (
@@ -211,24 +210,26 @@ export function ArticleCard({
 
   return (
     <article className={cn("group flex flex-col", className)}>
-      <Link href={href} className="flex h-full flex-col rounded-card focus-visible:focus-ring">
+      <Link href={href} className="flex h-full flex-col rounded-[2px] focus-visible:focus-ring">
         <ArticleImage article={article} variant="default" priority={priority} />
-        <div className="flex flex-1 flex-col p-4">
+        <div className="flex flex-1 flex-col pt-3">
           <CategoryBadge article={article} />
-          <Heading className={cn(titleClasses, "mt-2.5 text-lg leading-snug")}>
+          <Heading className={cn(titleClasses, "mt-1.5 text-[19px] leading-[1.22]")}>
             {article.title}
           </Heading>
           {showExcerpt ? (
-            <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted">
+            <p className="mt-1.5 line-clamp-3 flex-1 text-[12.5px] leading-[1.5] text-muted">
               {article.excerpt}
             </p>
           ) : null}
-          <Byline
-            author={article.author}
-            publishedAt={article.publishedAt}
-            readingMinutes={article.readingMinutes}
-            className="mt-3"
-          />
+          {/* The grid's footer is a stamp, not a full byline: small caps, no avatar. */}
+          <p className="mt-2.5 flex flex-wrap items-center gap-x-2 text-[10px] font-semibold tracking-[0.12em] text-muted-soft uppercase">
+            <span>{article.author.name}</span>
+            <span aria-hidden="true">·</span>
+            <time dateTime={article.publishedAt}>{formatShort(article.publishedAt)}</time>
+            <span aria-hidden="true">·</span>
+            <span className="normal-case tracking-normal">{article.readingMinutes} min read</span>
+          </p>
         </div>
       </Link>
     </article>

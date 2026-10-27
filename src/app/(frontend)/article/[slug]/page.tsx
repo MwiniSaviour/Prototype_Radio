@@ -55,7 +55,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
-      <Container className="py-8">
+      <Container className="pt-5 pb-10">
         <Breadcrumbs
           items={[
             { label: article.category.name, href: `/category/${article.category.slug}` },
@@ -66,25 +66,24 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         <article className="mx-auto max-w-3xl">
           <header className="flex flex-col gap-4">
             <div className="flex flex-wrap items-center gap-3">
-              <Badge variant="brand">{article.category.name}</Badge>
+              <span className="text-[10.5px] font-bold tracking-[0.14em] text-brand uppercase">
+                {article.category.name}
+              </span>
               {article.breaking ? (
                 <span className="rounded-full bg-brand px-2.5 py-0.5 text-[0.6875rem] font-bold uppercase tracking-wider text-brand-fg">
                   Breaking
                 </span>
               ) : null}
-              <time
-                dateTime={article.publishedAt}
-                className="text-xs text-muted"
-              >
+              <time dateTime={article.publishedAt} className="text-[11px] text-muted-soft">
                 {formatDateTime(article.publishedAt)}
               </time>
             </div>
 
-            <h1 className="font-display text-3xl leading-[1.1] font-extrabold tracking-tight text-ink sm:text-4xl lg:text-5xl">
+            <h1 className="font-display text-[32px] leading-[1.1] font-bold tracking-[-0.014em] text-ink sm:text-[42px] lg:text-[46px]">
               {article.title}
             </h1>
 
-            <p className="text-lg leading-relaxed text-muted sm:text-xl">
+            <p className="text-[16px] leading-[1.5] text-ink-soft sm:text-[17px]">
               {article.excerpt}
             </p>
 
@@ -100,7 +99,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </header>
 
           <figure className="mt-6">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-card border border-line bg-surface-2">
+            <div className="relative aspect-[16/9] overflow-hidden bg-surface-2">
               <Image
                 src={article.image.src}
                 alt={article.image.alt}
@@ -129,7 +128,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               ))}
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 rounded-card border border-line bg-surface p-4">
+            <div className="flex flex-wrap items-center gap-4 border border-line bg-surface p-4">
               <Avatar name={article.author.name} src={article.author.avatarUrl} size="md" />
               <div className="min-w-0 flex-1">
                 <p className="font-semibold text-ink">{article.author.name}</p>

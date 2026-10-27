@@ -27,19 +27,19 @@ export function NowPlayingChip({
   return (
     <div
       className={cn(
-        "flex items-center gap-3 rounded-xl border border-white/15 bg-black/55 p-2 pr-4 backdrop-blur-sm",
+        "flex items-center gap-2.5 rounded-[4px] border border-white/10 bg-black/55 p-1.5 pr-4 backdrop-blur-sm",
         className,
       )}
     >
-      <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-surface-2">
+      <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-[3px] bg-surface-2">
         <Image src={image.src} alt={image.alt} fill sizes="44px" className="object-cover" />
       </div>
       <div className="min-w-0">
-        <p className="text-[0.625rem] font-bold tracking-[0.16em] text-white/65 uppercase">
+        <p className="text-[0.5625rem] font-semibold tracking-[0.14em] text-white/60 uppercase">
           {label}
         </p>
-        <p className="truncate text-sm leading-tight font-semibold text-white">{title}</p>
-        <p className="truncate text-xs leading-tight text-white/75">— {artist}</p>
+        <p className="truncate text-[12.5px] leading-tight font-semibold text-white">{title}</p>
+        <p className="truncate text-[11px] leading-tight text-white/70">— {artist}</p>
       </div>
     </div>
   );

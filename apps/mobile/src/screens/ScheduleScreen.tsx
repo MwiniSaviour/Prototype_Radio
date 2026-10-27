@@ -22,7 +22,7 @@ export function ScheduleScreen() {
       <header className="flex items-start gap-2 px-5 pt-2">
         <BackButton tone="dark" onClick={goBack} label="Back" />
         <div className="min-w-0 flex-1 pt-0.5">
-          <h1 className="text-[22px] font-bold leading-tight tracking-[-0.025em] text-ink">
+          <h1 className="font-display text-[24px] leading-tight font-bold tracking-[-0.014em] text-ink">
             Broadcast Schedule
           </h1>
           <p className="mt-0.5 text-[12.5px] leading-snug text-muted">

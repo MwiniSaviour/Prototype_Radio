@@ -1,30 +1,22 @@
-import { ArticleGrid } from "@/components/news/ArticleGrid";
-import { BreakingNewsTicker } from "@/components/news/BreakingNewsTicker";
-import { CategoryNav } from "@/components/news/CategoryNav";
-import { ListenAnytime } from "@/components/news/ListenAnytime";
-import { LiveBadge } from "@/components/news/LiveBadge";
-import { NewsletterRail } from "@/components/news/NewsletterRail";
-import { TrendingList } from "@/components/news/TrendingList";
-import { ArticleCard } from "@/components/news/ArticleCard";
-import { LivePlayerHero } from "@/components/radio/LivePlayerHero";
-import { PromoCard } from "@/components/radio/PromoCard";
-import { ShowScheduleRail } from "@/components/radio/ShowScheduleRail";
-import { TodaysShows } from "@/components/radio/TodaysShows";
-import { Reveal } from "@/components/motion/Reveal";
+import Image from "next/image";
+import Link from "next/link";
+
+import { BigStory } from "@/components/news/BigStory";
+import { BreakingBar } from "@/components/news/BreakingBar";
+import { LatestStories } from "@/components/news/LatestStories";
+import { MostRead } from "@/components/news/MostRead";
+import { RegionList } from "@/components/news/RegionList";
+import { OnAirCard } from "@/components/radio/OnAirCard";
 import { Container } from "@/components/ui/Container";
-import { Section } from "@/components/ui/Section";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import {
   getBreakingArticles,
-  getCategories,
   getCurrentShow,
   getFeaturedArticles,
   getLatestArticles,
-  getLatestEpisodes,
   getNextShow,
-  getShowById,
   getTrendingArticles,
 } from "@/content";
+import { formatRelativeTime } from "@/lib/format";
 import type { Show, Weekday } from "@/lib/types";
 
 const DAY_ORDER: Weekday[] = [
@@ -48,131 +40,104 @@ function getCurrentSlot(show: Show, now: Date = new Date()): Show["schedule"][nu
       const [endHours, endMinutes] = slot.end.split(":").map(Number);
       const start = startHours * 60 + startMinutes;
       let end = endHours * 60 + endMinutes;
-      if (end <= start) end += 24 * 60; // slot crosses midnight
+      if (end <= start) end += 24 * 60;
       return minutes >= start && minutes < end;
     }) ?? null
   );
 }
 
+/**
+ * The front page.
+ *
+ * A newspaper grid: one lead story at the top of the main column, three latest
+ * stories beneath it, and a rail carrying what is on air, what is being read and
+ * the coverage index. Every block is fed by the same Payload-backed content as
+ * the app — there is no second copy of the newsroom.
+ */
 export default async function HomePage() {
-  const breaking = await getBreakingArticles();
-  const [lead, ...restFeatured] = await getFeaturedArticles(3);
-  const trending = await getTrendingArticles(5);
-  const latest = await getLatestArticles(6);
-  const episodes = await getLatestEpisodes(3);
-  const categories = await getCategories();
+  const [featured, latest, trending, breaking] = await Promise.all([
+    getFeaturedArticles(4),
+    getLatestArticles(9),
+    getTrendingArticles(5),
+    getBreakingArticles(),
+  ]);
 
-  const episodeItems = await Promise.all(
-    episodes.map(async (episode) => ({
-      episode,
-      show: await getShowById(episode.showId),
-    })),
-  );
+  const [lead] = featured;
+  // The lead must not repeat inside the latest row.
+  const latestWithoutLead = latest.filter((article) => article.id !== lead?.id);
+  const latestCards = latestWithoutLead.slice(0, 3);
+  const moreStories = latestWithoutLead.slice(3, 8);
 
   const liveShow = await getCurrentShow();
   const nextShow = await getNextShow();
-  // The hero leads with the live show; when the station is between shows it
-  // features the next one instead of inventing a live state.
   const heroShow = liveShow ?? nextShow?.show ?? null;
   const heroSlot = liveShow ? getCurrentSlot(liveShow) : (nextShow?.slot ?? null);
 
   return (
     <>
-      {breaking.length > 0 ? <BreakingNewsTicker articles={breaking} /> : null}
+      {breaking.length > 0 ? <BreakingBar articles={breaking} /> : null}
 
-      {/*
-        Radio block: live player + schedule rail, today's shows + promo,
-        podcasts + newsletter — three rows on one two-column grid, the layout
-        of the editorial reference. The newsroom sections follow below so the
-        page still reads as a news *and* radio product.
-      */}
-      <Section containerSize="wide" className="pt-8 sm:pt-10">
-        <div className="flex flex-col gap-10 sm:gap-12">
-          <div className="grid items-stretch gap-6 xl:grid-cols-[minmax(0,1fr)_21rem] xl:gap-10">
-            {heroShow ? (
-              <LivePlayerHero
-                show={heroShow}
-                slot={heroSlot}
-                isLive={Boolean(liveShow)}
-              />
-            ) : null}
-            <ShowScheduleRail />
-          </div>
-
-          <div className="grid items-stretch gap-6 xl:grid-cols-[minmax(0,1fr)_21rem] xl:gap-10">
-            <TodaysShows currentShow={liveShow} nextShow={nextShow} />
-            <PromoCard />
-          </div>
-
-          <div className="grid items-stretch gap-6 xl:grid-cols-[minmax(0,1fr)_21rem] xl:gap-10">
-            <section aria-labelledby="podcasts-heading" className="min-w-0">
-              <ListenAnytime
-                headingId="podcasts-heading"
-                eyebrow={{ muted: "Podcasts", accent: "& Featured" }}
-                title="Listen Anytime"
-                description="Long listens and extended interviews, whenever you want them."
-                action={{ label: "View All Podcasts", href: "/podcasts" }}
-                items={episodeItems}
-              />
-            </section>
-            <NewsletterRail />
-          </div>
-        </div>
-      </Section>
-
-      {/* Category rail: persistent navigation into each desk. */}
-      <div className="border-y border-line bg-surface py-4">
-        <Container>
-          <CategoryNav categories={categories} />
-        </Container>
-      </div>
-
-      {/* Lead: the day's most important story, plus what is moving right now. */}
-      <Section aria-labelledby="top-stories-heading">
-        <div className="grid gap-10 lg:grid-cols-[1fr_20rem]">
+      <Container className="pt-6 pb-12 sm:pt-7">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_366px] lg:gap-[34px]">
           <div className="min-w-0">
-            <SectionHeading
-              as="h2"
-              id="top-stories-heading"
-              eyebrow="Radio Waa newsroom"
-              title="Top stories"
-              className="mb-6"
-            />
-            <div className="flex flex-col gap-8">
-              {lead ? <ArticleCard article={lead} variant="hero" priority /> : null}
-              {restFeatured.length > 0 ? (
-                <div className="grid gap-6 sm:grid-cols-2">
-                  {restFeatured.map((article) => (
-                    <ArticleCard key={article.id} article={article} variant="default" />
+            {lead ? <BigStory article={lead} /> : null}
+
+            <LatestStories articles={latestCards} />
+
+            {moreStories.length > 0 ? (
+              <section aria-labelledby="more-heading" className="mt-9 border-t border-line pt-5">
+                <h2
+                  id="more-heading"
+                  className="font-display text-[26px] leading-none font-bold tracking-[-0.01em] text-ink"
+                >
+                  More from the newsroom
+                </h2>
+
+                <ul className="mt-4 divide-y divide-line">
+                  {moreStories.map((article) => (
+                    <li key={article.id}>
+                      <Link
+                        href={`/article/${article.slug}`}
+                        className="group flex items-start gap-4 py-4 transition-colors"
+                      >
+                        <span className="relative h-[68px] w-[96px] shrink-0 overflow-hidden bg-surface-2">
+                          <Image
+                            src={article.image.src}
+                            alt={article.image.alt}
+                            fill
+                            sizes="96px"
+                            className="object-cover"
+                          />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-[10px] font-bold tracking-[0.14em] text-brand uppercase">
+                            {article.category.name}
+                          </span>
+                          <span className="mt-1 block font-display text-[16.5px] leading-snug font-bold text-ink transition-colors group-hover:text-brand">
+                            {article.title}
+                          </span>
+                          <span className="mt-1 block text-[11px] tracking-[0.1em] text-muted-soft uppercase">
+                            {formatRelativeTime(article.publishedAt)}
+                          </span>
+                        </span>
+                      </Link>
+                    </li>
                   ))}
-                </div>
-              ) : null}
-            </div>
+                </ul>
+              </section>
+            ) : null}
           </div>
 
-          <aside aria-labelledby="trending-heading" className="lg:sticky lg:top-32 lg:self-start">
-            <div className="rounded-card border border-line bg-surface p-5">
-              <h2 id="trending-heading" className="font-display text-lg font-bold text-ink">
-                Trending now
-              </h2>
-              <TrendingList articles={trending} className="mt-3" />
-            </div>
-            <LiveBadge show={liveShow} nextShow={nextShow} className="mt-4" />
+          <aside className="min-w-0 space-y-7" aria-label="Live radio, most read and coverage">
+            {heroShow ? (
+              <OnAirCard show={heroShow} slot={heroSlot} isLive={Boolean(liveShow)} />
+            ) : null}
+
+            <MostRead articles={trending} />
+            <RegionList />
           </aside>
         </div>
-      </Section>
-
-      <Section aria-labelledby="latest-heading">
-        <SectionHeading
-          id="latest-heading"
-          eyebrow="Fresh from the desk"
-          title="Latest stories"
-          description="Everything the newsroom filed, newest first."
-        />
-        <Reveal className="mt-6">
-          <ArticleGrid articles={latest} variant="default" columns={3} />
-        </Reveal>
-      </Section>
+      </Container>
     </>
   );
 }

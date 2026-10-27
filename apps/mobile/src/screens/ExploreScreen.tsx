@@ -54,7 +54,7 @@ export function ExploreScreen() {
       />
 
       <div className="mt-3.5 flex items-center gap-2 px-5">
-        <label className="flex h-[44px] flex-1 items-center gap-2 rounded-[11px] border border-line bg-surface/85 px-3 focus-within:border-brand/40">
+        <label className="flex h-[44px] flex-1 items-center gap-2 rounded-[4px] border border-line bg-surface/85 px-3 focus-within:border-brand/40">
           <Icon name="search" size={17} className="shrink-0 text-[#3c4657]" />
           <input
             type="search"
@@ -71,7 +71,7 @@ export function ExploreScreen() {
           aria-label="Filter events"
           aria-expanded={filterOpen}
           className={cn(
-            "grid h-[44px] w-[44px] shrink-0 place-items-center rounded-[11px] border transition active:scale-95",
+            "grid h-[44px] w-[44px] shrink-0 place-items-center rounded-[4px] border transition active:scale-95",
             filterOpen
               ? "border-brand/30 bg-brand-soft text-brand"
               : "border-line bg-surface/80 text-[#1d2532]",
@@ -97,7 +97,7 @@ export function ExploreScreen() {
               onClick={() => setActive(filter)}
               aria-pressed={isActive}
               className={cn(
-                "h-[30px] shrink-0 snap-start rounded-[7px] px-3 text-[11.5px] font-medium transition active:scale-95",
+                "h-[30px] shrink-0 snap-start rounded-[4px] px-3 text-[11.5px] font-medium transition active:scale-95",
                 isActive
                   ? "bg-brand text-white shadow-[0_6px_14px_-6px_rgb(252_83_3/0.7)]"
                   : "border border-line bg-surface/70 text-[#3c4657]",
@@ -149,7 +149,7 @@ export function ExploreScreen() {
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="rounded-[16px] border border-dashed border-line-strong/70 bg-surface/50 px-4 py-8 text-center">
+    <div className="rounded-[5px] border border-dashed border-line-strong/70 bg-surface/50 px-4 py-8 text-center">
       <p className="text-[13px] leading-relaxed text-muted">{message}</p>
     </div>
   );

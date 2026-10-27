@@ -16,29 +16,30 @@
   --font-display: "Playfair Display Variable", "Playfair Display", Georgia,
     "Times New Roman", serif;
 
-  /* Ground + surfaces */
-  --color-paper: #f6f3ef;
-  --color-paper-deep: #efeae3;
-  --color-surface: #fdfcfa;
-  --color-surface-2: #f1ede7;
-  --color-surface-3: #e8e3db;
+  /* Ground + surfaces — same values as the website's globals.css. */
+  --color-paper: #f7f5f1;
+  --color-paper-deep: #f1eee7;
+  --color-surface: #ffffff;
+  --color-surface-2: #f1eee7;
+  --color-surface-3: #e8e4dc;
 
   /* Type */
-  --color-ink: #171a1f;
-  --color-ink-soft: #333840;
-  --color-muted: #6e747e;
-  --color-muted-soft: #8b909a;
+  --color-ink: #14120f;
+  --color-ink-soft: #2a2723;
+  --color-muted: #6c665f;
+  --color-muted-soft: #8d867d;
 
   /* Lines */
-  --color-line: #e8e2d9;
-  --color-line-strong: #d9d2c7;
+  --color-line: #e4e0d7;
+  --color-line-strong: #d3cec3;
 
   /* Brand */
   --color-brand: #fc5303;
   --color-brand-pressed: #e34800;
   --color-brand-soft: #fdeadf;
   --color-brand-fg: #ffffff;
-  --color-live: #f8090d;
+  /* Live uses the brand orange, never a second red — see globals.css on the web. */
+  --color-live: #fc5303;
 
   /* Status */
   --color-success: #1c8a44;
@@ -49,8 +50,10 @@
   /* Media ground (always dark, both themes) */
   --color-media: #0b0b0d;
 
-  --radius-card: 1rem;
-  --radius-panel: 1.25rem;
+  /* The website uses near-square corners; the phone keeps 8px so cards stay
+     comfortable at 390px, but the family reads the same. */
+  --radius-card: 0.5rem;
+  --radius-panel: 0.625rem;
 
   --shadow-card: 0 1px 2px rgb(23 26 31 / 0.04), 0 10px 24px -16px rgb(23 26 31 / 0.22);
   --shadow-raised: 0 2px 6px rgb(23 26 31 / 0.06), 0 18px 40px -22px rgb(23 26 31 / 0.28);

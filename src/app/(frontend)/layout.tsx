@@ -1,24 +1,12 @@
 import type { Viewport } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { SiteHeader } from "@/components/layout/Header";
 import { SiteFooter } from "@/components/layout/Footer";
+import { PlayerBar } from "@/components/layout/PlayerBar";
 import { getCategories, getCurrentShow, getNextShow } from "@/content";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/constants";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-});
 
 export const metadata = buildMetadata();
 
@@ -51,21 +39,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   ]);
 
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${playfair.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="flex min-h-screen flex-col">
+      <body className="flex min-h-screen flex-col pb-[62px]">
         <SkipLink />
         <SiteHeader currentShow={currentShow} nextShow={nextShow} categories={categories} />
         <main id="main-content" className="flex-1">
           {children}
         </main>
         <SiteFooter />
+        {/* One player for the whole site: the strip is fixed, so nothing scrolls it away. */}
+        <PlayerBar currentShow={currentShow} nextShow={nextShow} />
       </body>
     </html>
   );
