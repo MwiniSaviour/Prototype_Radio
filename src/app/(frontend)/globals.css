@@ -121,6 +121,13 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* Light-first: form controls, scrollbars and the canvas are light unless the
+       reader opts into dark, whatever the OS is set to. */
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
   }
 
   @media (prefers-reduced-motion: reduce) {

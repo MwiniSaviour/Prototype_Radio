@@ -35,9 +35,9 @@ export function BigStory({
           The big story
         </p>
 
-        <h1 className="mt-2 max-w-[46rem] font-display text-[28px] leading-[1.13] font-bold tracking-[-0.012em] text-ink transition-colors group-hover:text-brand sm:text-[36px] lg:text-[40px]">
+        <h2 className="mt-2 max-w-[46rem] font-display text-[28px] leading-[1.13] font-bold tracking-[-0.012em] text-ink transition-colors group-hover:text-brand sm:text-[36px] lg:text-[40px]">
           {article.title}
-        </h1>
+        </h2>
 
         <p className="mt-3 max-w-[42rem] text-[14.5px] leading-[1.55] text-ink-soft">
           {article.excerpt}

@@ -38,7 +38,8 @@ export function MobileMenu({
   const panelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const onCloseRef = useRef(onClose);
-  const isInitialRouteEffect = useRef(true);
+  /** The path the drawer was opened on; a change from it means "navigated". */
+  const previousPath = useRef(pathname);
   // `document` does not exist during prerender, so the portal target must only
   // be touched on the client. The server snapshot keeps the first render
   // portal-free; `document` exists for every subsequent client render.
@@ -52,14 +53,18 @@ export function MobileMenu({
     onCloseRef.current = onClose;
   }, [onClose]);
 
+  /*
+   * Close on navigation — but only when the path actually changed.
+   *
+   * A "first run" boolean does not survive React StrictMode, which mounts every
+   * effect twice in development: the second pass saw the flag already consumed
+   * and closed the drawer in the same commit that opened it, so the menu only
+   * blinked. Comparing against the previous path is idempotent, so a double
+   * mount is a no-op and a real route change still dismisses the panel.
+   */
   useEffect(() => {
-    // This panel is only mounted *because* the menu was just opened, so the
-    // effect's mount pass must not close it — otherwise the drawer unmounts in
-    // the same commit that opened it and never becomes visible.
-    if (isInitialRouteEffect.current) {
-      isInitialRouteEffect.current = false;
-      return;
-    }
+    if (previousPath.current === pathname) return;
+    previousPath.current = pathname;
     onCloseRef.current();
   }, [pathname]);
 
@@ -108,7 +113,7 @@ export function MobileMenu({
     };
   }, [mounted, triggerId]);
 
-  const linkClasses = "rounded-lg px-3 py-2.5 text-base font-medium text-ink hover:bg-surface-2";
+  const linkClasses = "rounded-[3px] px-3 py-2.5 text-[15px] font-medium text-ink hover:bg-surface-2";
 
   if (!mounted) return null;
 
@@ -151,7 +156,7 @@ export function MobileMenu({
         </nav>
 
         <div>
-          <h2 className="mb-2 px-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted">
+          <h2 className="mb-2 px-3 text-[10px] font-bold tracking-[0.14em] text-muted uppercase">
             Categories
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -159,7 +164,7 @@ export function MobileMenu({
               <Link
                 key={category.id}
                 href={`/category/${category.slug}`}
-                className="rounded-full border border-line px-3 py-1.5 text-sm text-ink hover:bg-surface-2"
+                className="rounded-[3px] border border-line px-2.5 py-1.5 text-[11.5px] font-semibold tracking-[0.04em] text-ink uppercase hover:border-line-strong hover:bg-surface-2"
               >
                 {category.name}
               </Link>

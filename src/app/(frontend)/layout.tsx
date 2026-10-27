@@ -15,7 +15,11 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: siteConfig.themeColors.light },
     { media: "(prefers-color-scheme: dark)", color: siteConfig.themeColors.dark },
   ],
-  colorScheme: "dark light",
+  /**
+   * The site is light-first: light is the declared scheme, and dark is only
+   * applied when a reader opts in with the footer toggle (the `.dark` class).
+   */
+  colorScheme: "light",
 };
 
 // Routes are statically generated; hourly regeneration keeps the on-air strip
@@ -26,8 +30,12 @@ export const revalidate = 3600;
  * Applies the persisted theme before first paint so there is no flash of the
  * wrong colour scheme. Must stay inline and self-contained (no imports) — it
  * runs before React hydrates. The storage key matches siteConfig.themeStorageKey.
+ *
+ * Light is the default: the OS preference is deliberately NOT consulted, so a
+ * reader whose machine is set to dark still lands on the warm-paper edition.
+ * Only an explicit choice (the footer toggle) turns dark on.
  */
-const themeScript = `(function(){try{var k=${JSON.stringify(siteConfig.themeStorageKey)};var s=localStorage.getItem(k);var d=s?s==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d);}catch(e){}})();`;
+const themeScript = `(function(){try{var k=${JSON.stringify(siteConfig.themeStorageKey)};var v=localStorage.getItem(k);document.documentElement.classList.toggle("dark",v==="dark");}catch(e){}})();`;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // The header is a client component, so the on-air state and menu categories

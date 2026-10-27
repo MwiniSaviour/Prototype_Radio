@@ -129,11 +129,11 @@ export function SiteHeader({ categories }: SiteHeaderProps) {
           </Link>
           <Link
             href="/shows"
-            className="group hidden h-10 items-center gap-2.5 rounded-[4px] bg-panel px-4 text-[12.5px] font-semibold tracking-[0.02em] text-white transition-colors duration-150 hover:bg-black sm:inline-flex"
+            className="group hidden h-10 items-center gap-2.5 rounded-[3px] bg-panel px-4 text-[12.5px] font-semibold tracking-[0.02em] text-white transition-colors duration-150 hover:bg-black sm:inline-flex dark:border dark:border-line-strong dark:bg-surface-2 dark:text-ink dark:hover:bg-surface"
           >
             <span aria-hidden="true" className="h-2 w-2 rounded-full bg-brand" />
             Listen Live
-            <IconWaveform className="h-4 w-4 text-white/55" aria-hidden="true" />
+            <IconWaveform className="h-4 w-4 text-white/55 dark:text-ink/45" aria-hidden="true" />
           </Link>
 
           <button
