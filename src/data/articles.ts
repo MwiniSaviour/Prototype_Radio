@@ -4,9 +4,10 @@
  * Region, Ghana — see docs/mock-data-report.md); nothing below is a real report,
  * quotation or event.
  *
- * Images: `wa-*` files are downloaded photographs of unknown provenance (see
- * docs/assets-provenance.md). `cover-*` files are SVG artwork generated for this
- * prototype. Nothing is hot-linked from a remote placeholder service.
+ * Images: every article now carries a real photograph — `news-*` files for the
+ * newsroom, `wa-*` for the two source pictures the fixtures started with. All of
+ * them are catalogued with their origin in docs/assets-provenance.md. Nothing is
+ * hot-linked from a remote service and no generated placeholder art is left.
  */
 
 import type { Article, Category } from "@/lib/types";
@@ -44,8 +45,8 @@ export const articles: Article[] = [
     breaking: true,
     tags: ["water", "utilities", "Jambia", "rationing"],
     image: {
-      src: "/assets/images/cover-water-emergency.svg",
-      alt: "Illustrated cover art of dry water pipes and a rationing notice",
+      src: "/assets/images/news-water-rationing.jpg",
+      alt: "Residents filling buckets and drums from a water tanker in a Wa suburb",
       credit: PROTO,
     },
     body: [
@@ -141,8 +142,8 @@ export const articles: Article[] = [
     featured: true,
     tags: ["shea", "trade", "agriculture", "prices"],
     image: {
-      src: "/assets/images/wa-shea-tree.png",
-      alt: "A shea tree in the Upper West savanna with fruit hanging from its branches",
+      src: "/assets/images/news-shea-season.jpg",
+      alt: "A shea picker carrying a full basket through the savanna",
       credit: UNVERIFIED,
     },
     body: [
@@ -191,8 +192,8 @@ export const articles: Article[] = [
     breaking: true,
     tags: ["connectivity", "mobile", "rural infrastructure"],
     image: {
-      src: "/assets/images/wa-mtn-digital-inclusion.jpg",
-      alt: "A mobile network mast rising above rural rooftops",
+      src: "/assets/images/news-mobile-coverage.jpg",
+      alt: "Rooftops and motorbikes along a Wa street",
       credit: UNVERIFIED,
     },
     body: [
@@ -233,8 +234,8 @@ export const articles: Article[] = [
     featured: true,
     tags: ["health", "drug use", "Jirapa", "youth"],
     image: {
-      src: "/assets/images/wa-youth-drugs-jirapa.jpeg",
-      alt: "Health workers in a community outreach session speaking with young people",
+      src: "/assets/images/news-recovery-centre.jpg",
+      alt: "Health workers gathered in a district hospital corridor",
       credit: UNVERIFIED,
     },
     body: [
@@ -283,8 +284,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["health", "malaria", "rains", "outreach"],
     image: {
-      src: "/assets/images/cover-malaria-season.svg",
-      alt: "Illustrated cover art of seasonal rain over a health outreach post",
+      src: "/assets/images/news-malaria-clinic.jpg",
+      alt: "A nurse drawing a vaccine into a syringe at a district clinic",
       credit: PROTO,
     },
     body: [
@@ -319,8 +320,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["Wechiau", "custody", "accountability", "justice"],
     image: {
-      src: "/assets/images/wa-wechiau-custody-death.jpeg",
-      alt: "A district police station entrance at dusk with a crowd gathered outside",
+      src: "/assets/images/news-custody-inquiry.jpg",
+      alt: "Officials seated at a briefing table answering questions",
       credit: UNVERIFIED,
     },
     body: [
@@ -360,8 +361,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["football", "SDD league", "Upper West United"],
     image: {
-      src: "/assets/images/cover-sdd-league.svg",
-      alt: "Illustrated cover art of a floodlit football pitch",
+      src: "/assets/images/news-sdd-league.jpg",
+      alt: "Footballers celebrating a goal on the pitch",
       credit: PROTO,
     },
     body: [
@@ -396,7 +397,7 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["NDC", "registration", "party politics"],
     image: {
-      src: "/assets/images/wa-ndc-organiser.jpg",
+      src: "/assets/images/news-ndc-organiser.jpg",
       alt: "A party organiser addressing a district registration drive meeting",
       credit: UNVERIFIED,
     },
@@ -433,8 +434,8 @@ export const articles: Article[] = [
     featured: true,
     tags: ["budget", "assembly", "accountability", "devolution"],
     image: {
-      src: "/assets/images/cover-assembly-finance.svg",
-      alt: "Illustrated cover art of assembly benches in a debating chamber",
+      src: "/assets/images/news-assembly-budget.jpg",
+      alt: "An official addressing journalists behind a bank of microphones",
       credit: PROTO,
     },
     body: [
@@ -482,8 +483,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["engineering", "transmitters", "broadcast", "spectrum"],
     image: {
-      src: "/assets/images/cover-transmitter-network.svg",
-      alt: "Illustrated cover art of a broadcast transmitter mast",
+      src: "/assets/images/news-transmitter.jpg",
+      alt: "A broadcast transmitter mast against a clear sky",
       credit: PROTO,
     },
     body: [
@@ -523,8 +524,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["mobile money", "fintech", "fees", "consumers"],
     image: {
-      src: "/assets/images/cover-mobile-money.svg",
-      alt: "Illustrated cover art of a mobile money receipt and balance",
+      src: "/assets/images/news-mobile-money.jpg",
+      alt: "A mobile money kiosk on a busy street corner",
       credit: PROTO,
     },
     body: [
@@ -564,8 +565,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["football", "Upper West United", "SDD league", "analysis"],
     image: {
-      src: "/assets/images/cover-upper-west-united.svg",
-      alt: "Illustrated cover art of a football club crest and pitch",
+      src: "/assets/images/news-upper-west-united.jpg",
+      alt: "A player shielding the ball during a league match",
       credit: PROTO,
     },
     body: [
@@ -601,8 +602,8 @@ export const articles: Article[] = [
     featured: true,
     tags: ["roads", "assembly", "audit", "infrastructure"],
     image: {
-      src: "/assets/images/wa-roads-inspection.jpg",
-      alt: "A graded feeder road under inspection with survey markers in the verge",
+      src: "/assets/images/news-road-audit.jpg",
+      alt: "Officials walking a graded feeder road during an inspection",
       credit: UNVERIFIED,
     },
     body: [
@@ -646,8 +647,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["mobile money", "banking", "access", "rural economy"],
     image: {
-      src: "/assets/images/wa-fintech-voices.jpg",
-      alt: "A mobile money agent’s shop counter with customers waiting to transact",
+      src: "/assets/images/news-mobile-money-agents.jpg",
+      alt: "Agents serving customers at a mobile money stand",
       credit: UNVERIFIED,
     },
     body: [
@@ -687,8 +688,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["groundnut", "prices", "trade", "markets"],
     image: {
-      src: "/assets/images/cover-groundnut.svg",
-      alt: "Illustrated cover art of groundnut packed for export",
+      src: "/assets/images/news-groundnut-market.jpg",
+      alt: "Groundnuts spread out to dry on a mat",
       credit: PROTO,
     },
     body: [
@@ -719,8 +720,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["education", "Anwelle", "exams", "access"],
     image: {
-      src: "/assets/images/wa-anwelle-students.jpg",
-      alt: "Students walking along a rural track towards an examination centre",
+      src: "/assets/images/news-exams-walk.jpg",
+      alt: "Pupils at their desks in a rural classroom",
       credit: UNVERIFIED,
     },
     body: [
@@ -755,7 +756,7 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["education", "skills", "women", "groundnut"],
     image: {
-      src: "/assets/images/wa-skills-training.jpeg",
+      src: "/assets/images/news-skills-centre.jpg",
       alt: "Trainees at a groundnut processing skills session in a community hall",
       credit: UNVERIFIED,
     },
@@ -792,8 +793,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["Dumba", "festival", "music", "culture"],
     image: {
-      src: "/assets/images/cover-dumba-festival.svg",
-      alt: "Illustrated cover art of dancers at a night festival",
+      src: "/assets/images/news-dumba-festival.jpg",
+      alt: "Dancers in traditional dress at a Dumba procession",
       credit: PROTO,
     },
     body: [
@@ -828,8 +829,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["hip-hop", "Wa", "music", "studios"],
     image: {
-      src: "/assets/images/cover-hip-hop.svg",
-      alt: "Illustrated cover art of a microphone and studio speakers",
+      src: "/assets/images/news-hip-hop-studio.jpg",
+      alt: "A singer recording at a studio microphone",
       credit: PROTO,
     },
     body: [
@@ -864,8 +865,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["opinion", "roads", "budget", "analysis"],
     image: {
-      src: "/assets/images/cover-road-opinion.svg",
-      alt: "Illustrated cover art of a road with a closed barrier",
+      src: "/assets/images/news-wa-road.jpg",
+      alt: "A main street in Wa with traffic and low buildings",
       credit: PROTO,
     },
     body: [
@@ -901,8 +902,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["diaspora", "remittances", "health", "associations"],
     image: {
-      src: "/assets/images/cover-community-matters.svg",
-      alt: "Illustrated cover art of a community hall with a diaspora association notice",
+      src: "/assets/images/show-community-matters.jpg",
+      alt: "A presenter speaking into a microphone in a bright studio",
       credit: PROTO,
     },
     body: [
@@ -942,8 +943,8 @@ export const articles: Article[] = [
     readingMinutes: 1,
     tags: ["harmattan", "weather", "traffic", "flights"],
     image: {
-      src: "/assets/images/cover-harmattan.svg",
-      alt: "Illustrated cover art of dust haze reducing visibility on a road",
+      src: "/assets/images/news-harmattan.jpg",
+      alt: "Dust haze cutting visibility on a road during harmattan",
       credit: PROTO,
     },
     body: [

@@ -78,11 +78,11 @@ export function LivePlayerHero({ show, slot, isLive, className }: LivePlayerHero
         alt={show.image.alt}
         fill
         sizes="(max-width: 1023px) 100vw, 860px"
-        className="object-cover object-right opacity-70"
+        className="object-cover object-center opacity-90"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/72 to-black/25"
+        className="absolute inset-0 bg-gradient-to-r from-black/92 via-black/65 to-black/15"
       />
 
       <div className="relative flex min-h-[19rem] flex-col justify-between gap-7 p-5 sm:min-h-[21rem] sm:p-7 lg:min-h-[22.5rem]">

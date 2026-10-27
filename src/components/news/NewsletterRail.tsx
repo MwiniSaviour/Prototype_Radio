@@ -40,16 +40,16 @@ export function NewsletterRail({
       )}
     >
       <Image
-        src="/assets/images/pulse-event-sunset-live.jpg"
+        src="/assets/images/live-studio.jpg"
         alt=""
         aria-hidden="true"
         fill
         sizes="(max-width: 1023px) 100vw, 366px"
-        className="pointer-events-none object-cover opacity-20"
+        className="pointer-events-none object-cover opacity-[0.18]"
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-paper via-paper/85 to-paper/40"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-r from-paper via-paper/95 to-paper/78"
       />
 
       <div className="relative">

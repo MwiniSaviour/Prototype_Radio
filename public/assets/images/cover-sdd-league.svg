@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Under The Floodlights cover art">
-  <rect width="800" height="800" fill="#191721"/>
-  <rect x="40" y="40" width="720" height="720" rx="48" fill="none" stroke="#f2b75c" stroke-width="4" opacity="0.6"/>
-  <g fill="none" stroke="#f2b75c" stroke-width="10"><path d="M180 120v120M620 120v120M180 120h440"/></g><g fill="#fbfaf7"><circle cx="400" cy="320" r="70"/><path d="M400 260l30 22-11 34h-38l-11-34z" fill="#c01b2b"/></g><path d="M240 460h320" stroke="#f2b75c" stroke-width="14" stroke-linecap="round"/>
-  <text x="400" y="700" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" font-weight="700" fill="#fbfaf7">Under The Floodlights</text>
-  <text x="400" y="740" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="4" fill="#f2b75c">SDD UNIVERSITY LEAGUE</text>
-</svg>

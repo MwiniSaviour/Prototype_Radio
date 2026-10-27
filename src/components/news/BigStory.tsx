@@ -27,7 +27,7 @@ export function BigStory({
             fill
             sizes="(max-width: 1023px) 100vw, 68vw"
             priority={priority}
-            className="object-cover motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-[1.02]"
+            className="object-cover object-center motion-safe:transition-transform motion-safe:duration-700 motion-safe:group-hover:scale-[1.02]"
           />
         </div>
 

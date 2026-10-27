@@ -120,9 +120,10 @@ Health 2 · Opinion 1 · Diaspora 1 · Weather & Traffic 1.
 ## 4. Asset summary
 
 See `docs/assets-provenance.md` for the full per-file table and licence status.
-In brief: 6 trademark brand files (captured, not licensed), 10 photographs of
-unknown provenance (do not ship), and 63 generated SVG covers/avatars/icons that
-this project owns outright.
+In brief: 6 trademark brand files (captured, not licensed), 69 photographs of
+unverified provenance used as stand-in editorial imagery (do not ship as-is), and
+12 generated line icons that this project owns outright. The generated cover,
+podcast and avatar SVGs were retired once real photography replaced them.
 
 ---
 

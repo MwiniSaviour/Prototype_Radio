@@ -26,7 +26,7 @@ export const stations: Station[] = [
     tagline: "The Voice of Wa",
     artwork: {
       src: "/assets/images/prototype-fm-artwork.jpg",
-      alt: "Prototype FM station artwork: the Wa skyline at dusk",
+      alt: "Wa's main street in the afternoon",
     },
     // The seed and the app both read a station stream from the environment at
     // their own boundary (Next: NEXT_PUBLIC_STREAM_URL, Vite: VITE_STREAM_URL),

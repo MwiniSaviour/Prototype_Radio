@@ -47,7 +47,7 @@ export function PodcastRow({
 
       <div className="flex min-w-0 flex-1 flex-col">
         <p className="truncate text-[9px] font-bold tracking-[0.14em] text-brand uppercase">
-          Podcast{show ? ` · ${show.name}` : ""}
+          {show ? show.name : "Podcast"}
         </p>
 
         <Heading className="mt-1 line-clamp-2 text-[13px] leading-[1.35] font-semibold tracking-[-0.005em] text-ink">

@@ -35,7 +35,7 @@ export function OnboardingScreen() {
   return (
     <div className="relative h-full w-full overflow-hidden bg-[#0b0b0d]">
       <img
-        src="/assets/images/pulse-onboarding-hero.jpg"
+        src="/assets/images/onboarding-hero.jpg"
         alt="A woman listening to Prototype Radio on headphones on a Wa street at night"
         className="absolute inset-0 h-full w-full object-cover object-[50%_32%]"
         draggable={false}
