@@ -7,7 +7,20 @@ import { siteConfig } from "@/lib/constants";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", allow: "/", disallow: "/search" }],
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: [
+          "/search",
+          // The CMS admin, its REST/GraphQL endpoints, and the health probe are
+          // operational surfaces, not content.
+          "/admin",
+          "/api/",
+          "/healthz",
+        ],
+      },
+    ],
     sitemap: `${siteConfig.url}/sitemap.xml`,
     host: siteConfig.url,
   };

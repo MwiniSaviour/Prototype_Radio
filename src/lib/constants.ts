@@ -1,5 +1,24 @@
 import type { NavItem, SocialLink } from "./types";
 
+/**
+ * Canonical origin for absolute URLs (sitemap, canonical tags, OpenGraph, and
+ * the origin Payload's admin posts back to).
+ *
+ * NEXT_PUBLIC_SITE_URL is the explicit answer and always wins. If it is missing
+ * on Vercel, fall back to the project's stable production host — a deploy with
+ * the real domain beaten by a placeholder is an SEO problem that is invisible
+ * until someone notices the canonicals.
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/+$/, "");
+
+  const vercelProductionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (vercelProductionHost) return `https://${vercelProductionHost}`;
+
+  return "https://radio-waa.example";
+}
+
 export const siteConfig = {
   name: process.env.NEXT_PUBLIC_SITE_NAME ?? "Prototype Radio",
   shortName: "PROTOTYPE",
@@ -7,7 +26,7 @@ export const siteConfig = {
   tagline: "The Voice of Wa.",
   description:
     "Prototype Radio is a broadcaster and newsroom in Wa, Upper West Region: live shows around the clock, reporting from the communities we serve, and podcasts you can take with you.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://radio-waa.example",
+  url: resolveSiteUrl(),
   locale: "en_US",
   /** localStorage key for the persisted theme choice (see ThemeToggle + layout script). */
   themeStorageKey: "radio-waa-theme",

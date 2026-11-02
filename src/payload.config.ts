@@ -2,6 +2,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import { postgresAdapter } from "@payloadcms/db-postgres";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
@@ -20,6 +21,41 @@ import { SiteSettings } from "./globals/SiteSettings";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+/**
+ * Public origin of this deployment. The admin bundle, CORS and absolute URLs are
+ * built from it, so it must be the origin the browser is actually on:
+ *
+ * 1. NEXT_PUBLIC_SITE_URL — the explicit production domain (preferred, and what
+ *    the front end uses for canonical URLs).
+ * 2. VERCEL_URL — the per-deployment host, so a preview's admin works on the
+ *    preview's own origin instead of posting to production.
+ * 3. VERCEL_PROJECT_PRODUCTION_URL — the project's stable production alias.
+ * 4. localhost, for `next dev`.
+ */
+function resolveServerURL(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/+$/, "");
+
+  if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  const production = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
+  if (production) return `https://${production}`;
+
+  return "http://localhost:3000";
+}
+
+const serverURL = resolveServerURL();
+
+/**
+ * Vercel's filesystem is read-only and per-invocation, so uploads cannot live in
+ * `public/media` there. When a Blob token is present the storage plugin takes
+ * over every media upload (and sets `disableLocalStorage` itself); without one —
+ * local development, the Termux preview — the collection keeps writing to disk.
+ */
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN?.trim();
 
 /**
  * No `editor` is set on purpose: this project has no richtext fields (article
@@ -50,11 +86,28 @@ export default buildConfig({
     Listeners,
   ],
   globals: [SiteSettings],
+  plugins: blobToken
+    ? [
+        vercelBlobStorage({
+          enabled: true,
+          collections: { media: true },
+          token: blobToken,
+        }),
+      ]
+    : [],
   db: postgresAdapter({
     pool: {
       // .env carries the Termux-local trust-auth URL; the fallback is the same
-      // instance so CLI tooling works even without a loaded environment.
+      // instance so CLI tooling works even without a loaded environment. On
+      // Vercel this is the Neon connection string — use the POOLED host
+      // (`...-pooler...`) so concurrent lambdas share a small set of server
+      // connections instead of each opening its own.
       connectionString: process.env.DATABASE_URL ?? "postgres://postgres@127.0.0.1:5432/radiowaa",
+      // Every serverless instance keeps its own pool, so the per-instance cap
+      // has to stay low: 3 × N instances, not 10 × N.
+      max: Number(process.env.DATABASE_POOL_MAX ?? (process.env.VERCEL ? 3 : 10)),
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 10_000,
     },
   }),
   // Passed explicitly rather than auto-detected: this host has no bionic sharp
@@ -63,7 +116,7 @@ export default buildConfig({
   sharp,
   // Payload refuses to boot without a signing secret; .env supplies PAYLOAD_SECRET.
   secret: process.env.PAYLOAD_SECRET ?? "",
-  serverURL: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  serverURL,
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },

@@ -1,0 +1,26 @@
+# The Capacitor app is a separate workspace with its own lockfile and build
+# toolchain. It is shipped to the app stores, never to Vercel — uploading it to
+# the builder only slows the deploy down.
+apps/
+
+# Local runtime artefacts.
+.env
+.env.*
+!.env.example
+.next/
+out/
+node_modules/
+*.log
+*.pid
+*.pid.log
+*.tsbuildinfo
+
+# Uploads written by Payload when it falls back to local disk storage. On Vercel
+# media lives in Blob storage, so these files must not be deployed.
+public/media/
+
+# Design/QA material that is not part of the site.
+docs/
+AGENTS.md
+.parallel/
+coverage/
