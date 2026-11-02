@@ -4,21 +4,24 @@ Live radio, real stories, every hour. A production-grade **Next.js 16 + Tailwind
 UI/UX foundation for a broadcast/news platform — App Router, TypeScript, strict
 accessibility, WCAG 2.2 AA colour, dark mode, and statically generated pages.
 
-No backend, no database, no auth: this repository is deliberately the front end
-only. `DATABASE_URL` is documented in `.env.example` for the later integration.
+Ships with **Payload CMS 3** embedded in the same Next app (`/admin`, `/api/*`)
+over **Postgres**, and a `CONTENT_SOURCE` switch that renders the seeded
+fixtures in `src/data/` when no database is available. Production runs on
+**Vercel** — see **[docs/deployment.md](./docs/deployment.md)**.
 
 ## Running it
 
 ```bash
-npm install
+npm ci
 # Termux only, once after install — see AGENTS.md section 1:
 find node_modules -type f -size -100k -print0 | xargs -0 grep -Il "^#!/usr/bin/env " 2>/dev/null | xargs sed -i '1s|^#!/usr/bin/env |#!/data/data/com.termux/files/usr/bin/env |'
 
-npm run dev      # next dev --webpack
-npm run build    # next build --webpack (production build)
-npm start        # serve the production build
-npm run lint     # eslint
-npm run typecheck
+npm run dev          # next dev --webpack
+npm run build        # next build --webpack (production build)
+npm run vercel-build # what Vercel runs: env checks → migrations → next build
+npm start            # serve the production build
+npm run check        # tsc --noEmit && eslint
+npm run migrate      # apply Payload migrations (needs DATABASE_URL)
 ```
 
 ## Routes
@@ -56,6 +59,13 @@ npm run typecheck
 - **Section** = a vertical slice of a page (news, shows, podcasts…).
 - **Desk** = a newsroom category (news, music, culture, sport, tech, community).
 - **Show** = a recurring broadcast; **episode** = one podcast instalment.
+
+## Deployment
+
+Vercel: Next 16 + Payload 3 in one deployment, Postgres (Neon) for content,
+Vercel Blob for uploads, `scripts/ci/vercel-build.mjs` validating the
+environment before it builds. Setup, environment variables, migrations, media,
+caching and rollback are documented in **[docs/deployment.md](./docs/deployment.md)**.
 
 ## Platform note
 

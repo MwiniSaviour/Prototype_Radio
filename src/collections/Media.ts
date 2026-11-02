@@ -15,8 +15,15 @@ export const Media: CollectionConfig = {
     update: isAdminOrEditor,
   },
   upload: {
-    // Local disk on purpose: this Termux host has no cloud storage, and Payload
-    // serves the files back out of public/media.
+    /*
+     * Local disk for development on this Termux host, where there is no cloud
+     * storage: Payload serves the files back out of public/media.
+     *
+     * On Vercel the filesystem is read-only and does not survive between
+     * invocations, so @payloadcms/storage-vercel-blob (enabled in
+     * payload.config.ts when BLOB_READ_WRITE_TOKEN is set) takes over and sets
+     * disableLocalStorage itself. staticDir then goes unused.
+     */
     staticDir: "public/media",
     mimeTypes: ["image/*"],
     imageSizes: [

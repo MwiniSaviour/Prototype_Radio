@@ -259,10 +259,16 @@ If you change a token, re-run the check — do not eyeball it.
 ## 5. Environment variables
 
 See `.env.example`. Public vars must keep the `NEXT_PUBLIC_` prefix (they are
-inlined into the browser bundle). `DATABASE_URL` is server-only and currently
-unused by the UI code. `NEXT_PUBLIC_STREAM_URL` (live radio stream) ships empty
-on purpose — the player falls back to an accessible "stream not configured"
-state; never commit a broadcaster's real feed without resolving licensing.
+inlined into the browser bundle). `DATABASE_URL` (Postgres, used by Payload) and
+`PAYLOAD_SECRET` are server-only. `CONTENT_SOURCE=local|payload` picks the
+content backend and defaults to `local`. `BLOB_READ_WRITE_TOKEN` switches media
+uploads from `public/media` to Vercel Blob and is required in production.
+`NEXT_PUBLIC_STREAM_URL` (live radio stream) ships empty on purpose — the player
+falls back to an accessible "stream not configured" state; never commit a
+broadcaster's real feed without resolving licensing.
+
+Deployment (Vercel, Postgres, Blob, migrations, env scoping) is documented in
+`docs/deployment.md`.')
 
 ## 6. Database (Postgres 18, native Termux)
 

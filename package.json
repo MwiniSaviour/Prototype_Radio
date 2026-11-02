@@ -2,16 +2,21 @@
   "name": "radio-waa",
   "version": "0.1.0",
   "private": true,
-  "description": "Radio Waa — live radio, shows, podcasts and news platform (UI/UX foundation).",
+  "description": "Radio Waa \u2014 live radio, shows, podcasts and news platform (UI/UX foundation).",
   "engines": {
-    "node": ">=20.9.0"
+    "node": "22.x"
   },
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
+    "vercel-build": "node scripts/ci/vercel-build.mjs",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint",
+    "migrate": "node scripts/ci/migrate.mjs",
+    "migrate:create": "node --no-warnings --import ./scripts/ts-ext-resolve.mjs node_modules/payload/bin.js --disable-transpile migrate:create",
+    "migrate:status": "node scripts/ci/migrate.mjs --status",
     "seed": "node --no-warnings --import ./scripts/ts-ext-resolve.mjs node_modules/payload/bin.js --disable-transpile run scripts/seed.ts"
   },
   "dependencies": {
@@ -20,6 +25,7 @@
     "@img/sharp-wasm32": "^0.35.5",
     "@payloadcms/db-postgres": "^3.91.0",
     "@payloadcms/next": "^3.91.0",
+    "@payloadcms/storage-vercel-blob": "3.91.0",
     "clsx": "^2.1.1",
     "graphql": "^16.14.2",
     "next": "16.4.0",
